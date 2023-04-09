@@ -1,0 +1,15 @@
+.registration_page_wrapper {
+  height: 100%;
+  background-image: url("../public/Images/banner-01.jpg");
+}
+
+.registration_page_wrapper input::-webkit-outer-spin-button,
+.registration_page_wrapper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Ensure the input stays the same size */
+.registration_page_wrapper input[type="number"] {
+  -moz-appearance: textfield;
+}

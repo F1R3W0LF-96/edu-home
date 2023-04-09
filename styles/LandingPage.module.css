@@ -1,0 +1,31 @@
+.landing_page_wrapper {
+  height: 100%;
+  background-image: url("../public/Images/banner-01.jpg");
+}
+
+.grid {
+  display: grid;
+}
+
+/* Set the width of each grid item */
+.grid > div {
+  width: 100%;
+}
+
+/* Add margin to each grid item */
+.grid > div:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+/* Media queries to adjust the grid layout based on screen size */
+@media screen and (min-width: 640px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
