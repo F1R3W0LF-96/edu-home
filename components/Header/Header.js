@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import logo from "../../public/Images/logo.svg";
 const Header = () => {
   const [activeLink, setActiveLink] = useState("");
@@ -48,9 +49,9 @@ const Header = () => {
   return (
     <header className="c">
       <nav className=" relative px-4 py-4 flex justify-between items-center bg-white">
-        <a className="text-3xl font-bold leading-none" href="/">
+        <Link className="text-3xl font-bold leading-none" href="/">
           <Image src={logo} width={200} alt="logo" />
-        </a>
+        </Link>
         <div className="lg:hidden">
           <button className="navbar-burger flex items-center text-blue-600 p-3">
             <svg
@@ -64,18 +65,18 @@ const Header = () => {
           </button>
         </div>
 
-        <a
+        <Link
           className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
           href="/login"
         >
           Sign In
-        </a>
-        <a
+        </Link>
+        <Link
           className="hidden lg:inline-block py-2 px-6 bg-sky-500 hover:bg-sky-600 text-sm text-white font-bold rounded-xl transition duration-200"
           href="/"
         >
           Sign up
-        </a>
+        </Link>
       </nav>
       <div className="navbar-menu relative z-50 hidden">
         <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "@/styles/LandingPage.module.css";
+import Link from "next/link";
 import { useRouter } from "next/router";
 function LandingPage() {
   const router = useRouter();
@@ -21,19 +21,19 @@ function LandingPage() {
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a
+            <Link
               className="block w-full rounded bg-sky-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-sky-700 focus:outline-none focus:ring active:bg-sky-500 sm:w-auto"
               href="/register/teacher"
             >
               Teacher
-            </a>
+            </Link>
 
-            <a
+            <Link
               className="block w-full rounded px-12 py-3 text-sm font-medium text-sky-600 shadow hover:text-sky-700 focus:outline-none focus:ring active:text-sky-500 sm:w-auto"
               href="/register/student"
             >
               Student
-            </a>
+            </Link>
           </div>
           <div className="pt-16">Scroll Down to know more</div>
         </div>

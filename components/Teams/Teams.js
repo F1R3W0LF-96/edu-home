@@ -1,4 +1,6 @@
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { teams } from "../../helper/index";
 const link = `<link rel="stylesheet" href="https://cdn.materialdesignicons.com/6.5.95/css/materialdesignicons.min.css"/>`;
 const Teams = () => {
@@ -13,7 +15,7 @@ const Teams = () => {
               </h1>
 
               <p className="text-gray-700 text-lg font-light">
-                With over 100 years of combined experience, we've got a
+                With over 100 years of combined experience, we have got a
                 well-seasoned team at the helm.
               </p>
             </div>
@@ -26,13 +28,13 @@ const Teams = () => {
                 key={(Math.random() + idx).toString()}
               >
                 <div className="flex flex-col">
-                  <a href="#" className="mx-auto">
-                    <img
+                  <Link href="#" className="mx-auto">
+                    <Image
                       className="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100"
                       src={ele.image}
                       alt=""
                     />
-                  </a>
+                  </Link>
 
                   <div className="text-center mt-6">
                     <h1 className="text-gray-900 text-xl font-bold mb-1">
