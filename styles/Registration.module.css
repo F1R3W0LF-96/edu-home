@@ -13,3 +13,14 @@
 .registration_page_wrapper input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.registration_page_wrapper button.ant_btn_primary {
+  color: #fff;
+  background-color: #1677ff;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+}
+.registration_page_wrapper button.ant_btn_default {
+  background-color: #fff !important;
+  border-color: #d9d9d9;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+}
