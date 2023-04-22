@@ -281,37 +281,37 @@ function TeacherRegistration() {
   const OtherDetails = () => {
     return (
       <div className="m-5">
-        <div class="mt-6 text-start">
+        <div className="mt-6 text-start">
           <label
             for="hourly-rate"
-            class="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700"
           >
             Hourly Rate
           </label>
-          <div class="mt-1 relative rounded-md shadow-sm">
+          <div className="mt-1 relative rounded-md shadow-sm">
             <input
               type="number"
               name="hourly-rate"
               id={styles.hourly_rate}
-              class="focus:ring-indigo-500 p-2 border focus:border-indigo-500 block w-full pl-3 pr-10 py-2 sm:text-sm border-gray-300 rounded-md"
+              className="focus:ring-indigo-500 p-2 border focus:border-indigo-500 block w-full pl-3 pr-10 py-2 sm:text-sm border-gray-300 rounded-md"
               required
             />
           </div>
         </div>
 
-        <div class="mt-6 text-start">
+        <div className="mt-6 text-start">
           <label
             for="description"
-            class="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700"
           >
             Other Information
           </label>
-          <div class="mt-1">
+          <div className="mt-1">
             <textarea
               id="description"
               name="description"
               rows="3"
-              class="shadow-sm p-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              className="shadow-sm p-2 border focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
               placeholder="Enter any additional information or description"
             ></textarea>
           </div>

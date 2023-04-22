@@ -1,6 +1,8 @@
 .landing_page_wrapper {
   height: 100%;
-  background-image: url("../public/Images/wave.svg");
+  background: rgb(127, 127, 240);
+  background: linear-gradient(90deg, rgba(127, 127, 240, 1) 49%, rgba(158, 226, 240, 1) 100%);
+  /* background-image: url("../public/Images/wave.svg"); */
 }
 
 .grid {
