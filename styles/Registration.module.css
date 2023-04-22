@@ -24,3 +24,13 @@
   border-color: #d9d9d9;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
 }
+
+.registration_page_wrapper * {
+  line-height: 30px !important;
+}
+
+.registration_page_wrapper button {
+  line-height: 40px !important;
+  display: flex;
+  align-items: center;
+}
