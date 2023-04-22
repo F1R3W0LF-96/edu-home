@@ -365,6 +365,7 @@ function TeacherRegistration() {
               style={{
                 marginTop: 24,
               }}
+              className="flex"
             >
               {current > 0 && (
                 <Button

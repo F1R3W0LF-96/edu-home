@@ -32,5 +32,5 @@
 .registration_page_wrapper button {
   line-height: 40px !important;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
 }
