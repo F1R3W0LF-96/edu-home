@@ -1,8 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import Wrapper from "@/components/Layouts/Wrapper";
-
+import useAuthentication from "../hooks/useAuthentication";
 const Login = () => {
+  const { getLogin, loading, isAuthenticated, loginResponse, userDetails } =
+    useAuthentication();
+  console.log(
+    getLogin,
+    loading,
+    isAuthenticated,
+    loginResponse,
+    userDetails,
+    "getLogin, loading, isAuthenticated, loginResponse, userDetails"
+  );
+  const handleSubmit = () => {};
   return (
     <Wrapper>
       <div className="mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:px-8 h-screen">
