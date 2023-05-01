@@ -1,9 +1,38 @@
 import React, { useState } from "react";
 import styles from "@/styles/Registration.module.css";
-import { Button, message, Steps, theme } from "antd";
+import { Button, message, Select, Steps, theme } from "antd";
+import {
+  BoardsTypes,
+  Budget,
+  Gender,
+  ModeOfTeaching,
+  Subjects,
+} from "@/helper/Constant";
+import axios from "axios";
 
 function StudentRegistration() {
+  const [selectedBoard, setSelectedBoard] = useState("");
   const BasicDetails = () => {
+    const [address, setAddress] = useState([]);
+    const [pincode, setPincode] = useState("");
+
+    const handlePincodeChange = async (e) => {
+      const { value } = e.target;
+      if (value.length === 6) {
+        try {
+          const response = await axios.get(
+            `https://api.postalpincode.in/pincode/${e.target.value}`
+          );
+          setPincode(value);
+          setAddress(response.data[0].PostOffice);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        setPincode(value);
+      }
+    };
+    console.log(":::::pincode", pincode);
     return (
       <div>
         <div className="mb-4 text-start">
@@ -30,6 +59,8 @@ function StudentRegistration() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your pincode"
             required
+            onChange={handlePincodeChange}
+            value={pincode}
           />
         </div>
         <div className="mb-4 text-start">
@@ -49,14 +80,17 @@ function StudentRegistration() {
           <label for="address" className="block text-gray-700 font-bold mb-2">
             Address or Landmark
           </label>
-          <input
-            type="text"
-            name="address"
-            id="address"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter your address or landmark"
-            required
-          />
+
+          <select className="shadow border rounded w-full py-3 px-3 text-gray-700 ">
+            <option value="">Choose Address</option>
+            {address.map((type, index) => {
+              return (
+                <option key={type.Name} value={type.Name}>
+                  {type.Name}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <div className="mb-4 text-start">
           <label for="phone" className="block text-gray-700 font-bold mb-2">
@@ -101,14 +135,23 @@ function StudentRegistration() {
           <label for="board" className="block text-gray-700 font-bold mb-2">
             Board
           </label>
-          <input
-            type="text"
-            name="board"
-            id="board"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter your board"
-            required
-          />
+
+          <select
+            className="shadow border rounded w-full py-3 px-3 text-gray-700 "
+            onChange={(e) => {
+              setSelectedBoard(e.target.value);
+            }}
+            value={selectedBoard}
+          >
+            <option value="">Choose Board</option>
+            {Object.keys(BoardsTypes).map((type, index) => {
+              return (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              );
+            })}
+          </select>
         </div>
       </div>
     );
@@ -120,14 +163,18 @@ function StudentRegistration() {
           <label for="subject" className="block text-gray-700 font-bold mb-2">
             Subject
           </label>
-          <input
-            type="text"
-            name="subject"
-            id="subject"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter your subject"
-            required
-          />
+
+          <select className="shadow border appearance-none rounded w-full py-3 px-3 text-gray-700 ">
+            <option value="">Choose Subject</option>
+            {Subjects[selectedBoard] &&
+              (Subjects[selectedBoard] || Subjects.CBSE).map((type, index) => {
+                return (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                );
+              })}
+          </select>
         </div>
         <div className="mb-4 text-start">
           <label
@@ -137,15 +184,19 @@ function StudentRegistration() {
             Mode of Tuition
           </label>
           <select
-            name="mode-of-tuition"
-            id="mode-of-tuition"
+            name="teacher-gender"
+            id="teacher-gender"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           >
-            <option value="">Select a mode of tuition</option>
-            <option value="online">Online</option>
-            <option value="offline">Offline</option>
-            <option value="both">Both</option>
+            <option value="">Select Mode of Teaching</option>
+            {ModeOfTeaching.map((value, index) => {
+              return (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div className="mb-4 text-start">
@@ -161,9 +212,14 @@ function StudentRegistration() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           >
-            <option value="">Select a teacher gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="">Select gender</option>
+            {Gender.map((value, index) => {
+              return (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div className="mt-6 text-start">
@@ -174,14 +230,16 @@ function StudentRegistration() {
             Hourly Budget
           </label>
           <div className="mt-1 relative rounded-md shadow-sm">
-            <input
-              type="number"
-              name="hourly-rate"
-              id="hourly-rate"
-              className="focus:ring-indigo-500 p-2 border focus:border-indigo-500 block w-full pl-3 pr-10 py-2 sm:text-sm border-gray-300 rounded-md"
-              placeholder="Enter hourly rate"
-              required
-            />
+            <select className="shadow border appearance-none rounded w-full py-3 px-3 text-gray-700 ">
+              <option value="">Choose Budget</option>
+              {Budget.map((type, index) => {
+                return (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                );
+              })}
+            </select>
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <span className="text-gray-500 sm:text-sm">INR/hour</span>
             </div>
@@ -234,6 +292,7 @@ function StudentRegistration() {
     textAlign: "center",
     marginTop: 16,
   };
+  console.log("seleted board items", selectedBoard);
   return (
     <div className={styles.registration_page_wrapper}>
       <div className=" min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -257,13 +316,22 @@ function StudentRegistration() {
                 </Button>
               )}
               {current === steps.length - 1 && (
-                <Button
-                  type="primary"
-                  onClick={() => message.success("Processing complete!")}
-                  className={`${styles.ant_btn_primary} `}
-                >
-                  Register
-                </Button>
+                <span className="flex justify-between">
+                  <Button
+                    type="primary"
+                    onClick={() => prev()}
+                    className={`${styles.ant_btn_primary} align-center`}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    type="primary"
+                    onClick={() => message.success("Processing complete!")}
+                    className={`${styles.ant_btn_primary} align-center`}
+                  >
+                    Register
+                  </Button>
+                </span>
               )}
             </div>
           </div>
