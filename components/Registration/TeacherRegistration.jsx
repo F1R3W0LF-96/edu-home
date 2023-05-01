@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styles from "@/styles/Registration.module.css";
 import { Button, message, Steps, theme, Checkbox, Col, Row } from "antd";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
+import { Budget, Gender } from "@/helper/Constant";
 const BasicSection = ({
   basicDetails,
   address,
@@ -23,7 +24,7 @@ const BasicSection = ({
           type="text"
           name="name"
           id="name"
-          className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
+          className="p-2 shadow appearance-none border  focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
           placeholder="Enter your full name"
           value={basicDetails.name || ""}
           onChange={handleBasicDetailsChange}
@@ -34,7 +35,7 @@ const BasicSection = ({
         <div className=" text-start">
           <label
             htmlFor="gender"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-gray-700 mb-2  "
           >
             Email Id
           </label>
@@ -42,7 +43,7 @@ const BasicSection = ({
             type="text"
             name="email"
             id="email"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
+            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2 shadow appearance-none border"
             placeholder="yourname@abc.com"
             value={basicDetails.email}
             onChange={handleBasicDetailsChange}
@@ -60,8 +61,8 @@ const BasicSection = ({
             type="number"
             name="phone"
             id="phone"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
-            placeholder="Enter your pincode"
+            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2 shadow appearance-none border "
+            placeholder="Enter your phone number"
             value={basicDetails.phone}
             // onChange={handlePincodeChange}
             required
@@ -77,17 +78,21 @@ const BasicSection = ({
             Gender
           </label>
           <select
-            id="gender"
-            name="gender"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
+            name="teacher-gender"
+            id="teacher-gender"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
             value={basicDetails.gender}
             onChange={handleBasicDetailsChange}
-            required
           >
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
+            <option value="">Select gender</option>
+            {Gender.map((value, index) => {
+              return (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              );
+            })}
           </select>
         </div>
         <div className=" text-start">
@@ -101,7 +106,7 @@ const BasicSection = ({
             type="text"
             name="pincode"
             id="pincode"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
+            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2 shadow appearance-none border"
             placeholder="Enter your pincode"
             // value={basicDetails.pincode}
             onChange={handlePincodeChange}
@@ -116,19 +121,9 @@ const BasicSection = ({
         >
           Select Your Address
         </label>
-        {/* <input
-          type="text"
-          name="city"
-          id="city"
-          className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
-          placeholder="City"
-          value={basicDetails.city}
-          readOnly
-          required
-          disabled
-        /> */}
+
         <select
-          className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
+          className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2 shadow appearance-none border "
           value={JSON.stringify(basicDetails.address)}
           onChange={handleAddressChange}
         >
@@ -240,14 +235,16 @@ const OtherDetails = ({ othersDetails, handleChange }) => {
           Hourly Rate
         </label>
         <div className="mt-1 relative rounded-md shadow-sm">
-          <input
-            type="number"
-            name="hourly_rate"
-            id={othersDetails.hourly_rate}
-            onChange={handleChange}
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
-            required
-          />
+          <select className="shadow border appearance-none rounded w-full py-3 px-3 text-gray-700 ">
+            <option value="">Choose Budget</option>
+            {Budget.map((type, index) => {
+              return (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              );
+            })}
+          </select>
         </div>
       </div>
 
