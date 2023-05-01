@@ -24,9 +24,8 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
-}
-input:focus,
-input:hover {
-  border: none;
-  outline: none;
+  background-image: url("../public/Images/wave.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }

@@ -6,7 +6,7 @@ const link = `<link rel="stylesheet" href="https://cdn.materialdesignicons.com/6
 const Teams = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-white py-48">
-      <div className="flex flex-col mt-8">
+      <div className="flex flex-col">
         <div className="container max-w-7xl px-4">
           <div className="flex flex-wrap justify-center text-center mb-24">
             <div className="w-full lg:w-6/12 px-4">
@@ -24,12 +24,12 @@ const Teams = () => {
           <div className="flex flex-wrap">
             {teams.map((ele, idx) => (
               <div
-                className="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4"
+                className="w-full md:w-6/12 lg:w-6/12 mb-6 px-6 sm:px-6 lg:px-4"
                 key={(Math.random() + idx).toString()}
               >
                 <div className="flex flex-col">
                   <Link href="#" className="mx-auto">
-                    <Image
+                    <img
                       className="rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100"
                       src={ele.image}
                       alt=""
