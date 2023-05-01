@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Wrapper from "@/components/Layouts/Wrapper";
-function Student() {
+function Courses() {
+  const router = useRouter();
+  const { courses } = router.query;
+  console.log(">>>>>>>>>>>>>>>>>>>", courses);
   const [results, setResults] = useState([]);
   const fetchLists = () => {};
   useEffect(() => {}, []);
@@ -13,21 +17,21 @@ function Student() {
               <div class="p-4 lg:w-1/3 md:w-1/2 sm:w-full" key={ele.toString()}>
                 <div class="h-full border border-gray-300 border-opacity-60 rounded-lg overflow-hidden bg-white">
                   <img
-                    class="lg:h-72 md:h-48 w-full object-cover object-center"
+                    class="lg:h-72 md:h-64 w-full object-cover object-center"
                     src="https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                     alt="blog"
                   />
                   <div class="p-6">
                     <div className="flex flex-row items-center">
-                      <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/6">
-                        ICSE
+                      <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/4">
+                        MATHS
                       </div>
-                      <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/6">
-                        CBSE
+                      <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/4">
+                        MATHS
                       </div>
                     </div>
                     <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                      12th Physics
+                      The Catalyzer
                     </h1>
                     <p class="leading-relaxed mb-3">
                       Photo booth fam kinfolk cold-pressed sriracha leggings
@@ -145,4 +149,4 @@ function Student() {
   );
 }
 
-export default Student;
+export default Courses;

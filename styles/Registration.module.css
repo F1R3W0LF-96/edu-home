@@ -1,6 +1,6 @@
 .registration_page_wrapper {
   height: 100%;
-  background-image: url("../public/Images/banner-01.jpg");
+  /* background-image: url("../public/Images/banner-01.jpg"); */
 }
 
 .registration_page_wrapper input::-webkit-outer-spin-button,

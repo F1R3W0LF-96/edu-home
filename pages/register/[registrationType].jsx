@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React from "react";
-import styles from "@/styles/Registration.module.css";
 import TeacherRegistration from "@/components/Registration/TeacherRegistration";
 import StudentRegistration from "@/components/Registration/StudentRegistration";
 import { RegistrationTypes } from "@/helper/Constant";

@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import LandingPage from "@/components/LandingPage/LandingPage";
 import Wrapper from "@/components/Layouts/Wrapper";
 import Teams from "@/components/Teams/Teams";
-
+import Contact from "@/components/Contact/Contact";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -11,6 +11,7 @@ export default function Home() {
     <Wrapper>
       <LandingPage />
       <Teams />
+      <Contact />
     </Wrapper>
   );
 }
