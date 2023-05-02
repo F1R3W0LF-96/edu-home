@@ -3,9 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "../../public/Images/logo.png";
 import Avatar from "../Elements/Avatar";
+import { Button } from "antd";
+import { useRouter } from "next/router";
+
 const Header = ({ isAuthenticated, os }) => {
+  const { push } = useRouter();
   const mobileMenu = useRef(null);
   const [openMenu, setOpenMenu] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(false);
+  useEffect(() => {
+    if (localStorage) {
+      if (localStorage.getItem("accessToken")) {
+        setLoggedInUser(true);
+      }
+    }
+  }, []);
   useEffect(() => {
     // Burger menus
     document.addEventListener("DOMContentLoaded", function () {
@@ -55,6 +67,7 @@ const Header = ({ isAuthenticated, os }) => {
     //   mobileMenu.current.classList.forEach((ele) => console.log(ele));
     // }
   };
+  console.log(">>>>>>>>>loggedInUser", loggedInUser);
   return (
     <header>
       <nav className=" relative px-4 py-4 flex justify-between items-center bg-white">
@@ -90,18 +103,31 @@ const Header = ({ isAuthenticated, os }) => {
               }
             />
           )}
-          <Link
-            className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-            href="/login"
-          >
-            Sign In
-          </Link>
-          <Link
-            className="hidden lg:inline-block py-2 px-6 bg-sky-500 hover:bg-sky-600 text-sm text-white font-bold rounded-xl transition duration-200"
-            href="/"
-          >
-            Sign up
-          </Link>
+          {loggedInUser ? (
+            <Button
+              onClick={() => {
+                localStorage.removeItem("accessToken");
+                push("/");
+              }}
+            >
+              Logout
+            </Button>
+          ) : (
+            <>
+              <Link
+                className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+                href="/login"
+              >
+                Sign In
+              </Link>
+              <Link
+                className="hidden lg:inline-block py-2 px-6 bg-sky-500 hover:bg-sky-600 text-sm text-white font-bold rounded-xl transition duration-200"
+                href="/"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
       {openMenu && (
@@ -173,20 +199,32 @@ const Header = ({ isAuthenticated, os }) => {
               </ul>
             </div>
             <div className="mt-auto">
-              <div className="pt-6">
-                <Link
-                  className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
-                  href="/login"
+              {loggedInUser ? (
+                <Button
+                  onClick={() => {
+                    localStorage.removeItem("accessToken");
+                    push("/");
+                  }}
                 >
-                  Sign in
-                </Link>
-                <Link
-                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-blue font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-                  href="/register"
-                >
-                  Sign Up
-                </Link>
-              </div>
+                  Logout
+                </Button>
+              ) : (
+                <>
+                  <Link
+                    className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
+                    href="/login"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-blue font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
+                    href="/"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
+              <div className="pt-6"></div>
               <p className="my-4 text-xs text-center text-gray-400">
                 <span>Copyright © {new Date().getFullYear()}</span>
               </p>

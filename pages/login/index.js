@@ -1,32 +1,51 @@
 import React from "react";
 import Link from "next/link";
 import Wrapper from "@/components/Layouts/Wrapper";
-import useAuthentication from "../hooks/useAuthentication";
+import axios from "axios";
+import useAuthentication from "@/hooks/useAuthentication";
+import { useRouter } from "next/router";
 const Login = () => {
+  const { push } = useRouter();
   const { getLogin, loading, isAuthenticated, loginResponse, userDetails } =
     useAuthentication();
-  console.log(
-    getLogin,
-    loading,
-    isAuthenticated,
-    loginResponse,
-    userDetails,
-    "getLogin, loading, isAuthenticated, loginResponse, userDetails"
-  );
-  const handleSubmit = () => {};
+  // console.log(
+  //   getLogin,
+  //   loading,
+  //   isAuthenticated,
+  //   loginResponse,
+  //   userDetails,
+  //   "getLogin, loading, isAuthenticated, loginResponse, userDetails"
+  // );
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const apiUrl = process.env.API_URL;
+    console.log("process.env.HOST>>>>>>>>>>>>>>>>>>>>>>>", apiUrl);
+    axios
+      .post(`${apiUrl}/api/v1/users/login`, {
+        email: "rozerbagh456@gmail.com",
+        password: "Rozer@123",
+      })
+      .then((response) => {
+        if (response.data.success) {
+          localStorage.setItem("accessToken", response.data.data.accessToken);
+          push("/student");
+        }
+      });
+  };
   return (
     <Wrapper>
       <div className="mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:px-8 h-screen">
         <div className="mx-auto max-w-lg text-center">
           <h1 className="text-2xl font-bold sm:text-3xl">Login !</h1>
 
-          <p className="mt-4 text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et libero
-            nulla eaque error neque ipsa culpa autem, at itaque nostrum!
+          <p className="mt-4 text-gray-500 text-left">
+            Welcome to the tuition search login page! Here, you can access all
+            the features and benefits of our platform to find the perfect tutor
+            for your educational needs.
           </p>
         </div>
 
-        <form action="" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
+        <form className="mx-auto mb-0 mt-8 max-w-md space-y-4">
           <div>
             <label for="email" className="sr-only">
               Email
@@ -68,6 +87,7 @@ const Login = () => {
                 type="password"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter password"
+                autoComplete="false"
               />
 
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
@@ -98,14 +118,14 @@ const Login = () => {
           <div className="flex items-center justify-between">
             <p className="text-sm text-gray-500">
               No account?
-              <Link className="underline" href="/register">
+              <Link className="underline" href="/">
                 Sign up
               </Link>
             </p>
 
             <button
-              type="submit"
               className="inline-block rounded-lg bg-sky-500 px-5 py-3 text-sm font-medium text-white"
+              onClick={(e) => handleSubmit(e)}
             >
               Sign in
             </button>
