@@ -5,7 +5,8 @@ import styles from "@/styles/LandingPage.module.css";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import useAuthentication from "@/hooks/useAuthentication";
-const Wrapper = ({ children }) => {
+const Wrapper = (props) => {
+  console.log(props);
   const { isAuthenticated } = useAuthentication();
   const [os, setOS] = useState("window");
   useEffect(() => {
@@ -25,7 +26,7 @@ const Wrapper = ({ children }) => {
   return (
     <>
       <Header isAuthenticated={isAuthenticated} os={os} />
-      {children}
+      {props.children}
       <Footer />
       {/* <BackToTop /> */}
     </>
