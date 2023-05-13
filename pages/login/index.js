@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Wrapper from "@/components/Layouts/Wrapper";
 import axios from "axios";
@@ -8,29 +8,28 @@ const Login = () => {
   const { push } = useRouter();
   const { getLogin, loading, isAuthenticated, loginResponse, userDetails } =
     useAuthentication();
-  // console.log(
-  //   getLogin,
-  //   loading,
-  //   isAuthenticated,
-  //   loginResponse,
-  //   userDetails,
-  //   "getLogin, loading, isAuthenticated, loginResponse, userDetails"
-  // );
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     const apiUrl = process.env.API_URL;
     console.log("process.env.HOST>>>>>>>>>>>>>>>>>>>>>>>", apiUrl);
-    axios
-      .post(`${apiUrl}/api/v1/users/login`, {
-        email: "rozerbagh456@gmail.com",
-        password: "Rozer@123",
-      })
-      .then((response) => {
-        if (response.data.success) {
-          localStorage.setItem("accessToken", response.data.data.accessToken);
-          push("/student");
-        }
-      });
+    if (email && password) {
+      axios
+        .post(`${apiUrl}/api/v1/users/login`, {
+          email: email,
+          password: password,
+        })
+        .then((response) => {
+          if (response.data.success) {
+            localStorage.setItem("accessToken", response.data.data.accessToken);
+            localStorage.setItem("fullName", response.data.data.fullName);
+            push("/student");
+          }
+        });
+    } else {
+      alert("Please enter your Email Address and Password");
+    }
   };
   return (
     <Wrapper>
@@ -56,6 +55,8 @@ const Login = () => {
                 type="email"
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
 
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
@@ -88,6 +89,8 @@ const Login = () => {
                 className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter password"
                 autoComplete="false"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
