@@ -64,10 +64,14 @@ export default function Home() {
 
                 // textOverflow: "ellipsis",
               }}
-              title={`${currentLocation?.suburb},${currentLocation?.town}`}
+              title={`${
+                currentLocation?.suburb || currentLocation?.residential
+              },${currentLocation?.town || currentLocation?.state_district}`}
             >
               <Image src={locationImg} width={20} alt="logo" />
-              {currentLocation.suburb},{currentLocation.town}
+              {`${currentLocation?.suburb || currentLocation?.residential},${
+                currentLocation?.town || currentLocation?.state_district
+              }`}
             </span>
           </>
         )}
