@@ -6,21 +6,25 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import locationImg from "../public/Images/location.png";
+import BarLoader from "react-spinners/BarLoader";
 
 export default function Home() {
   const { push } = useRouter();
   const [currentLocation, setCurrentLocation] = useState([]);
-
   const [location, setLocation] = useState();
+  const [fetchLocation, setFetchLocation] = useState(false);
 
   const fetchApiData = async ({ latitude, longitude }) => {
     const res = await fetch(
       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
     );
     const data = await res.json();
-    debugger;
     if (data.address) setCurrentLocation(data.address);
+    setFetchLocation(false);
   };
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -34,6 +38,7 @@ export default function Home() {
   useEffect(() => {
     // Fetch data from API if `location` object is set
     if (location) {
+      setFetchLocation(true);
       fetchApiData(location);
     }
   }, [location]);
@@ -51,28 +56,38 @@ export default function Home() {
       <div className="flex justify-end">
         {currentLocation && (
           <>
-            <span
-              style={{
-                // maxWidth: "200px",
-                marginRight: "20px",
-                wordBreak: "break-word",
-                display: "flex",
-                whiteSpace: "nowrap",
-                fontSize: "12px",
-                // overflow: "hidden !important",
-                alignItems: "center",
+            {fetchLocation ? (
+              <BarLoader
+                // color={color}
+                loading={true}
+                size={15}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            ) : (
+              <span
+                style={{
+                  // maxWidth: "200px",
+                  marginRight: "20px",
+                  wordBreak: "break-word",
+                  display: "flex",
+                  whiteSpace: "nowrap",
+                  fontSize: "12px",
+                  // overflow: "hidden !important",
+                  alignItems: "center",
 
-                // textOverflow: "ellipsis",
-              }}
-              title={`${
-                currentLocation?.suburb || currentLocation?.residential
-              },${currentLocation?.town || currentLocation?.state_district}`}
-            >
-              <Image src={locationImg} width={20} alt="logo" />
-              {`${currentLocation?.suburb || currentLocation?.residential},${
-                currentLocation?.town || currentLocation?.state_district
-              }`}
-            </span>
+                  // textOverflow: "ellipsis",
+                }}
+                title={`${
+                  currentLocation?.suburb || currentLocation?.residential
+                },${currentLocation?.town || currentLocation?.state_district}`}
+              >
+                <Image src={locationImg} width={20} alt="logo" />
+                {`${currentLocation?.suburb || currentLocation?.residential},${
+                  currentLocation?.town || currentLocation?.state_district
+                }`}
+              </span>
+            )}
           </>
         )}
       </div>
@@ -81,6 +96,7 @@ export default function Home() {
         <Teams />
         <Contact />
       </Wrapper>
+      <ToastContainer />
     </>
   );
 }
