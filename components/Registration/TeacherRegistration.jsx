@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "@/styles/Registration.module.css";
 import { Button, message, Steps, theme, Checkbox, Col, Row } from "antd";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
-import { Budget, Gender } from "@/helper/Constant";
+import { Budget, Education, Gender } from "@/helper/Constant";
 const BasicSection = ({
   basicDetails,
   address,
@@ -52,7 +52,7 @@ const BasicSection = ({
         </div>
         <div className=" text-start">
           <label
-            htmlFor="pincode"
+            htmlFor="phone"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
             Phone Number
@@ -64,6 +64,7 @@ const BasicSection = ({
             className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2 shadow appearance-none border "
             placeholder="Enter your phone number"
             value={basicDetails.phone}
+            onChange={handleBasicDetailsChange}
             // onChange={handlePincodeChange}
             required
           />
@@ -78,8 +79,8 @@ const BasicSection = ({
             Gender
           </label>
           <select
-            name="teacher-gender"
-            id="teacher-gender"
+            name="gender"
+            id="gender"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
             value={basicDetails.gender}
@@ -130,7 +131,7 @@ const BasicSection = ({
           <option value="" disabled>
             Select One
           </option>
-          {address.map((ele, idx) => (
+          {address?.map((ele, idx) => (
             <option key={idx + "_address"} value={JSON.stringify(ele)}>
               {ele.Name},{ele.Block},{ele.District},{ele.Pincode}
             </option>
@@ -153,16 +154,34 @@ const ProfessionalSection = ({
         >
           Education
         </label>
-        <input
-          type="text"
-          name="education"
-          id="education"
-          className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
-          placeholder="Education"
-          value={professionalDetails.education}
-          onChange={handleProfessionalDetailsChange}
-          required
-        />
+        <div className="flex justify-between">
+          <select className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-25 sm:text-sm rounded-md mb-2 shadow appearance-none border ">
+            <option value="">Choose Education</option>
+            {Education.map((education) => {
+              return <option key={education}>{education}</option>;
+            })}
+          </select>
+          <input
+            type="text"
+            name="stream"
+            id="stream"
+            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-25 sm:text-sm rounded-md mb-2 ml-4"
+            placeholder="Engineering,doctor etc..."
+            value={professionalDetails.stream}
+            onChange={handleProfessionalDetailsChange}
+            required
+          />
+          <input
+            type="text"
+            name="batch"
+            id="batch"
+            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-20 sm:text-sm rounded-md mb-2 ml-4"
+            placeholder="2014-2018"
+            value={professionalDetails.batch}
+            onChange={handleProfessionalDetailsChange}
+            required
+          />
+        </div>
       </div>
       <div className=" text-start">
         <label
@@ -171,16 +190,38 @@ const ProfessionalSection = ({
         >
           Qualification
         </label>
-        <input
-          type="text"
-          name="qualification"
-          id="qualification"
-          className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
-          placeholder="Qualification"
-          value={professionalDetails.qualification}
-          onChange={handleProfessionalDetailsChange}
-          required
-        />
+        <div className="flex justify-between">
+          <input
+            type="text"
+            name="designation"
+            id="designation"
+            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block  sm:text-sm rounded-md mb-2"
+            placeholder="designation"
+            value={professionalDetails.qualification}
+            onChange={handleProfessionalDetailsChange}
+            required
+          />
+          <input
+            type="text"
+            name="company"
+            id="company"
+            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm rounded-md mb-2"
+            placeholder="company"
+            value={professionalDetails.qualification}
+            onChange={handleProfessionalDetailsChange}
+            required
+          />
+          <input
+            type="text"
+            name="year"
+            id="year"
+            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm rounded-md mb-2"
+            placeholder="year"
+            value={professionalDetails.qualification}
+            onChange={handleProfessionalDetailsChange}
+            required
+          />
+        </div>
       </div>
       <div className=" text-start">
         <label
@@ -281,12 +322,14 @@ function TeacherRegistration() {
     pincode: "",
     city: "",
     address: {},
+    phone: "",
   });
   const [address, setAddress] = useState([]);
   const [professionalDetails, setProfessionalDetails] = useState({
     education: "",
     qualification: "",
     subjects: "",
+    stream: "",
   });
   const [otherDetails, setOtherDetails] = useState({
     hourly_rate: 0,
@@ -318,9 +361,11 @@ function TeacherRegistration() {
         const response = await axios.get(
           `https://api.postalpincode.in/pincode/${e.target.value}`
         );
+        debugger;
         setBasicDetails((ps) => ({
           ...ps,
           pincode: value,
+          address: response.data[0].PostOffice[0],
         }));
         setAddress(response.data[0].PostOffice);
       } catch (error) {
@@ -394,9 +439,39 @@ function TeacherRegistration() {
   ];
   const next = () => {
     setCurrent(current + 1);
+    registerUser(current);
   };
   const prev = () => {
     setCurrent(current - 1);
+  };
+
+  const registerUser = (step) => {
+    const apiUrl = process.env.API_URL;
+    const body =
+      step === 0
+        ? {
+            fullName: basicDetails.name,
+            email: basicDetails.email,
+            password: "Rozer@123",
+            phoneno: basicDetails.phone,
+            user_role: "TEACHER",
+            gender: basicDetails.gender,
+            status: 1,
+            coins: 300,
+
+            image:
+              "https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg",
+            isProfileComplete: false,
+            isDeleted: false,
+            address: basicDetails.address,
+            qualifications: [],
+            subjects: [],
+            experiences: [],
+          }
+        : {};
+    axios.post(`${apiUrl}/api/v1/users/sign-up`, body).then((response) => {
+      localStorage.setItem("accessToken", response.data.meta.accessToken);
+    });
   };
   const items = steps.map((item) => ({
     key: item.title,

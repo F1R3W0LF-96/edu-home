@@ -10,7 +10,18 @@ const BoardsTypes = {
   International: "International",
   IGCSE: "IGCSE",
 };
-
+const Education = [
+  "BBA",
+  "Engineering – BE, B.Tech, and B.Arch.",
+  "Computer Application – BCA",
+  "Designing – Fashion/Interior/Web",
+  "Mass-Communication/Journalism – BJMC",
+  "Hospitality (Hotel) – Hotel Management",
+  "Medical – BDS and MBBS",
+  "Finance – B.Com/CA",
+  "Arts Psychology and Sociology",
+  "Law – BA LLB/LLB",
+];
 const Subjects = {
   CBSE: [
     "English",
@@ -80,4 +91,5 @@ export {
   Budget,
   Gender,
   ModeOfTeaching,
+  Education,
 };
