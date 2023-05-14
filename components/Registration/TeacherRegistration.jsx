@@ -3,7 +3,11 @@ import React, { useState } from "react";
 import styles from "@/styles/Registration.module.css";
 import { Button, message, Steps, theme, Checkbox, Col, Row } from "antd";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
-import { Budget, Education, Gender } from "@/helper/Constant";
+import { Budget, Education, Gender, Subjects } from "@/helper/Constant";
+import plus from "../../public/Images/plus.svg";
+import Image from "next/image";
+import CreatableSelect from "react-select/creatable";
+
 const BasicSection = ({
   basicDetails,
   address,
@@ -145,14 +149,20 @@ const ProfessionalSection = ({
   professionalDetails,
   handleProfessionalDetailsChange,
 }) => {
+  const subjectOptions = [
+    ...Subjects.ICSE.map((subject) => {
+      return { name: subject, label: subject };
+    }),
+  ];
   return (
     <div className="m-5">
       <div className=" text-start">
         <label
           htmlFor="education"
-          className="block text-sm font-medium text-gray-700 mb-2"
+          className=" text-sm font-medium text-gray-700 mb-2 flex"
         >
           Education
+          <Image className="ml-5" alt={"plus"} src={plus} width={20} />
         </label>
         <div className="flex justify-between">
           <select className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-25 sm:text-sm rounded-md mb-2 shadow appearance-none border ">
@@ -186,9 +196,10 @@ const ProfessionalSection = ({
       <div className=" text-start">
         <label
           htmlFor="qualification"
-          className="block text-sm font-medium text-gray-700 mb-2"
+          className="flex text-sm font-medium text-gray-700 mb-2"
         >
           Qualification
+          <Image className="ml-5" alt={"plus"} src={plus} width={20} />
         </label>
         <div className="flex justify-between">
           <input
@@ -230,7 +241,8 @@ const ProfessionalSection = ({
         >
           Subjects you can teach
         </label>
-        <textarea
+        <CreatableSelect isMulti options={subjectOptions} />
+        {/* <textarea
           id="subjects"
           name="subjects"
           rows="3"
@@ -239,7 +251,7 @@ const ProfessionalSection = ({
           value={professionalDetails.subjects}
           onChange={handleProfessionalDetailsChange}
           required
-        ></textarea>
+        ></textarea> */}
       </div>
       <div className=" text-start">
         <label
@@ -313,7 +325,7 @@ const OtherDetails = ({ othersDetails, handleChange }) => {
 };
 function TeacherRegistration() {
   const { token } = theme.useToken();
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(1);
 
   const [basicDetails, setBasicDetails] = useState({
     name: "",
@@ -326,8 +338,8 @@ function TeacherRegistration() {
   });
   const [address, setAddress] = useState([]);
   const [professionalDetails, setProfessionalDetails] = useState({
-    education: "",
-    qualification: "",
+    education: [],
+    qualification: [],
     subjects: "",
     stream: "",
   });
