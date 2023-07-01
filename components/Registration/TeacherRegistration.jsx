@@ -1,10 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/Registration.module.css";
 import { Button, message, Steps, theme, Checkbox, Col, Row } from "antd";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 import { Budget, Education, Gender, Subjects } from "@/helper/Constant";
+import deleteicon from "../../public/Images/deletebin.svg";
+
 import plus from "../../public/Images/plus.svg";
+
 import Image from "next/image";
 import CreatableSelect from "react-select/creatable";
 
@@ -149,6 +152,40 @@ const ProfessionalSection = ({
   professionalDetails,
   handleProfessionalDetailsChange,
 }) => {
+  const [educationDetail, setEducationDetail] = useState([]);
+  const [qualificationDetail, setQualificationDetail] = useState([]);
+
+  useEffect(() => {
+    addEducationDetail();
+    addQualificationDetail();
+  }, []);
+
+  const addEducationDetail = () => {
+    const newEducationDetail = {
+      category: "",
+      sub_category: "",
+      year: "",
+    };
+    setEducationDetail([...educationDetail, newEducationDetail]);
+  };
+  const removeEducationDetail = (index) => {
+    const updatedEducationDetail = [...educationDetail];
+    updatedEducationDetail.splice(index, 1);
+    setEducationDetail(updatedEducationDetail);
+  };
+  const addQualificationDetail = () => {
+    const newQualificationDetail = {
+      designation: "",
+      company: "",
+      year: "",
+    };
+    setQualificationDetail([...qualificationDetail, newQualificationDetail]);
+  };
+  const removeQualificationDetail = (index) => {
+    const updatedQualificationDetail = [...qualificationDetail];
+    updatedQualificationDetail.splice(index, 1);
+    setQualificationDetail(updatedQualificationDetail);
+  };
   const subjectOptions = [
     ...Subjects.ICSE.map((subject) => {
       return { name: subject, label: subject };
@@ -162,77 +199,160 @@ const ProfessionalSection = ({
           className=" text-sm font-medium text-gray-700 mb-2 flex"
         >
           Education
-          <Image className="ml-5" alt={"plus"} src={plus} width={20} />
+          <Image
+            className="ml-5"
+            alt={"plus"}
+            src={plus}
+            width={20}
+            onClick={() => addEducationDetail()}
+          />
         </label>
-        <div className="flex justify-between">
-          <select className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-25 sm:text-sm rounded-md mb-2 shadow appearance-none border ">
-            <option value="">Choose Education</option>
-            {Education.map((education) => {
-              return <option key={education}>{education}</option>;
-            })}
-          </select>
-          <input
-            type="text"
-            name="stream"
-            id="stream"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-25 sm:text-sm rounded-md mb-2 ml-4"
-            placeholder="Engineering,doctor etc..."
-            value={professionalDetails.stream}
-            onChange={handleProfessionalDetailsChange}
-            required
-          />
-          <input
-            type="text"
-            name="batch"
-            id="batch"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-20 sm:text-sm rounded-md mb-2 ml-4"
-            placeholder="2014-2018"
-            value={professionalDetails.batch}
-            onChange={handleProfessionalDetailsChange}
-            required
-          />
-        </div>
+        {educationDetail &&
+          educationDetail?.map((edetail, idx) => {
+            return (
+              <div className="flex justify-between" key={idx}>
+                <select
+                  className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-40 sm:text-sm rounded-md mb-2 shadow appearance-none border "
+                  onChange={(e) =>
+                    handleProfessionalDetailsChange(
+                      e.target.value,
+                      "Degree",
+                      "education",
+                      idx
+                    )
+                  }
+                >
+                  <option value="">Choose Education</option>
+                  {Education.map((education) => {
+                    return <option key={education}>{education}</option>;
+                  })}
+                </select>
+                <input
+                  type="text"
+                  name="education"
+                  id="education"
+                  className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block  sm:text-sm rounded-md mb-2 ml-4"
+                  placeholder="Engineering,doctor etc..."
+                  value={edetail.category}
+                  onChange={(e) =>
+                    handleProfessionalDetailsChange(
+                      e.target.value,
+                      "degreeType",
+                      "education",
+                      idx
+                    )
+                  }
+                  required
+                />
+                <input
+                  type="text"
+                  name="batch"
+                  id="batch"
+                  className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block  sm:text-sm rounded-md mb-2 ml-4"
+                  placeholder="2014-2018"
+                  value={edetail.sub_category}
+                  onChange={(e) =>
+                    handleProfessionalDetailsChange(
+                      e.target.value,
+                      "batch",
+                      "education",
+                      idx
+                    )
+                  }
+                  required
+                />
+                <Image
+                  className="ml-5"
+                  alt={"deleteicon"}
+                  src={deleteicon}
+                  width={20}
+                  height={1}
+                  onClick={() => removeEducationDetail(idx)}
+                />
+              </div>
+            );
+          })}
       </div>
+
       <div className=" text-start">
         <label
           htmlFor="qualification"
           className="flex text-sm font-medium text-gray-700 mb-2"
         >
           Qualification
-          <Image className="ml-5" alt={"plus"} src={plus} width={20} />
+          <Image
+            className="ml-5"
+            alt={"plus"}
+            src={plus}
+            width={20}
+            onClick={() => addQualificationDetail()}
+          />
         </label>
-        <div className="flex justify-between">
-          <input
-            type="text"
-            name="designation"
-            id="designation"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block  sm:text-sm rounded-md mb-2"
-            placeholder="designation"
-            value={professionalDetails.qualification}
-            onChange={handleProfessionalDetailsChange}
-            required
-          />
-          <input
-            type="text"
-            name="company"
-            id="company"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm rounded-md mb-2"
-            placeholder="company"
-            value={professionalDetails.qualification}
-            onChange={handleProfessionalDetailsChange}
-            required
-          />
-          <input
-            type="text"
-            name="year"
-            id="year"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm rounded-md mb-2"
-            placeholder="year"
-            value={professionalDetails.qualification}
-            onChange={handleProfessionalDetailsChange}
-            required
-          />
-        </div>
+        {qualificationDetail &&
+          qualificationDetail?.map((qual, idx) => {
+            return (
+              <>
+                <div className="flex justify-between">
+                  <input
+                    type="text"
+                    name="designation"
+                    id="designation"
+                    className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block  sm:text-sm rounded-md mb-2"
+                    placeholder="designation"
+                    value={qual.designation}
+                    onChange={(e) =>
+                      handleProfessionalDetailsChange(
+                        e.target.value,
+                        "Qualification",
+                        idx
+                      )
+                    }
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="company"
+                    id="company"
+                    className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm rounded-md mb-2"
+                    placeholder="company"
+                    value={qual.company}
+                    onChange={(e) =>
+                      handleProfessionalDetailsChange(
+                        e.target.value,
+                        "Qualification",
+                        idx
+                      )
+                    }
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="year"
+                    id="year"
+                    className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm rounded-md mb-2"
+                    placeholder="year"
+                    value={qual.year}
+                    onChange={(e) =>
+                      handleProfessionalDetailsChange(
+                        e.target.value,
+                        "Qualification",
+                        idx
+                      )
+                    }
+                    required
+                  />
+                  <Image
+                    className="ml-5"
+                    alt={"deleteicon"}
+                    src={deleteicon}
+                    width={20}
+                    height={1}
+                    onClick={() => removeQualificationDetail(idx)}
+                  />
+                </div>
+              </>
+            );
+          })}
       </div>
       <div className=" text-start">
         <label
@@ -351,19 +471,32 @@ function TeacherRegistration() {
 
   const handleBasicDetailsChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value, ":::::: name and value :::::::");
     setBasicDetails((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const handleProfessionalDetailsChange = (e) => {
-    const { name, value } = e.target;
-    setProfessionalDetails({
-      ...professionalDetails,
-      [name]: value,
-    });
+  const handleProfessionalDetailsChange = (value, name, type, index) => {
+    const updatedEducationDetails = { ...professionalDetails };
+    if (type === "education") {
+      const education = [...updatedEducationDetails.education];
+      education[index] = {
+        ...education[index],
+        [name]: value,
+      };
+      debugger;
+      setProfessionalDetails({
+        ...updatedEducationDetails,
+        education: education,
+      });
+    }
+
+    console.log("updatedEducationDetails", updatedEducationDetails);
+    // setProfessionalDetails({
+    //   ...professionalDetails,
+    //   [name]: value,
+    // });
   };
 
   const handlePincodeChange = async (e) => {
@@ -481,9 +614,11 @@ function TeacherRegistration() {
             experiences: [],
           }
         : {};
-    axios.post(`${apiUrl}/api/v1/users/sign-up`, body).then((response) => {
-      localStorage.setItem("accessToken", response.data.meta.accessToken);
-    });
+    if (step === 0) {
+      axios.post(`${apiUrl}/api/v1/users/sign-up`, body).then((response) => {
+        localStorage.setItem("accessToken", response.data.meta.accessToken);
+      });
+    }
   };
   const items = steps.map((item) => ({
     key: item.title,
