@@ -88,3 +88,17 @@ export const loginType = {
   PHONE: "PHONE",
   EMAIL: "EMAIL",
 };
+
+function generateOTP(length) {
+  const characters = "0123456789";
+  const charactersLength = characters.length;
+  let otp = "";
+
+  for (let i = 0; i < length; i++) {
+    otp += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return otp;
+}
+
+export { generateOTP };
