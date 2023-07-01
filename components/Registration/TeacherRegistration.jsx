@@ -3,7 +3,17 @@ import React, { useEffect, useState } from "react";
 import styles from "@/styles/Registration.module.css";
 import { Button, message, Steps, theme, Checkbox, Col, Row } from "antd";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
-import { Budget, Education, Gender, Subjects } from "@/helper/Constant";
+import {
+  Budget,
+  Education,
+  Gender,
+  Subjects,
+  validateEmail,
+  validateGender,
+  validateName,
+  validatePhoneNumber,
+  validatePincode,
+} from "@/helper/Constant";
 import deleteicon from "../../public/Images/deletebin.svg";
 
 import plus from "../../public/Images/plus.svg";
@@ -17,10 +27,11 @@ const BasicSection = ({
   handleAddressChange,
   handleBasicDetailsChange,
   handlePincodeChange,
+  error,
 }) => {
   return (
-    <div className="m-5 ">
-      <div className=" text-start">
+    <div className="m-5">
+      <div className="text-start">
         <label
           htmlFor="name"
           className="block text-sm font-medium text-gray-700 mb-2"
@@ -37,12 +48,15 @@ const BasicSection = ({
           onChange={handleBasicDetailsChange}
           required
         />
+        {error && error.name && (
+          <span className="text-red-500 text-sm">{error.name}</span>
+        )}
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <div className=" text-start">
+        <div className="text-start">
           <label
             htmlFor="gender"
-            className="block text-sm font-medium text-gray-700 mb-2  "
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
             Email Id
           </label>
@@ -56,8 +70,11 @@ const BasicSection = ({
             onChange={handleBasicDetailsChange}
             required
           />
+          {error && error.email && (
+            <span className="text-red-500 text-sm">{error.email}</span>
+          )}
         </div>
-        <div className=" text-start">
+        <div className="text-start">
           <label
             htmlFor="phone"
             className="block text-sm font-medium text-gray-700 mb-2"
@@ -72,13 +89,15 @@ const BasicSection = ({
             placeholder="Enter your phone number"
             value={basicDetails.phone}
             onChange={handleBasicDetailsChange}
-            // onChange={handlePincodeChange}
             required
           />
+          {error && error.phone && (
+            <span className="text-red-500 text-sm">{error.phone}</span>
+          )}
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <div className=" text-start">
+        <div className="text-start">
           <label
             htmlFor="gender"
             className="block text-sm font-medium text-gray-700 mb-2"
@@ -102,8 +121,11 @@ const BasicSection = ({
               );
             })}
           </select>
+          {error && error.gender && (
+            <span className="text-red-500 text-sm">{error.gender}</span>
+          )}
         </div>
-        <div className=" text-start">
+        <div className="text-start">
           <label
             htmlFor="pincode"
             className="block text-sm font-medium text-gray-700 mb-2"
@@ -116,13 +138,15 @@ const BasicSection = ({
             id="pincode"
             className="w-full rounded-lg border-gray-200 p-2 pe-4 ps-4 text-sm shadow-sm"
             placeholder="Enter your pincode"
-            // value={basicDetails.pincode}
             onChange={handlePincodeChange}
             required
           />
+          {error && error.pincode && (
+            <span className="text-red-500 text-sm">{error.pincode}</span>
+          )}
         </div>
       </div>
-      <div className=" text-start">
+      <div className="text-start">
         <label
           htmlFor="city"
           className="block text-sm font-medium text-gray-700 mb-2"
@@ -144,6 +168,9 @@ const BasicSection = ({
             </option>
           ))}
         </select>
+        {error && error.address && (
+          <span className="text-red-500 text-sm">{error.address}</span>
+        )}
       </div>
     </div>
   );
@@ -445,7 +472,8 @@ const OtherDetails = ({ othersDetails, handleChange }) => {
 };
 function TeacherRegistration() {
   const { token } = theme.useToken();
-  const [current, setCurrent] = useState(1);
+  const [current, setCurrent] = useState(0);
+  const [errors, setErrors] = useState([]);
 
   const [basicDetails, setBasicDetails] = useState({
     name: "",
@@ -485,7 +513,6 @@ function TeacherRegistration() {
         ...education[index],
         [name]: value,
       };
-      debugger;
       setProfessionalDetails({
         ...updatedEducationDetails,
         education: education,
@@ -506,7 +533,6 @@ function TeacherRegistration() {
         const response = await axios.get(
           `https://api.postalpincode.in/pincode/${e.target.value}`
         );
-        debugger;
         setBasicDetails((ps) => ({
           ...ps,
           pincode: value,
@@ -536,6 +562,67 @@ function TeacherRegistration() {
     console.log(basicDetails, professionalDetails);
     // Submit the form data to the server
   };
+  function validateAndCallAPI(name, email, phoneNumber, gender, pincode) {
+    const isValidName = validateName(name);
+    const isValidEmail = validateEmail(email);
+    const isValidPhoneNumber = validatePhoneNumber(phoneNumber);
+    const isValidGender = validateGender(gender);
+    const isValidPincode = validatePincode(pincode);
+
+    if (
+      isValidName &&
+      isValidEmail &&
+      isValidPhoneNumber &&
+      isValidGender &&
+      isValidPincode
+    ) {
+      // All validations passed, call the API here
+      // Example API call using fetch:
+      // fetch("https://api.example.com/endpoint", {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     name: name,
+      //     email: email,
+      //     phoneNumber: phoneNumber,
+      //     gender: gender,
+      //     pincode: pincode,
+      //   }),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // })
+      //   .then((response) => {
+      //     // Process the API response here
+      //     console.log("API response:", response);
+      //   })
+      //   .catch((error) => {
+      //     // Handle any error that occurred during the API call
+      //     console.error("API error:", error);
+      //   });
+    } else {
+      const errors = [];
+      if (!isValidName) {
+        errors.push("Invalid name");
+      }
+      if (!isValidEmail) {
+        errors.push("Invalid email");
+      }
+      if (!isValidPhoneNumber) {
+        errors.push("Invalid phone number");
+      }
+      if (!isValidGender) {
+        errors.push("Invalid gender");
+      }
+      if (!isValidPincode) {
+        errors.push("Invalid pincode");
+      }
+      setErrors((prevData) => ({
+        ...prevData,
+        errors: errors,
+      }));
+      console.log("Validation failed.");
+    }
+  }
 
   const steps = [
     {
@@ -554,6 +641,7 @@ function TeacherRegistration() {
           basicDetails={basicDetails}
           handleBasicDetailsChange={handleBasicDetailsChange}
           handlePincodeChange={handlePincodeChange}
+          error={errors}
         />
       ),
     },
@@ -583,6 +671,13 @@ function TeacherRegistration() {
     },
   ];
   const next = () => {
+    validateAndCallAPI(
+      basicDetails.name,
+      basicDetails.email,
+      basicDetails.phone,
+      basicDetails.gender,
+      basicDetails.pincode
+    );
     setCurrent(current + 1);
     registerUser(current);
   };

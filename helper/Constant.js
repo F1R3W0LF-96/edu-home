@@ -112,5 +112,36 @@ function generateOTP(length) {
 
   return otp;
 }
+function validateName(name) {
+  const pattern = /^[A-Za-z\s]+$/;
+  return pattern.test(name);
+}
 
-export { generateOTP };
+function validateEmail(email) {
+  const pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return pattern.test(email);
+}
+
+function validatePhoneNumber(phoneNumber) {
+  const pattern = /^\d{10}$/;
+  return pattern.test(phoneNumber);
+}
+
+function validateGender(gender) {
+  // Assuming gender can only be 'Male' or 'Female'
+  return gender === "Male" || gender === "Female";
+}
+
+function validatePincode(pincode) {
+  const pattern = /^\d{6}$/;
+  return pattern.test(pincode);
+}
+
+export {
+  generateOTP,
+  validateName,
+  validateEmail,
+  validatePhoneNumber,
+  validatePincode,
+  validateGender,
+};
