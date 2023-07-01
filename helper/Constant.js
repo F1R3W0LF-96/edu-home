@@ -93,3 +93,10 @@ export {
   ModeOfTeaching,
   Education,
 };
+
+export const loginType = {
+  LOGIN: "LOGIN",
+  REGISTER: "REGISTER",
+  PHONE: "PHONE",
+  EMAIL: "EMAIL",
+};

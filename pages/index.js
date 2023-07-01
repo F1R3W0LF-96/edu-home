@@ -1,10 +1,10 @@
 import LandingPage from "@/components/LandingPage/LandingPage";
+import Hero from "@/components/Hero/Hero";
 import Wrapper from "@/components/Layouts/Wrapper";
 import Teams from "@/components/Teams/Teams";
 import Contact from "@/components/Contact/Contact";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -53,7 +53,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         {currentLocation && (
           <>
             {fetchLocation ? (
@@ -90,9 +90,9 @@ export default function Home() {
             )}
           </>
         )}
-      </div>
+      </div> */}
       <Wrapper>
-        <LandingPage />
+        <Hero />
         <Teams />
         <Contact />
       </Wrapper>
