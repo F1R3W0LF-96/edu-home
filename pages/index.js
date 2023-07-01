@@ -1,10 +1,10 @@
 import LandingPage from "@/components/LandingPage/LandingPage";
+import Hero from "@/components/Hero/Hero";
 import Wrapper from "@/components/Layouts/Wrapper";
 import Teams from "@/components/Teams/Teams";
 import Contact from "@/components/Contact/Contact";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 import locationImg from "../public/Images/location.png";
 
@@ -19,7 +19,6 @@ export default function Home() {
       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
     );
     const data = await res.json();
-    debugger;
     if (data.address) setCurrentLocation(data.address);
   };
   useEffect(() => {
@@ -48,7 +47,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         {currentLocation && (
           <>
             <span
@@ -75,9 +74,9 @@ export default function Home() {
             </span>
           </>
         )}
-      </div>
+      </div> */}
       <Wrapper>
-        <LandingPage />
+        <Hero />
         <Teams />
         <Contact />
       </Wrapper>

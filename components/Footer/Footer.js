@@ -1,41 +1,48 @@
 import React from "react";
 import Image from "next/image";
+import logo from "../../public/Images/logo.png";
 const Footer = () => {
   return (
     <footer
       aria-label="Site Footer"
-      className="bg-white dark:bg-gray-900 lg:grid lg:grid-cols-5"
+      className="bg-white dark:bg-gray-900 lg:grid lg:grid-cols-5 border border-blue-200"
     >
-      <div className="relative block h-32 lg:col-span-2 lg:h-full">
-        <img
-          src="https://images.unsplash.com/photo-1642370324100-324b21fab3a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80"
+      <div className="relative h-16 col-span-12 mt-12">
+        <Image
+          src={logo}
           alt=""
-          className="absolute inset-0 object-cover w-full h-full"
+          className="inset-0 object-contain w-full h-16"
         />
       </div>
 
-      <div className="px-4 py-16 sm:px-6 lg:col-span-3 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-          <div>
+      <div className="px-4 py-16 sm:px-6 col-span-12 lg:px-8">
+        <div className="grid grid-cols-12 gap-8 sm:grid-cols-2 text-center">
+          <div className="col-span-12">
             <p>
               <span className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
-                Call us
+                Call us / Mail us
               </span>
 
               <a
-                href="#"
+                href="tel:+919553444001"
                 className="block text-2xl font-medium text-gray-900 hover:opacity-75 dark:text-white sm:text-3xl"
               >
-                0123456789
+                +91 9553444001
+              </a>
+              <a
+                href="mailto:tuition@tuitionsearch.co.in"
+                className="block text-md font-small text-gray-900 hover:opacity-75 dark:text-white sm:text-md"
+              >
+                tuition@tuitionsearch.co.in
               </a>
             </p>
 
-            <ul className="mt-8 space-y-1 text-sm text-gray-700 dark:text-gray-200">
+            {/* <ul className="mt-8 space-y-1 text-sm text-gray-700 dark:text-gray-200">
               <li>Monday to Friday: 10am - 5pm</li>
               <li>Weekend: 10am - 3pm</li>
-            </ul>
+            </ul> */}
 
-            <ul className="flex gap-6 mt-8">
+            <ul className="flex gap-6 mt-8 justify-center">
               <li>
                 <a
                   href="/"
@@ -154,7 +161,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <p className="font-medium text-gray-900 dark:text-white">
                 Services
@@ -246,7 +253,7 @@ const Footer = () => {
                 </ul>
               </nav>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="pt-12 mt-12 border-t border-gray-100 dark:border-gray-800">

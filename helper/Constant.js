@@ -81,3 +81,10 @@ export {
   Gender,
   ModeOfTeaching,
 };
+
+export const loginType = {
+  LOGIN: "LOGIN",
+  REGISTER: "REGISTER",
+  PHONE: "PHONE",
+  EMAIL: "EMAIL",
+};
