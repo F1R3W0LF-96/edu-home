@@ -473,7 +473,7 @@ const OtherDetails = ({ othersDetails, handleChange }) => {
 function TeacherRegistration() {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const [basicDetails, setBasicDetails] = useState({
     name: "",
@@ -576,49 +576,28 @@ function TeacherRegistration() {
       isValidGender &&
       isValidPincode
     ) {
-      // All validations passed, call the API here
-      // Example API call using fetch:
-      // fetch("https://api.example.com/endpoint", {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     name: name,
-      //     email: email,
-      //     phoneNumber: phoneNumber,
-      //     gender: gender,
-      //     pincode: pincode,
-      //   }),
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // })
-      //   .then((response) => {
-      //     // Process the API response here
-      //     console.log("API response:", response);
-      //   })
-      //   .catch((error) => {
-      //     // Handle any error that occurred during the API call
-      //     console.error("API error:", error);
-      //   });
+      registerUser(current);
+      setCurrent(current + 1);
     } else {
-      const errors = [];
+      const errors = {};
       if (!isValidName) {
-        errors.push("Invalid name");
+        errors.name = "Invalid name";
       }
       if (!isValidEmail) {
-        errors.push("Invalid email");
+        errors.email = "Invalid email";
       }
       if (!isValidPhoneNumber) {
-        errors.push("Invalid phone number");
+        errors.phone = "Invalid phone number";
       }
       if (!isValidGender) {
-        errors.push("Invalid gender");
+        errors.gender = "Invalid gender";
       }
       if (!isValidPincode) {
-        errors.push("Invalid pincode");
+        errors.pincode = "Invalid pincode";
       }
       setErrors((prevData) => ({
         ...prevData,
-        errors: errors,
+        ...errors,
       }));
       console.log("Validation failed.");
     }
@@ -678,8 +657,6 @@ function TeacherRegistration() {
       basicDetails.gender,
       basicDetails.pincode
     );
-    setCurrent(current + 1);
-    registerUser(current);
   };
   const prev = () => {
     setCurrent(current - 1);
