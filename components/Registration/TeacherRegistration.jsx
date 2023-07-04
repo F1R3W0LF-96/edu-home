@@ -1,19 +1,37 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/Registration.module.css";
 import { Button, message, Steps, theme, Checkbox, Col, Row } from "antd";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
-import { Budget, Gender } from "@/helper/Constant";
+import {
+  Budget,
+  Education,
+  Gender,
+  Subjects,
+  validateEmail,
+  validateGender,
+  validateName,
+  validatePhoneNumber,
+  validatePincode,
+} from "@/helper/Constant";
+import deleteicon from "../../public/Images/deletebin.svg";
+
+import plus from "../../public/Images/plus.svg";
+
+import Image from "next/image";
+import CreatableSelect from "react-select/creatable";
+
 const BasicSection = ({
   basicDetails,
   address,
   handleAddressChange,
   handleBasicDetailsChange,
   handlePincodeChange,
+  error,
 }) => {
   return (
-    <div className="m-5 ">
-      <div className=" text-start">
+    <div className="m-5">
+      <div className="text-start">
         <label
           htmlFor="name"
           className="block text-sm font-medium text-gray-700 mb-2"
@@ -24,18 +42,21 @@ const BasicSection = ({
           type="text"
           name="name"
           id="name"
-          className="p-2 shadow appearance-none border  focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
+          className="w-full rounded-lg border-gray-200 p-2 pe-4 ps-4 text-sm shadow-sm"
           placeholder="Enter your full name"
           value={basicDetails.name || ""}
           onChange={handleBasicDetailsChange}
           required
         />
+        {error && error.name && (
+          <span className="text-red-500 text-sm">{error.name}</span>
+        )}
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <div className=" text-start">
+        <div className="text-start">
           <label
             htmlFor="gender"
-            className="block text-sm font-medium text-gray-700 mb-2  "
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
             Email Id
           </label>
@@ -43,16 +64,19 @@ const BasicSection = ({
             type="text"
             name="email"
             id="email"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2 shadow appearance-none border"
+            className="w-full rounded-lg border-gray-200 p-2 pe-4 ps-4 text-sm shadow-sm"
             placeholder="yourname@abc.com"
             value={basicDetails.email}
             onChange={handleBasicDetailsChange}
             required
           />
+          {error && error.email && (
+            <span className="text-red-500 text-sm">{error.email}</span>
+          )}
         </div>
-        <div className=" text-start">
+        <div className="text-start">
           <label
-            htmlFor="pincode"
+            htmlFor="phone"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
             Phone Number
@@ -61,16 +85,19 @@ const BasicSection = ({
             type="number"
             name="phone"
             id="phone"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2 shadow appearance-none border "
+            className="w-full rounded-lg border-gray-200 p-2 pe-4 ps-4 text-sm shadow-sm"
             placeholder="Enter your phone number"
             value={basicDetails.phone}
-            // onChange={handlePincodeChange}
+            onChange={handleBasicDetailsChange}
             required
           />
+          {error && error.phone && (
+            <span className="text-red-500 text-sm">{error.phone}</span>
+          )}
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <div className=" text-start">
+        <div className="text-start">
           <label
             htmlFor="gender"
             className="block text-sm font-medium text-gray-700 mb-2"
@@ -78,8 +105,8 @@ const BasicSection = ({
             Gender
           </label>
           <select
-            name="teacher-gender"
-            id="teacher-gender"
+            name="gender"
+            id="gender"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
             value={basicDetails.gender}
@@ -94,8 +121,11 @@ const BasicSection = ({
               );
             })}
           </select>
+          {error && error.gender && (
+            <span className="text-red-500 text-sm">{error.gender}</span>
+          )}
         </div>
-        <div className=" text-start">
+        <div className="text-start">
           <label
             htmlFor="pincode"
             className="block text-sm font-medium text-gray-700 mb-2"
@@ -106,15 +136,17 @@ const BasicSection = ({
             type="text"
             name="pincode"
             id="pincode"
-            className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2 shadow appearance-none border"
+            className="w-full rounded-lg border-gray-200 p-2 pe-4 ps-4 text-sm shadow-sm"
             placeholder="Enter your pincode"
-            // value={basicDetails.pincode}
             onChange={handlePincodeChange}
             required
           />
+          {error && error.pincode && (
+            <span className="text-red-500 text-sm">{error.pincode}</span>
+          )}
         </div>
       </div>
-      <div className=" text-start">
+      <div className="text-start">
         <label
           htmlFor="city"
           className="block text-sm font-medium text-gray-700 mb-2"
@@ -123,19 +155,22 @@ const BasicSection = ({
         </label>
 
         <select
-          className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2 shadow appearance-none border "
+          className="w-full rounded-lg border-gray-200 p-2 pe-4 ps-4 text-sm shadow-sm"
           value={JSON.stringify(basicDetails.address)}
           onChange={handleAddressChange}
         >
           <option value="" disabled>
             Select One
           </option>
-          {address.map((ele, idx) => (
+          {address?.map((ele, idx) => (
             <option key={idx + "_address"} value={JSON.stringify(ele)}>
               {ele.Name},{ele.Block},{ele.District},{ele.Pincode}
             </option>
           ))}
         </select>
+        {error && error.address && (
+          <span className="text-red-500 text-sm">{error.address}</span>
+        )}
       </div>
     </div>
   );
@@ -144,43 +179,207 @@ const ProfessionalSection = ({
   professionalDetails,
   handleProfessionalDetailsChange,
 }) => {
+  const [educationDetail, setEducationDetail] = useState([]);
+  const [qualificationDetail, setQualificationDetail] = useState([]);
+
+  useEffect(() => {
+    addEducationDetail();
+    addQualificationDetail();
+  }, []);
+
+  const addEducationDetail = () => {
+    const newEducationDetail = {
+      category: "",
+      sub_category: "",
+      year: "",
+    };
+    setEducationDetail([...educationDetail, newEducationDetail]);
+  };
+  const removeEducationDetail = (index) => {
+    const updatedEducationDetail = [...educationDetail];
+    updatedEducationDetail.splice(index, 1);
+    setEducationDetail(updatedEducationDetail);
+  };
+  const addQualificationDetail = () => {
+    const newQualificationDetail = {
+      designation: "",
+      company: "",
+      year: "",
+    };
+    setQualificationDetail([...qualificationDetail, newQualificationDetail]);
+  };
+  const removeQualificationDetail = (index) => {
+    const updatedQualificationDetail = [...qualificationDetail];
+    updatedQualificationDetail.splice(index, 1);
+    setQualificationDetail(updatedQualificationDetail);
+  };
+  const subjectOptions = [
+    ...Subjects.ICSE.map((subject) => {
+      return { name: subject, label: subject };
+    }),
+  ];
   return (
     <div className="m-5">
       <div className=" text-start">
         <label
           htmlFor="education"
-          className="block text-sm font-medium text-gray-700 mb-2"
+          className=" text-sm font-medium text-gray-700 mb-2 flex"
         >
           Education
+          <Image
+            className="ml-5"
+            alt={"plus"}
+            src={plus}
+            width={20}
+            onClick={() => addEducationDetail()}
+          />
         </label>
-        <input
-          type="text"
-          name="education"
-          id="education"
-          className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
-          placeholder="Education"
-          value={professionalDetails.education}
-          onChange={handleProfessionalDetailsChange}
-          required
-        />
+        {educationDetail &&
+          educationDetail?.map((edetail, idx) => {
+            return (
+              <div className="flex justify-between" key={idx}>
+                <select
+                  className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-40 sm:text-sm rounded-md mb-2 shadow appearance-none border "
+                  onChange={(e) =>
+                    handleProfessionalDetailsChange(
+                      e.target.value,
+                      "Degree",
+                      "education",
+                      idx
+                    )
+                  }
+                >
+                  <option value="">Choose Education</option>
+                  {Education.map((education) => {
+                    return <option key={education}>{education}</option>;
+                  })}
+                </select>
+                <input
+                  type="text"
+                  name="education"
+                  id="education"
+                  className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block  sm:text-sm rounded-md mb-2 ml-4"
+                  placeholder="Engineering,doctor etc..."
+                  value={edetail.category}
+                  onChange={(e) =>
+                    handleProfessionalDetailsChange(
+                      e.target.value,
+                      "degreeType",
+                      "education",
+                      idx
+                    )
+                  }
+                  required
+                />
+                <input
+                  type="text"
+                  name="batch"
+                  id="batch"
+                  className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block  sm:text-sm rounded-md mb-2 ml-4"
+                  placeholder="2014-2018"
+                  value={edetail.sub_category}
+                  onChange={(e) =>
+                    handleProfessionalDetailsChange(
+                      e.target.value,
+                      "batch",
+                      "education",
+                      idx
+                    )
+                  }
+                  required
+                />
+                <Image
+                  className="ml-5"
+                  alt={"deleteicon"}
+                  src={deleteicon}
+                  width={20}
+                  height={1}
+                  onClick={() => removeEducationDetail(idx)}
+                />
+              </div>
+            );
+          })}
       </div>
+
       <div className=" text-start">
         <label
           htmlFor="qualification"
-          className="block text-sm font-medium text-gray-700 mb-2"
+          className="flex text-sm font-medium text-gray-700 mb-2"
         >
           Qualification
+          <Image
+            className="ml-5"
+            alt={"plus"}
+            src={plus}
+            width={20}
+            onClick={() => addQualificationDetail()}
+          />
         </label>
-        <input
-          type="text"
-          name="qualification"
-          id="qualification"
-          className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
-          placeholder="Qualification"
-          value={professionalDetails.qualification}
-          onChange={handleProfessionalDetailsChange}
-          required
-        />
+        {qualificationDetail &&
+          qualificationDetail?.map((qual, idx) => {
+            return (
+              <>
+                <div className="flex justify-between">
+                  <input
+                    type="text"
+                    name="designation"
+                    id="designation"
+                    className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block  sm:text-sm rounded-md mb-2"
+                    placeholder="designation"
+                    value={qual.designation}
+                    onChange={(e) =>
+                      handleProfessionalDetailsChange(
+                        e.target.value,
+                        "Qualification",
+                        idx
+                      )
+                    }
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="company"
+                    id="company"
+                    className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm rounded-md mb-2"
+                    placeholder="company"
+                    value={qual.company}
+                    onChange={(e) =>
+                      handleProfessionalDetailsChange(
+                        e.target.value,
+                        "Qualification",
+                        idx
+                      )
+                    }
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="year"
+                    id="year"
+                    className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm rounded-md mb-2"
+                    placeholder="year"
+                    value={qual.year}
+                    onChange={(e) =>
+                      handleProfessionalDetailsChange(
+                        e.target.value,
+                        "Qualification",
+                        idx
+                      )
+                    }
+                    required
+                  />
+                  <Image
+                    className="ml-5"
+                    alt={"deleteicon"}
+                    src={deleteicon}
+                    width={20}
+                    height={1}
+                    onClick={() => removeQualificationDetail(idx)}
+                  />
+                </div>
+              </>
+            );
+          })}
       </div>
       <div className=" text-start">
         <label
@@ -189,16 +388,17 @@ const ProfessionalSection = ({
         >
           Subjects you can teach
         </label>
-        <textarea
+        <CreatableSelect isMulti options={subjectOptions} />
+        {/* <textarea
           id="subjects"
           name="subjects"
           rows="3"
-          className="p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md mb-2"
+          className="w-full rounded-lg border-gray-200 p-2 pe-4 ps-4 text-sm shadow-sm"
           placeholder="Enter the subjects you can teach"
           value={professionalDetails.subjects}
           onChange={handleProfessionalDetailsChange}
           required
-        ></textarea>
+        ></textarea> */}
       </div>
       <div className=" text-start">
         <label
@@ -273,6 +473,7 @@ const OtherDetails = ({ othersDetails, handleChange }) => {
 function TeacherRegistration() {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
+  const [errors, setErrors] = useState({});
 
   const [basicDetails, setBasicDetails] = useState({
     name: "",
@@ -281,12 +482,14 @@ function TeacherRegistration() {
     pincode: "",
     city: "",
     address: {},
+    phone: "",
   });
   const [address, setAddress] = useState([]);
   const [professionalDetails, setProfessionalDetails] = useState({
-    education: "",
-    qualification: "",
+    education: [],
+    qualification: [],
     subjects: "",
+    stream: "",
   });
   const [otherDetails, setOtherDetails] = useState({
     hourly_rate: 0,
@@ -296,19 +499,31 @@ function TeacherRegistration() {
 
   const handleBasicDetailsChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value, ":::::: name and value :::::::");
     setBasicDetails((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const handleProfessionalDetailsChange = (e) => {
-    const { name, value } = e.target;
-    setProfessionalDetails({
-      ...professionalDetails,
-      [name]: value,
-    });
+  const handleProfessionalDetailsChange = (value, name, type, index) => {
+    const updatedEducationDetails = { ...professionalDetails };
+    if (type === "education") {
+      const education = [...updatedEducationDetails.education];
+      education[index] = {
+        ...education[index],
+        [name]: value,
+      };
+      setProfessionalDetails({
+        ...updatedEducationDetails,
+        education: education,
+      });
+    }
+
+    console.log("updatedEducationDetails", updatedEducationDetails);
+    // setProfessionalDetails({
+    //   ...professionalDetails,
+    //   [name]: value,
+    // });
   };
 
   const handlePincodeChange = async (e) => {
@@ -321,6 +536,7 @@ function TeacherRegistration() {
         setBasicDetails((ps) => ({
           ...ps,
           pincode: value,
+          address: response.data[0].PostOffice[0],
         }));
         setAddress(response.data[0].PostOffice);
       } catch (error) {
@@ -346,6 +562,46 @@ function TeacherRegistration() {
     console.log(basicDetails, professionalDetails);
     // Submit the form data to the server
   };
+  function validateAndCallAPI(name, email, phoneNumber, gender, pincode) {
+    const isValidName = validateName(name);
+    const isValidEmail = validateEmail(email);
+    const isValidPhoneNumber = validatePhoneNumber(phoneNumber);
+    const isValidGender = validateGender(gender);
+    const isValidPincode = validatePincode(pincode);
+
+    if (
+      isValidName &&
+      isValidEmail &&
+      isValidPhoneNumber &&
+      isValidGender &&
+      isValidPincode
+    ) {
+      registerUser(current);
+      setCurrent(current + 1);
+    } else {
+      const errors = {};
+      if (!isValidName) {
+        errors.name = "Invalid name";
+      }
+      if (!isValidEmail) {
+        errors.email = "Invalid email";
+      }
+      if (!isValidPhoneNumber) {
+        errors.phone = "Invalid phone number";
+      }
+      if (!isValidGender) {
+        errors.gender = "Invalid gender";
+      }
+      if (!isValidPincode) {
+        errors.pincode = "Invalid pincode";
+      }
+      setErrors((prevData) => ({
+        ...prevData,
+        ...errors,
+      }));
+      console.log("Validation failed.");
+    }
+  }
 
   const steps = [
     {
@@ -364,6 +620,7 @@ function TeacherRegistration() {
           basicDetails={basicDetails}
           handleBasicDetailsChange={handleBasicDetailsChange}
           handlePincodeChange={handlePincodeChange}
+          error={errors}
         />
       ),
     },
@@ -393,10 +650,47 @@ function TeacherRegistration() {
     },
   ];
   const next = () => {
-    setCurrent(current + 1);
+    validateAndCallAPI(
+      basicDetails.name,
+      basicDetails.email,
+      basicDetails.phone,
+      basicDetails.gender,
+      basicDetails.pincode
+    );
   };
   const prev = () => {
     setCurrent(current - 1);
+  };
+
+  const registerUser = (step) => {
+    const apiUrl = process.env.API_URL;
+    const body =
+      step === 0
+        ? {
+            fullName: basicDetails.name,
+            email: basicDetails.email,
+            password: "Rozer@123",
+            phoneno: basicDetails.phone,
+            user_role: "TEACHER",
+            gender: basicDetails.gender,
+            status: 1,
+            coins: 300,
+
+            image:
+              "https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg",
+            isProfileComplete: false,
+            isDeleted: false,
+            address: basicDetails.address,
+            qualifications: [],
+            subjects: [],
+            experiences: [],
+          }
+        : {};
+    if (step === 0) {
+      axios.post(`${apiUrl}/api/v1/users/sign-up`, body).then((response) => {
+        localStorage.setItem("accessToken", response.data.meta.accessToken);
+      });
+    }
   };
   const items = steps.map((item) => ({
     key: item.title,

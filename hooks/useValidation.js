@@ -12,6 +12,9 @@ const useValidation = () => {
       setIsEmail(validator.isEmail(email));
       return validator.isEmail(email);
     },
+    validatePhoneNo: (phone) => {
+      return validator.isMobilePhone(phone);
+    },
     validateStrongPassword: (password) => {
       const _sp = validator.isStrongPassword(password, {
         minLength: 8,

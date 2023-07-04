@@ -43,6 +43,23 @@ class AuthRepository {
       });
     return reponse;
   }
+  async sendotp(phone) {
+    const endPoint = `${baseDomain}/send-otp`;
+    const reponse = await axios
+      .post(endPoint, { phoneno: phone })
+      .then((response) => {
+        if (response.data) {
+          return response.data;
+        } else {
+          return null;
+        }
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+        return null;
+      });
+    return reponse;
+  }
   async getUserDetails(id) {
     const endPoint = `${baseDomain}/user/${id}`;
     const reponse = await axios
