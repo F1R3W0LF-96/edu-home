@@ -1247,3 +1247,17 @@ export const countryCodes = [
 ];
 
 export let _countryCodes = new Map();
+
+export let proverbs = [
+  "Education is the foundation upon which we build our future.",
+  "Invest in your education; it's the key to unlocking your future.",
+  "The beautiful thing about learning is that no one can take it away from you.",
+  "Education is the most powerful weapon which you can use to change the world.",
+  "The more that you read, the more things you will know. The more that you learn, the more places you'll go.",
+  "Education is the foundation upon which we build our future.",
+  "Education is the key to unlock the golden door of freedom.",
+  "Education is not preparation for life; education is life itself.",
+  "The best way to predict the future is to create it.",
+  "Education is not just about going to school; it's about widening your knowledge and absorbing the truth about life.",
+  "The purpose of education is to replace an empty mind with an open one.",
+];

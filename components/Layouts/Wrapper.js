@@ -5,6 +5,7 @@ import styles from "@/styles/LandingPage.module.css";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import useAuthentication from "@/hooks/useAuthentication";
+import Whatsapp from "../Widgets/Whatsapp";
 const Wrapper = (props) => {
   console.log(props);
   const { isAuthenticated } = useAuthentication();
@@ -28,6 +29,9 @@ const Wrapper = (props) => {
       <Header isAuthenticated={isAuthenticated} os={os} />
       {props.children}
       <Footer />
+      <div className="whatsapp-widget">
+        <Whatsapp />
+      </div>
       {/* <BackToTop /> */}
     </>
   );

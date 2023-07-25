@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { countryCodes } from "@/helper/index";
 import { loginType, validatePhoneNumber } from "@/helper/Constant";
 import { useRouter } from "next/router";
-import axios from "axios";
+
 function Login({ ...props }) {
   const router = useRouter();
-
   const [countryCode, setCountryCode] = useState("+91");
   const [loginTypes, setLoginTypes] = useState(loginType.PHONE);
   const [otpParams, setOtpParams] = useState({
@@ -229,7 +228,7 @@ function Login({ ...props }) {
 
       <button
         type="button"
-        className="w-1/2 font-regular rounded bg-white-400 text-white"
+        className="w-1/2 font-regular rounded bg-white-400 "
         onClick={(e) => handleLoginType(e, loginTypes)}
       >
         Login with {loginTypes === loginType.PHONE ? " Email" : "Phone No"}
@@ -237,7 +236,7 @@ function Login({ ...props }) {
       {resetPassword && (
         <button
           type="button"
-          className="w-1/2 font-regular rounded bg-white-400 text-white"
+          className="w-1/2 font-regular rounded bg-white-400"
           onClick={() => handleResetPassword()}
         >
           Email Reset Password
@@ -245,7 +244,7 @@ function Login({ ...props }) {
       )}
       {!resetPassword && (
         <span
-          className="w-1/2  font-regular rounded bg-white-400 text-white"
+          className="w-1/2  font-regular rounded bg-white-400"
           onClick={() => {
             setResetPassword(!resetPassword);
           }}
