@@ -1,5 +1,6 @@
 import axios from "axios";
-export const baseDomain = "http://143.244.128.159:8500";
+export const baseDomain = process.env.BASE_URL;
+console.log(baseDomain);
 export const baseUrlProduct = "http://143.244.128.159:8500";
 export const customHeaders = (token) =>
   token === null

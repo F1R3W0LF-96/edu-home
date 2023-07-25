@@ -6,9 +6,12 @@ import Avatar from "../Elements/Avatar";
 import { Button } from "antd";
 import { useRouter } from "next/router";
 import coinImage from "../../public/Images/rupee.png";
+import InstagramIcon from "@/public/Icons/instagram";
+import WhatsappIcon from "@/public/Icons/whatsapp";
+import PhoneIcon from "@/public/Icons/Phone";
 
 const Header = ({ isAuthenticated, os, location }) => {
-  const { push } = useRouter();
+  const { push, route } = useRouter();
   const mobileMenu = useRef(null);
   const [openMenu, setOpenMenu] = useState(false);
   const [userName, setUserName] = useState("");
@@ -73,7 +76,6 @@ const Header = ({ isAuthenticated, os, location }) => {
     //   mobileMenu.current.classList.forEach((ele) => console.log(ele));
     // }
   };
-  console.log(">>>>>>>>>loggedInUser", loggedInUser);
   return (
     <header>
       <nav className=" relative px-4 py-4 flex justify-between items-center bg-white">
@@ -181,18 +183,59 @@ const Header = ({ isAuthenticated, os, location }) => {
             </>
           ) : (
             <>
+              <Link className="flex items-center mr-3" href="tel:9553444001">
+                <PhoneIcon />
+                <span className="ms-1 text-sm text-sky font-bold">
+                  +919553444001
+                </span>
+              </Link>
               <Link
+                className="flex items-center mr-3"
+                href="https://wa.me/+919553444001"
+                target="_blank"
+              >
+                <WhatsappIcon />
+                <span className="ms-1 text-sm text-sky font-bold">
+                  +919553444001
+                </span>
+              </Link>
+              <Link
+                className="flex items-center mr-3"
+                href="https://www.instagram.com/tuitionsearch/"
+              >
+                <InstagramIcon />
+                <span className="ms-1 text-sm text-sky font-bold">
+                  tuitionsearch
+                </span>
+              </Link>
+              {route === "/" && (
+                <>
+                  <Link
+                    className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+                    href="#hero"
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+                    href="#about-us"
+                  >
+                    About Us
+                  </Link>
+                  <Link
+                    className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+                    href="#contact-us"
+                  >
+                    Contact Us
+                  </Link>
+                </>
+              )}
+              {/* <Link
                 className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
                 href="/login"
               >
                 Sign In
-              </Link>
-              <Link
-                className="hidden lg:inline-block py-2 px-6 bg-sky-500 hover:bg-sky-600 text-sm text-white font-bold rounded-xl transition duration-200"
-                href="/"
-              >
-                Sign up
-              </Link>
+              </Link> */}
             </>
           )}
         </div>
