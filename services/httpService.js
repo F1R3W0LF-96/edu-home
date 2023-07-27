@@ -1,7 +1,7 @@
 import axios from "axios";
-export const baseDomain = process.env.BASE_URL;
+export const baseDomain = `${process.env.BASE_URL}/api/v1`;
 console.log(baseDomain);
-export const baseUrlProduct = "http://143.244.128.159:8500";
+export const baseUrlProduct = process.env.BASE_URL || "process.env.BASE_URL";
 export const customHeaders = (token) =>
   token === null
     ? {

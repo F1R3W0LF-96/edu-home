@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import locationImg from "../public/Images/location.png";
 import BarLoader from "react-spinners/BarLoader";
 import About from "@/components/AboutUs/About";
+import HeroSection from "@/components/Hero/HeroSection";
 
 export default function Home() {
   const { push } = useRouter();
@@ -93,7 +94,8 @@ export default function Home() {
         )}
       </div> */}
       <Wrapper>
-        <Hero />
+        <HeroSection />
+        {/* <Hero /> */}
         <About />
         <Teams />
         <Contact />
