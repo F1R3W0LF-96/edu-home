@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import validator from "validator";
-import { countryCodes } from "@/helper/index";
-import { useRouter } from "next/router";
-import AuthRepository from "@/services/authService";
+import useAuthentication from "@/hooks/useAuthentication";
 function Auth({ ...props }) {
-  const Auth = new AuthRepository();
+  const { getlogin, loginResponse, loading } = useAuthentication();
   const [loginDetails, setLoginDetails] = useState({
     phoneno: {
       valid: false,
@@ -61,54 +59,57 @@ function Auth({ ...props }) {
   };
   return (
     <>
-      <form
-        novalidate=""
-        action=""
-        className="self-stretch space-y-3"
-        onSubmit={handleLogin}
-      >
-        <h1 className="text-3xl text-white font-bold"> Login Details</h1>
-        <div>
-          <label for="phoneno" className="text-sm sr-only">
+      <form onSubmit={handleLogin}>
+        <div className="mb-1 sm:mb-2">
+          <label htmlFor="lastName" className="inline-block mb-1 font-medium">
             Phone No
           </label>
           <input
-            name="phoneno"
+            placeholder="Enter your Phoneno"
+            required
+            type="number"
+            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
             id="phoneno"
-            type="text"
-            placeholder="Your phone no"
-            className="w-full rounded-md focus:ring ri border text-black border-gray-400 p-2"
+            name="phoneno"
+            value={loginDetails.phoneno}
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label for="password" className="text-sm sr-only">
-            Password{" "}
+        <div className="mb-1 sm:mb-2">
+          <label htmlFor="password" className="inline-block mb-1 font-medium">
+            Password
           </label>
           <input
+            onChange={handleInputChange}
+            value={loginDetails.password}
             name="password"
             id="password"
             type="password"
-            placeholder="Password"
-            className="w-full rounded-md focus:ring ri border text-black border-gray-400 p-2"
-            onChange={handleInputChange}
+            placeholder="Enter your password"
+            required
+            className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-teal-400 focus:outline-none focus:shadow-outline"
           />
         </div>
-        <button
-          type="button"
-          className="w-full py-2 font-regular rounded bg-teal-600 hover:bg-teal-900 text-gray-100 font-bold"
-          onClick={handleLogin}
-        >
-          Login
-        </button>
+        <div className="mt-4 mb-2 sm:mb-4">
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
+          >
+            Login
+          </button>
+        </div>
       </form>
-      <button
-        type="button"
-        className="w-full py-2 mt-4 font-regular rounded bg-teal-600 hover:bg-teal-900 text-gray-100 font-bold"
-        onClick={handleLogin}
-      >
-        Forgot Password
-      </button>
+      <div className="mt-4 mb-2 sm:mb-4">
+        <button
+          type="submit"
+          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
+        >
+          Forgot password
+        </button>
+      </div>
+      <p className="text-xs text-gray-600 sm:text-sm">
+        We respect your privacy. Unsubscribe at any time.
+      </p>
     </>
   );
 }
