@@ -1,6 +1,25 @@
+import useAuthentication from "@/hooks/useAuthentication";
 import Link from "next/link";
+import { useState } from "react";
 
 const HeroSection = () => {
+  const { getlogin } = useAuthentication();
+  const [formData, setFormData] = useState({
+    phoneNumber: "",
+    password: "",
+  });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const loginWithMobileNumber = async (e) => {
+    e.preventDefault();
+    const { phoneNumber, password } = formData;
+    const response = await getlogin(phoneNumber, password);
+  };
   return (
     <div className="relative">
       <img
@@ -71,12 +90,13 @@ const HeroSection = () => {
                       Phone No
                     </label>
                     <input
-                      placeholder="Enter your Phoneno"
+                      placeholder="Enter your Phone.no"
                       required
-                      type="number"
+                      type="text"
                       className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                      id="phoneno"
-                      name="phoneno"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      onChange={handleInputChange}
                     />
                   </div>
                   <div className="mb-1 sm:mb-2">
@@ -93,11 +113,13 @@ const HeroSection = () => {
                       placeholder="Enter your password"
                       required
                       className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-teal-400 focus:outline-none focus:shadow-outline"
+                      onChange={handleInputChange}
                     />
                   </div>
                   <div className="mt-4 mb-2 sm:mb-4">
                     <button
-                      type="submit"
+                      // type="submit"
+                      onClick={(e) => loginWithMobileNumber(e)}
                       className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
                     >
                       Login
@@ -105,7 +127,7 @@ const HeroSection = () => {
                   </div>
                   <div className="mt-4 mb-2 sm:mb-4">
                     <button
-                      type="submit"
+                      // type="submit"
                       className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
                     >
                       Forgot password

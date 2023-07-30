@@ -138,7 +138,7 @@ function ContactImage() {
             fontSize="12.457"
             transform="translate(324.878 258.836)"
           >
-            phone number
+            Phone Number
           </text>
           <text
             fill="#26779B"
@@ -146,7 +146,7 @@ function ContactImage() {
             fontSize="12.457"
             transform="translate(323.59 210.964)"
           >
-            e-mail adDress
+            E-mail address
           </text>
           <text
             fill="#26779B"
@@ -154,7 +154,7 @@ function ContactImage() {
             fontSize="12.457"
             transform="translate(324.193 305.244)"
           >
-            location
+            Location
           </text>
           <circle cx="295.795" cy="207.322" r="17.925" fill="#26779B"></circle>
           <path
