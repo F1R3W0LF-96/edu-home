@@ -17,6 +17,14 @@ function About({ ...props }) {
           <div className="flex flex-col col-span-12 p-6 divide-y lg:col-span-7 lg:p-10 divide-gray-700 order-2 lg:order-1">
             <div className="pt-6 pb-4 space-y-2">
               <p>
+                Affordable education/Teaching at your fingertips - Connecting
+                students and teachers for a pocket-friendly fee of{" "}
+                <strong>just 19 rupees!</strong>
+              </p>
+            </div>
+
+            <div className="pt-6 pb-4 space-y-2">
+              <p>
                 Unleash academic excellence and financial success - THE platform
                 drives students towards top marks while empowering teachers to
                 unlock their true earning potential!
