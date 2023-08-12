@@ -45,7 +45,7 @@ function About({ ...props }) {
             </div>
             <div className="pt-6 pb-4 space-y-2">
               <p>
-                Seamless learning on your terms - THE platform provides flexible
+                Seamless learning on your terms - The platform provides flexible
                 options, delivering services to your doorstep or through an
                 online connection, creating a truly convenient experience for
                 tutors and students!
