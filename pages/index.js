@@ -97,7 +97,7 @@ export default function Home() {
         <HeroSection />
         {/* <Hero /> */}
         <About />
-        <Teams />
+        {/* <Teams /> */}
         <Contact />
       </Wrapper>
       <ToastContainer />
