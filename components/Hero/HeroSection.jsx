@@ -15,11 +15,14 @@ const HeroSection = () => {
       [name]: value,
     }));
   };
-  const loginWithMobileNumber = async (e) => {
+  const loginWithMobileNumber =async  (e) => {
     e.preventDefault();
     const { phoneNumber, password } = formData;
     const response = await getlogin(phoneNumber, password);
+    console.log(response);
+    debugger
   };
+
   return (
     <div className="relative">
       <img

@@ -32,8 +32,9 @@ class AuthRepository {
     const reponse = await axios
       .post(endPoint, { phoneno: phoneno, password: password })
       .then((response) => {
+        debugger
         if (response.data) {
-          return response.data;
+          return response.data.data;
         } else {
           return null;
         }

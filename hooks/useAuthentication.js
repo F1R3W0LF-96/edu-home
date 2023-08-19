@@ -68,7 +68,7 @@ export default function useAuthentication() {
       setLoading(true);
       const isValidEmail = validateEmail(email);
       // const isStrongPassword = validateStrongPassword(password);
-      debugger;
+      // debugger;
 
       if (
         isValidEmail
