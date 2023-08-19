@@ -3,7 +3,7 @@ require("dotenv").config();
 const nextConfig = {
   reactStrictMode: false,
   env: {
-    API_URL: process.env.API_URL,
+    BASE_URL: "https://api.tuitionsearch.co.in",
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
