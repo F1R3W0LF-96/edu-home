@@ -137,6 +137,11 @@ function validatePincode(pincode) {
   return pattern.test(pincode);
 }
 
+const alignment = {
+  GRID: "GRID",
+  ROW: "ROW",
+};
+
 export {
   generateOTP,
   validateName,
@@ -144,4 +149,5 @@ export {
   validatePhoneNumber,
   validatePincode,
   validateGender,
+  alignment,
 };
