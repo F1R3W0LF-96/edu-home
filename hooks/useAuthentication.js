@@ -53,7 +53,7 @@ export default function useAuthentication() {
           250
         );
       }
-      return true;
+      return response;
     },
     getUserDetails: async (id) => {
       setLoading(true);
