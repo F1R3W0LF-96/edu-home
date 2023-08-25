@@ -20,7 +20,7 @@ function Auth({ ...props }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (loginDetails.phoneno.valid && loginDetails.password.valid) {
-      let loginData = await Auth.login(
+      let loginData = await getlogin(
         loginDetails.phoneno.value,
         loginDetails.password.value
       );
