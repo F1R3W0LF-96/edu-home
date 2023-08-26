@@ -1,7 +1,9 @@
 import axios from "axios";
-export const baseDomain = `${process.env.BASE_URL}/api/v1`;
+// export const baseDomain = `${process.env.BASE_URL}/api/v1`;
+export const baseDomain = "https://api.tuitionsearch.co.in";
 console.log(baseDomain);
-export const baseUrlProduct = process.env.BASE_URL || "process.env.BASE_URL";
+// export const baseUrlProduct = process.env.BASE_URL || "process.env.BASE_URL";
+export const baseUrlProduct = "https://api.tuitionsearch.co.in";
 export const customHeaders = (token) =>
   token === null
     ? {

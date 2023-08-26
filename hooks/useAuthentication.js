@@ -3,8 +3,7 @@ import useValidation from "./useValidation";
 import AuthRepositors from "../services/authService";
 export default function useAuthentication() {
   const AuthRepositor = new AuthRepositors();
-  const { isEmail, validateEmail, validateStrongPassword, validatePhoneNo } =
-    useValidation();
+  const { isEmail, validateStrongPassword, validatePhoneNo } = useValidation();
   const [loading, setLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginResponse, setLoginResponse] = useState(null);
@@ -40,7 +39,7 @@ export default function useAuthentication() {
         return false;
       }
     },
-    getlogin: async (email, password) => {
+    getlogin: async (phoneno, password) => {
       setLoading(true);
       const response = await AuthRepositor.login(email, password);
       if (response) {

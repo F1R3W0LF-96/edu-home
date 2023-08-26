@@ -2,17 +2,21 @@ import { useState } from "react";
 import validator from "validator";
 const useValidation = () => {
   const [isEmail, setIsEmail] = useState(false);
+  const [isPhone, setIsPhone] = useState(false);
   const [isStrongPassword, setIsStrongPassword] = useState({
     flag: false,
     score: 0,
   });
   return {
+    isStrongPassword,
+    isPhone,
     isEmail,
     validateEmail: (email) => {
       setIsEmail(validator.isEmail(email));
       return validator.isEmail(email);
     },
     validatePhoneNo: (phone) => {
+      setIsPhone(validator.isMobilePhone(phone));
       return validator.isMobilePhone(phone);
     },
     validateStrongPassword: (password) => {
