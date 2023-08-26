@@ -28,6 +28,7 @@ class AuthRepository {
 
   async login(phoneno, password) {
     const endPoint = `${baseDomain}/users/login`;
+    // const endPoint = `https://api.tuitionsearch.co.in/api/v1/users/login`;
     const reponse = await axios
       .post(endPoint, { phoneno: phoneno, password: password })
       .then((response) => {
@@ -76,6 +77,19 @@ class AuthRepository {
         return null;
       });
     return reponse;
+  }
+
+  async signUp(requestBody) {
+    const endPoint = `${baseDomain}/users/sign-up`;
+    // const endPoint = `https://api.tuitionsearch.co.in/api/v1/users/sign-up`;
+
+    try {
+      const response = await axios.post(endPoint, requestBody);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
 }
 
