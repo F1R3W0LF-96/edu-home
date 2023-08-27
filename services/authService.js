@@ -32,7 +32,6 @@ class AuthRepository {
     const reponse = await axios
       .post(endPoint, { phoneno: phoneno, password: password })
       .then((response) => {
-        debugger
         if (response.data) {
           return response.data.data;
         } else {
@@ -90,6 +89,17 @@ class AuthRepository {
     } catch (error) {
       console.error(error);
       return null;
+    }
+  }
+  async getUsersByRole(role) {
+    const endpoint = `${baseDomain}/users/listing-by-role?user_role=${role}`;
+
+    try {
+      const response = await axios.get(endpoint);
+      return response.data; // Return the data from the response
+    } catch (error) {
+      console.error("Error:", error);
+      return null; // Return null in case of an error
     }
   }
 }

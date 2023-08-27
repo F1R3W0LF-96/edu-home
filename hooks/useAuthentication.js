@@ -99,5 +99,10 @@ export default function useAuthentication() {
         return { error: "Invalid email or password." }; // Return an error object for validation errors
       }
     },
+    getUserBtRole: async (role) => {
+      setLoading(true);
+      const response = await AuthRepositor.getUsersByRole(role);
+      return response;
+    },
   };
 }

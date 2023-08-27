@@ -4,11 +4,22 @@ import CategoriesFilter from "@/components/Elements/CategoriesFilter";
 import GridIcon from "@/public/Icons/GridIcon";
 import SortIcon from "@/public/Icons/SortIcon";
 import { alignment } from "@/helper/Constant";
+import useAuthentication from "@/hooks/useAuthentication";
+import { useRouter } from "next/router";
+
 function Student() {
+  const { getUserBtRole } = useAuthentication();
+  const router = useRouter();
+  const { userType } = router.query;
   const [results, setResults] = useState([]);
   const fetchLists = () => {};
   const [align, setAlign] = useState(alignment.GRID);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("userType", userType);
+    debugger;
+
+    getUserBtRole(router.pathname.substring(1).toUpperCase());
+  }, []);
 
   const layout = (type, ele) => {
     switch (type) {
