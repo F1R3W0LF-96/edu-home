@@ -7,7 +7,6 @@ import StudentRegistration from "@/components/Registration/StudentRegistration";
 import { RegistrationTypes } from "@/helper/Constant";
 const Index = () => {
   const router = useRouter();
-  const { pid } = router.query;
   return (
     <Wrapper>
       <Registration

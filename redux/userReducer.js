@@ -4,7 +4,7 @@ const initialState = {
   data: {},
 };
 
-export const LoginCardSlice = createSlice({
+const userReducer = createSlice({
   name: "login",
   initialState,
   reducers: {
@@ -14,4 +14,5 @@ export const LoginCardSlice = createSlice({
   },
 });
 
-export const LoginCardActions = LoginCardSlice.actions;
+export const { addDetails } = userReducer.actions; // Destructuring here
+export default userReducer.reducer;

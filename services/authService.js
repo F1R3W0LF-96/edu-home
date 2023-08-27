@@ -32,15 +32,24 @@ class AuthRepository {
     const reponse = await axios
       .post(endPoint, { phoneno: phoneno, password: password })
       .then((response) => {
-        if (response.data) {
-          return response.data.data;
+        if (response.data && response.data.success) {
+          return {
+            success: true,
+            data: response.data.data,
+          };
         } else {
-          return null;
+          return {
+            success: false,
+            data: null,
+          };
         }
       })
       .catch((error) => {
         console.log(JSON.stringify(error));
-        return error;
+        return {
+          success: false,
+          data: null,
+        };
       });
     return reponse;
   }
@@ -89,6 +98,16 @@ class AuthRepository {
     } catch (error) {
       console.error(error);
       return null;
+    }
+  }
+  async getUsersByRole(role) {
+    const endpoint = `${baseDomain}/users/listing-by-role?user_role=${role}`;
+    try {
+      const response = await axios.get(endpoint);
+      return response.data; // Return the data from the response
+    } catch (error) {
+      console.error("Error:", error);
+      return null; // Return null in case of an error
     }
   }
 }

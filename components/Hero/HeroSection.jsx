@@ -1,8 +1,17 @@
 import useAuthentication from "@/hooks/useAuthentication";
+import { addDetails } from "@/redux/userReducer";
 import Link from "next/link";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { RegistrationTypes } from "@/helper/Constant";
 
 const HeroSection = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const userReducer = useSelector((state) => state).user;
+
   const { getlogin } = useAuthentication();
   const [formData, setFormData] = useState({
     phoneNumber: "",
@@ -15,13 +24,21 @@ const HeroSection = () => {
       [name]: value,
     }));
   };
-  const loginWithMobileNumber =async  (e) => {
+  const loginWithMobileNumber = async (e) => {
     e.preventDefault();
     const { phoneNumber, password } = formData;
     const response = await getlogin(phoneNumber, password);
-    console.log(response);
-    debugger
+    if (response.success) {
+      dispatch(addDetails(response));
+      if (
+        response.data.user_role ===
+        RegistrationTypes.TEACHER_TYPE.toLocaleUpperCase()
+      ) {
+        router.push("/userListing/teacher"); // Replace 'new-page' with the actual page path
+      }
+    }
   };
+  console.log("userReducer", userReducer);
 
   return (
     <div className="relative">
