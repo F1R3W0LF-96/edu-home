@@ -1,5 +1,5 @@
 import useAuthentication from "@/hooks/useAuthentication";
-import { addDetails } from "@/redux/UserReducer";
+import { addDetails } from "@/redux/userReducer";
 import Link from "next/link";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,14 +28,13 @@ const HeroSection = () => {
     e.preventDefault();
     const { phoneNumber, password } = formData;
     const response = await getlogin(phoneNumber, password);
-    debugger;
     if (response.success) {
       dispatch(addDetails(response));
       if (
         response.data.user_role ===
         RegistrationTypes.TEACHER_TYPE.toLocaleUpperCase()
       ) {
-        router.push("/profile"); // Replace 'new-page' with the actual page path
+        router.push("/userListing/teacher"); // Replace 'new-page' with the actual page path
       }
     }
   };

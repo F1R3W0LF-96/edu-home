@@ -102,7 +102,6 @@ class AuthRepository {
   }
   async getUsersByRole(role) {
     const endpoint = `${baseDomain}/users/listing-by-role?user_role=${role}`;
-
     try {
       const response = await axios.get(endpoint);
       return response.data; // Return the data from the response

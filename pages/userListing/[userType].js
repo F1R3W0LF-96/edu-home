@@ -12,20 +12,26 @@ function Student() {
   const router = useRouter();
   const { userType } = router.query;
   const [results, setResults] = useState([]);
-  const fetchLists = () => {};
   const [align, setAlign] = useState(alignment.GRID);
   useEffect(() => {
     console.log("userType", userType);
-    debugger;
+    if (userType) {
+      getUserListing(userType);
+    }
+  }, [userType]);
 
-    getUserBtRole(router.pathname.substring(1).toUpperCase());
-  }, []);
+  const getUserListing = async (type) => {
+    const response = await getUserBtRole(type.toUpperCase());
+    setResults(response.data);
+    console.log(response);
+  };
 
   const layout = (type, ele) => {
+    debugger;
     switch (type) {
       case alignment.GRID:
         return (
-          <div class="p-4 w-full lg:w-1/3 md:w-1/2" key={ele.toString()}>
+          <div class="p-4 w-full lg:w-1/3 md:w-1/2" key={ele._id.toString()}>
             <div class="h-full border border-gray-300 border-opacity-60 rounded-lg overflow-hidden bg-white">
               <img
                 class="lg:h-72 md:h-48 w-full object-cover object-center"
@@ -42,7 +48,7 @@ function Student() {
                   </div>
                 </div>
                 <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                  12th Physics
+                  {ele.firstName} {ele.LastName}
                 </h1>
                 <p class="leading-relaxed mb-3">
                   Photo booth fam kinfolk cold-pressed sriracha leggings
@@ -288,7 +294,7 @@ function Student() {
                   align !== alignment.GRID ? "flex-col " : "flex-row "
                 } `}
               >
-                {[1, 2, 4, 5, 6, 7, 8, 9].map((ele) => layout(align, ele))}
+                {results.length > 0 && results.map((ele) => layout(align, ele))}
               </div>
             </div>
           </div>

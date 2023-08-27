@@ -1,128 +1,278 @@
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
 
-function ProfilePage() {
+import Wrapper from "@/components/Layouts/Wrapper";
+import useAuthentication from "@/hooks/useAuthentication";
+
+function Profile() {
+  const router = useRouter();
+  const { id } = router.query;
+  console.log("id: " + id);
+  // const { getUserDetails, loading } = useAuthentication();
+
   return (
-    <div class="px-16 py-4 h-full">
-      <div class="p-8 bg-white shadow mt-24">
-        <div class="grid grid-cols-1 md:grid-cols-3">
-          <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
-            <div>
-              <p class="font-bold text-gray-700 text-xl">300</p>
-              <p class="text-gray-400">Coins</p>
-            </div>
-            <div>
-              <p class="font-bold text-gray-700 text-xl">5</p>
-              <p class="text-gray-400">Subjects</p>
-            </div>
-            <div>
-              <p class="font-bold text-gray-700 text-xl">9</p>
-              <p class="text-gray-400">Teachers</p>
-            </div>
-          </div>
-          <div class="relative">
-            <div class="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-24 w-24"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
+    <Wrapper>
+      <div class="container mx-auto my-5 p-5 h-full">
+        <div class="md:flex no-wrap md:-mx-2">
+          <div class="w-full md:w-3/12 md:mx-2">
+            <div class="bg-white p-3 border-2 border-green-400 rounded">
+              <div class="image overflow-hidden">
+                <img
+                  class="h-auto w-full mx-auto"
+                  src="https://avatars2.githubusercontent.com/u/24622175?s=720&amp;v=4"
+                  alt=""
                 />
-              </svg>
+              </div>
+              <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">
+                Jane Doe
+              </h1>
+              <h3 class="text-gray-600 font-lg font-bold leading-6">
+                Physics Teacher
+              </h3>
+              <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur
+                non deserunt
+              </p>
+              <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                <li class="flex items-center py-3">
+                  <span>Status</span>
+                  <span class="ml-auto">
+                    <span class="bg-green-500 py-1 px-2 rounded text-white text-sm">
+                      Active
+                    </span>
+                  </span>
+                </li>
+                <li class="flex items-center py-3">
+                  <span>Coins</span>
+                  <span class="ml-auto">
+                    <span class="bg-yellow-500 py-1 px-2 rounded text-gray-900 text-sm font-semibold">
+                      3000
+                    </span>
+                  </span>
+                </li>
+                <li class="flex items-center py-3">
+                  <span>Member since</span>
+                  <span class="ml-auto">Nov 07, 2016</span>
+                </li>
+              </ul>
+            </div>
+            <div class="bg-white p-3 hover:shadow mt-4">
+              <div class="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
+                <span class="text-green-500">
+                  <svg
+                    class="h-5 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                </span>
+                <span>Your&apos;s Teachers</span>
+              </div>
+              <div class="grid grid-cols-3">
+                <div class="text-center my-2">
+                  <img
+                    class="h-16 w-16 rounded-full mx-auto"
+                    src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
+                    alt=""
+                  />
+                  <a href="#" class="text-gray-600">
+                    Kojstantin
+                  </a>
+                </div>
+                <div class="text-center my-2">
+                  <img
+                    class="h-16 w-16 rounded-full mx-auto"
+                    src="https://avatars2.githubusercontent.com/u/24622175?s=60&amp;v=4"
+                    alt=""
+                  />
+                  <a href="#" class="text-gray-600">
+                    James
+                  </a>
+                </div>
+                <div class="text-center my-2">
+                  <img
+                    class="h-16 w-16 rounded-full mx-auto"
+                    src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
+                    alt=""
+                  />
+                  <a href="#" class="text-gray-600">
+                    Steve
+                  </a>
+                </div>
+                <div class="text-center my-2">
+                  <img
+                    class="h-16 w-16 rounded-full mx-auto"
+                    src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
+                    alt=""
+                  />
+                  <a href="#" class="text-gray-600">
+                    Mike
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-            <button class="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-              Update Profile
-            </button>
-            <button class="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-              Stats
-            </button>
+          <div class="w-full md:w-9/12 md:mx-2 mt-4 md:mt-0 h-full">
+            <div class="bg-white p-3 shadow-sm rounded-sm">
+              <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                <span clas="text-green-500">
+                  <svg
+                    class="h-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                </span>
+                <span class="tracking-wide">About</span>
+              </div>
+              <div class="text-gray-700">
+                <div class="grid md:grid-cols-2 text-sm">
+                  <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">First Name</div>
+                    <div class="px-4 py-2">Jane</div>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Last Name</div>
+                    <div class="px-4 py-2">Doe</div>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Gender</div>
+                    <div class="px-4 py-2">Female</div>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Contact No.</div>
+                    <div class="px-4 py-2">+11 998001001</div>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Current Address</div>
+                    <div class="px-4 py-2">Beech Creek, PA, Pennsylvania</div>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Permanant Address</div>
+                    <div class="px-4 py-2">Arlington Heights, IL, Illinois</div>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Email.</div>
+                    <div class="px-4 py-2">
+                      <a class="text-blue-800" href="mailto:jane@example.com">
+                        jane@example.com
+                      </a>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <div class="px-4 py-2 font-semibold">Birthday</div>
+                    <div class="px-4 py-2">Feb 06, 1998</div>
+                  </div>
+                </div>
+              </div>
+              <button class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
+                Show Full Information
+              </button>
+            </div>
+
+            <div class="my-4"></div>
+
+            <div class="bg-white p-3 shadow-sm rounded-sm">
+              <div class="grid grid-cols-2">
+                <div>
+                  <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                    <span clas="text-green-500">
+                      <svg
+                        class="h-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                    </span>
+                    <span class="tracking-wide">Qualifications</span>
+                  </div>
+                  <ul class="list-inside space-y-2">
+                    <li>
+                      <div class="text-teal-600">Owner at Her Company Inc.</div>
+                      <div class="text-gray-500 text-xs">March 2020 - Now</div>
+                    </li>
+                    <li>
+                      <div class="text-teal-600">Owner at Her Company Inc.</div>
+                      <div class="text-gray-500 text-xs">March 2020 - Now</div>
+                    </li>
+                    <li>
+                      <div class="text-teal-600">Owner at Her Company Inc.</div>
+                      <div class="text-gray-500 text-xs">March 2020 - Now</div>
+                    </li>
+                    <li>
+                      <div class="text-teal-600">Owner at Her Company Inc.</div>
+                      <div class="text-gray-500 text-xs">March 2020 - Now</div>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                    <span clas="text-green-500">
+                      <svg
+                        class="h-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path
+                          fill="#fff"
+                          d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
+                        />
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+                        />
+                      </svg>
+                    </span>
+                    <span class="tracking-wide">Education</span>
+                  </div>
+                  <ul class="list-inside space-y-2">
+                    <li>
+                      <div class="text-teal-600">Masters Degree in Oxford</div>
+                      <div class="text-gray-500 text-xs">March 2020 - Now</div>
+                    </li>
+                    <li>
+                      <div class="text-teal-600">Bachelors Degreen in LPU</div>
+                      <div class="text-gray-500 text-xs">March 2020 - Now</div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="mt-20 text-center border-b pb-12">
-          <h1 class="text-4xl font-medium text-gray-700">
-            Jessica Jones, <span class="font-light text-gray-500">27</span>
-          </h1>
-          <p class="font-light text-gray-600 mt-3">Bucharest, Romania</p>
-          <p class="mt-8 text-gray-500">Class 12th</p>
-          <p class="mt-2 text-gray-500">ST. Annes Convent School Bangalore</p>
-        </div>
-        <div className="w-full mt-10">
-          <div className="flex flex-row items-center">
-            <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-lg bg-lime-200 w:1/4">
-              Physics
-            </div>
-            <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-lg bg-sky-200 w:1/4">
-              Mathematics
-            </div>
-            <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-lg bg-orange-200 w:1/4">
-              Chemistry
-            </div>
-            <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-lg bg-teal-200 w:1/4">
-              Biology
-            </div>
-            <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-lg bg-gray-200 w:1/4">
-              English
-            </div>
-            <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-lg bg-red-200 w:1/4">
-              Art
-            </div>
-          </div>
-        </div>
-        <div className="w-full flex mt-16 flex-col">
-          <h2 class="text-gray-600 text-left font-bold mb-2 ms-2">Addresses</h2>
-          <div className="sm-w-full md-w:1/2 flex flex-row">
-            <div className="w-full flex sm-w-full lg-w:1/4 flex-col border-1 m-4 p-6 bg-white rounded-lg drop-shadow-xl">
-              <div className="flex w-full">House no</div>
-              <div className="flex w-full">Street</div>
-              <div className="flex w-full">Landmark</div>
-              <div className="flex w-full">City</div>
-              <div className="flex w-full">Dist</div>
-              <div className="flex w-full">State</div>
-              <div className="flex w-full">pincode</div>
-            </div>
-            <div className="w-full flex sm-w-full lg-w:1/4 flex-col border-1 m-4 p-6 bg-white rounded-lg drop-shadow-xl">
-              <div className="flex w-full">House no</div>
-              <div className="flex w-full">Street</div>
-              <div className="flex w-full">Landmark</div>
-              <div className="flex w-full">City</div>
-              <div className="flex w-full">Dist</div>
-              <div className="flex w-full">State</div>
-              <div className="flex w-full">pincode</div>
-            </div>
-            <div className="w-full flex sm-w-full lg-w:1/4 flex-col border-1 m-4 p-6 bg-white rounded-lg drop-shadow-xl">
-              <div className="flex w-full">House no</div>
-              <div className="flex w-full">Street</div>
-              <div className="flex w-full">Landmark</div>
-              <div className="flex w-full">City</div>
-              <div className="flex w-full">Dist</div>
-              <div className="flex w-full">State</div>
-              <div className="flex w-full">pincode</div>
-            </div>
-            <div className="w-full flex sm-w-full lg-w:1/4 flex-col border-1 m-4 p-6 bg-white rounded-lg drop-shadow-xl">
-              <div className="flex w-full">House no</div>
-              <div className="flex w-full">Street</div>
-              <div className="flex w-full">Landmark</div>
-              <div className="flex w-full">City</div>
-              <div className="flex w-full">Dist</div>
-              <div className="flex w-full">State</div>
-              <div className="flex w-full">pincode</div>
-            </div>
-          </div>
-        </div>
-        <div class="mt-12 flex flex-col justify-center">
-          <button class="text-sky-500 py-2 px-4 font-medium mt-4">
-            Show more
-          </button>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }
 
-export default ProfilePage;
+export default Profile;
