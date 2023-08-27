@@ -3,9 +3,13 @@ import { addDetails } from "@/redux/UserReducer";
 import Link from "next/link";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { RegistrationTypes } from "@/helper/Constant";
 
 const HeroSection = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
+
   const userReducer = useSelector((state) => state).user;
 
   const { getlogin } = useAuthentication();
@@ -24,7 +28,16 @@ const HeroSection = () => {
     e.preventDefault();
     const { phoneNumber, password } = formData;
     const response = await getlogin(phoneNumber, password);
-    dispatch(addDetails(response));
+    debugger;
+    if (response.success) {
+      dispatch(addDetails(response));
+      if (
+        response.data.user_role ===
+        RegistrationTypes.TEACHER_TYPE.toLocaleUpperCase()
+      ) {
+        router.push("/profile"); // Replace 'new-page' with the actual page path
+      }
+    }
   };
   console.log("userReducer", userReducer);
 
