@@ -29,9 +29,8 @@ const Wrapper = (props) => {
       <Header isAuthenticated={isAuthenticated} os={os} />
       {props.children}
       <Footer />
-      <div className="whatsapp-widget">
-        <Whatsapp />
-      </div>
+      <Whatsapp />
+      <div className="whatsapp-widget"></div>
       {/* <BackToTop /> */}
     </>
   );

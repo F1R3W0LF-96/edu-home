@@ -14,7 +14,7 @@ const TextChanger = ({ texts_arr }) => {
   }, [currentIndex]);
 
   return (
-    <div className="w-full text-white text-xl font-bold qoute">
+    <div className="w-full text-white text-4xl font-bold qoute">
       &quot;&nbsp;<span>{texts_arr[currentIndex]}</span>&nbsp;&quot;
     </div>
   );

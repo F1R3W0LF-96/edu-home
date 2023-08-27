@@ -32,7 +32,6 @@ class AuthRepository {
     const reponse = await axios
       .post(endPoint, { phoneno: phoneno, password: password })
       .then((response) => {
-        debugger
         if (response.data) {
           return response.data.data;
         } else {
@@ -41,7 +40,7 @@ class AuthRepository {
       })
       .catch((error) => {
         console.log(JSON.stringify(error));
-        return null;
+        return error;
       });
     return reponse;
   }

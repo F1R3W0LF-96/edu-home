@@ -41,7 +41,7 @@ export default function useAuthentication() {
     },
     getlogin: async (phoneno, password) => {
       setLoading(true);
-      const response = await AuthRepositor.login(email, password);
+      const response = await AuthRepositor.login(phoneno, password);
       if (response) {
         setLoginResponse(response);
         setIsAuthenticated(true);
