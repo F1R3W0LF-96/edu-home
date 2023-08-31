@@ -20,11 +20,11 @@ const filters = [
 ];
 const FlexAlignation = ({ data }) => {
   return (
-    <div class="flex flex-col w-full mt-4">
+    <div className="flex flex-col w-full mt-4">
       {data.map((filter, idx) => (
         <select
           key={idx + filter.name}
-          class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm mb-2"
+          className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm mb-2"
         >
           {filter.values.map((val, i) => (
             <option key={Math.random().toString()} value={val.val}>
@@ -39,11 +39,11 @@ const FlexAlignation = ({ data }) => {
 
 const GridAlignation = ({ data }) => {
   return (
-    <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
       {data.map((filter, idx) => (
         <select
           key={idx + filter.name}
-          class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
+          className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
         >
           <option key={Math.random().toString()} value="">
             {filter.name}
@@ -60,11 +60,11 @@ const GridAlignation = ({ data }) => {
 };
 const CategoriesFilter = ({ type = "flex" }) => {
   return (
-    <div class="w-full shadow p-5 rounded-lg bg-white m-4">
-      <div class="relative">
-        <div class="absolute flex items-center ml-2 h-full">
+    <div className="w-full shadow p-5 rounded-lg bg-white m-4">
+      <div className="relative">
+        <div className="absolute flex items-center ml-2 h-full">
           <svg
-            class="w-4 h-4 fill-current text-primary-gray-dark"
+            className="w-4 h-4 fill-current text-primary-gray-dark"
             viewBox="0 0 16 16"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -76,14 +76,14 @@ const CategoriesFilter = ({ type = "flex" }) => {
         <input
           type="text"
           placeholder="Search by listing, location, bedroom number..."
-          class="px-8 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
+          className="px-8 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
         />
       </div>
 
-      <div class="flex items-center justify-between mt-4">
-        <p class="font-medium">Filters</p>
+      <div className="flex items-center justify-between mt-4">
+        <p className="font-medium">Filters</p>
 
-        <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md">
+        <button className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md">
           Reset Filter
         </button>
       </div>

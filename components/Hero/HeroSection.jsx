@@ -1,18 +1,16 @@
-import useAuthentication from "@/hooks/useAuthentication";
-import { addDetails } from "@/redux/userReducer";
 import Link from "next/link";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { addDetails, isAuthenticated } from "@/redux/userReducer";
+import useAuthentication from "@/hooks/useAuthentication";
 import { RegistrationTypes } from "@/helper/Constant";
 
 const HeroSection = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const userReducer = useSelector((state) => state).user;
-
-  const { getlogin } = useAuthentication();
+  const userState = useSelector((state) => state).user;
+  const { getlogin, loading } = useAuthentication();
   const [formData, setFormData] = useState({
     phoneNumber: "",
     password: "",
@@ -24,21 +22,26 @@ const HeroSection = () => {
       [name]: value,
     }));
   };
-  const loginWithMobileNumber = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const { phoneNumber, password } = formData;
-    const response = await getlogin(phoneNumber, password);
-    if (response.success) {
-      dispatch(addDetails(response));
-      if (
-        response.data.user_role ===
-        RegistrationTypes.TEACHER_TYPE.toLocaleUpperCase()
-      ) {
-        router.push("/userListing/teacher"); // Replace 'new-page' with the actual page path
+    const { data, success, error } = await getlogin(phoneNumber, password);
+    console.log(data, success, error, ":::: handleLogin ::::");
+    if (success) {
+      delete data["password"];
+      delete data["otp"];
+      dispatch(addDetails({ data, success, error }));
+      dispatch(isAuthenticated(true));
+      localStorage.setItem("accessToken", data.accessToken);
+      if (!data.isProfileComplete) {
+        router.push("/lists/teacher");
+      } else {
+        router.push("/profile");
       }
+    } else {
+      dispatch(isAuthenticated(null));
     }
   };
-  console.log("userReducer", userReducer);
 
   return (
     <div className="relative">
@@ -139,10 +142,11 @@ const HeroSection = () => {
                   <div className="mt-4 mb-2 sm:mb-4">
                     <button
                       // type="submit"
-                      onClick={(e) => loginWithMobileNumber(e)}
+                      disabled={loading}
+                      onClick={(e) => handleLogin(e)}
                       className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
                     >
-                      Login
+                      {loading ? "Logging..." : "Login"}
                     </button>
                   </div>
                   <div className="mt-4 mb-2 sm:mb-4">

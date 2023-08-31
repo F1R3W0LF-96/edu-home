@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import TextChanger from "../Elements/TextChanger";
 import { proverbs } from "@/helper";
 import useAuthentication from "@/hooks/useAuthentication";
 import { RegistrationTypes } from "@/helper/Constant";
+import { addDetails, isAuthenticated } from "@/redux/userReducer";
 function Registration({ registrationType, ...props }) {
   const { signUp } = useAuthentication();
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -28,7 +32,7 @@ function Registration({ registrationType, ...props }) {
     const apiData = {
       fullname: `${formData.firstName} ${formData.lastName}`,
       name: formData.firstName.toLowerCase(),
-      email: `${formData.firstName.toLowerCase()}${formData.lastName.toLowerCase()}123@gmail.com`,
+      email: `${formData.email}`,
       password: formData.password,
       phoneno: formData.phoneNumber,
       user_role:
@@ -36,7 +40,7 @@ function Registration({ registrationType, ...props }) {
           ? RegistrationTypes.TEACHER_TYPE
           : RegistrationTypes.STUDENT_TYPE,
     };
-    const response = await signUp(
+    const { data, success, error, message } = await signUp(
       apiData.fullname,
       apiData.name,
       apiData.email,
@@ -44,6 +48,12 @@ function Registration({ registrationType, ...props }) {
       apiData.phoneno,
       apiData.user_role
     );
+    if (success) {
+      dispatch(addDetails({ data, success, error }));
+      dispatch(isAuthenticated(true));
+    } else {
+      dispatch(isAuthenticated(false));
+    }
   };
 
   return (
@@ -158,7 +168,7 @@ function Registration({ registrationType, ...props }) {
                 </div> */}
 
                 <div className="flex -mx-3">
-                  <div className="w-full px-3 mb-12">
+                  <div className="w-full px-3 mb-1">
                     <label htmlFor="" className="text-xs font-semibold px-1">
                       Password
                     </label>
@@ -167,7 +177,7 @@ function Registration({ registrationType, ...props }) {
                         <i className="mdi mdi-lock-outline text-gray-400 text-lg" />
                       </div>
                       <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                         placeholder="************"
@@ -175,6 +185,17 @@ function Registration({ registrationType, ...props }) {
                       />
                     </div>
                   </div>
+                </div>
+                <div className="mx-3 mb-4">
+                  <input
+                    type="checkbox"
+                    name="showpassword"
+                    placeholder="************"
+                    onChange={() => {
+                      setShowPassword((ps) => !ps);
+                    }}
+                  />
+                  &nbsp;Show Password
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">

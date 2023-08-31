@@ -10,38 +10,41 @@ function Courses() {
   useEffect(() => {}, []);
   return (
     <Wrapper>
-      <section class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto">
-          <div class="flex flex-wrap -m-4">
+      <section className="text-gray-600 body-font">
+        <div className="container px-5 py-24 mx-auto">
+          <div className="flex flex-wrap -m-4">
             {[1, 2, 4, 5, 6, 7, 8, 9].map((ele) => (
-              <div class="p-4 lg:w-1/3 md:w-1/2 sm:w-full" key={ele.toString()}>
-                <div class="h-full border border-gray-300 border-opacity-60 rounded-lg overflow-hidden bg-white">
+              <div
+                className="p-4 lg:w-1/3 md:w-1/2 sm:w-full"
+                key={ele.toString()}
+              >
+                <div className="h-full border border-gray-300 border-opacity-60 rounded-lg overflow-hidden bg-white">
                   <img
-                    class="lg:h-72 md:h-64 w-full object-cover object-center"
+                    className="lg:h-72 md:h-64 w-full object-cover object-center"
                     src="https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                     alt="blog"
                   />
-                  <div class="p-6">
+                  <div className="p-6">
                     <div className="flex flex-row items-center">
-                      <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/4">
+                      <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/4">
                         MATHS
                       </div>
-                      <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/4">
+                      <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/4">
                         MATHS
                       </div>
                     </div>
-                    <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
+                    <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
                       The Catalyzer
                     </h1>
-                    <p class="leading-relaxed mb-3">
+                    <p className="leading-relaxed mb-3">
                       Photo booth fam kinfolk cold-pressed sriracha leggings
                       jianbing microdosing tousled waistcoat.
                     </p>
-                    <div class="flex items-center flex-wrap">
-                      <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                    <div className="flex items-center flex-wrap">
+                      <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
                         Learn More
                         <svg
-                          class="w-4 h-4 ml-2"
+                          className="w-4 h-4 ml-2"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
                           stroke-width="2"
@@ -53,9 +56,9 @@ function Courses() {
                           <path d="M12 5l7 7-7 7"></path>
                         </svg>
                       </a>
-                      <span class="text-black-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+                      <span className="text-black-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
                         <svg
-                          class="w-4 h-4 mr-1"
+                          className="w-4 h-4 mr-1"
                           stroke="currentColor"
                           stroke-width="2"
                           fill="none"
@@ -68,9 +71,9 @@ function Courses() {
                         </svg>
                         1.2K
                       </span>
-                      <span class="text-black-400 inline-flex items-center leading-none text-sm">
+                      <span className="text-black-400 inline-flex items-center leading-none text-sm">
                         <svg
-                          class="w-4 h-4 mr-1"
+                          className="w-4 h-4 mr-1"
                           stroke="currentColor"
                           stroke-width="2"
                           fill="none"
@@ -84,8 +87,8 @@ function Courses() {
                       </span>
                     </div>
 
-                    <div class="flex justify-between items-center flex-wrap mt-8">
-                      <span class="text-black-400 mr-3 inline-flex items-center text-sm pr-3 py-1">
+                    <div className="flex justify-between items-center flex-wrap mt-8">
+                      <span className="text-black-400 mr-3 inline-flex items-center text-sm pr-3 py-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -96,7 +99,7 @@ function Courses() {
                           stroke-width="2"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          class="feather feather-file-text"
+                          className="feather feather-file-text"
                         >
                           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                           <polyline points="14 2 14 8 20 8"></polyline>
@@ -106,7 +109,7 @@ function Courses() {
                         </svg>
                         10 lessons
                       </span>
-                      <span class="text-black-400 inline-flex items-center leading-none text-sm">
+                      <span className="text-black-400 inline-flex items-center leading-none text-sm">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -117,7 +120,7 @@ function Courses() {
                           stroke-width="2"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          class="feather feather-share-2"
+                          className="feather feather-share-2"
                         >
                           <circle cx="18" cy="5" r="3"></circle>
                           <circle cx="6" cy="12" r="3"></circle>

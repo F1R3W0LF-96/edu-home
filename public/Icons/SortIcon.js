@@ -7,7 +7,7 @@ function SortIcon() {
       width="32"
       height="32"
       fill="currentColor"
-      class="bi bi-arrow-down"
+      className="bi bi-arrow-down"
       viewBox="0 0 16 16"
       id="IconChangeColor"
     >

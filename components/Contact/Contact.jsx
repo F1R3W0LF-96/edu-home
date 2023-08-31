@@ -48,7 +48,7 @@ const Contact = () => {
                           name="fullname"
                           required
                           className="border border-gray-300  pl-3 py-3 shadow-sm bg-transparent rounded text-sm focus:outline-none focus:border-indigo-700 placeholder-gray-500 text-gray-500 dark:text-gray-400"
-                          placeholder
+                          // placeholder
                         />
                       </div>
                       <div className="xl:w-1/2 lg:w-1/2 flex flex-col mb-6 mx-6 order-1 lg:order-2">
@@ -123,7 +123,7 @@ const Contact = () => {
                           name="message"
                           required
                           className="border border-gray-300 dark:border-gray-700 pl-3 py-3 shadow-sm bg-transparent rounded text-sm focus:outline-none focus:border-indigo-700 placeholder-gray-500 text-gray-500 dark:text-gray-400"
-                          placeholder
+                          // placeholder
                         ></textarea>
                       </div>
                     </div>

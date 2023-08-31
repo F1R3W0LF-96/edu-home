@@ -1,4 +1,4 @@
-import Repository, { baseDomain } from "./httpService";
+import Repository, { baseDomain, customHeaders } from "./httpService";
 import axios from "axios";
 // export async function getTotalRecords() {
 //   const reponse = await Repository(null)
@@ -24,34 +24,45 @@ import axios from "axios";
 // }
 
 class AuthRepository {
-  constructor() {}
+  token = "";
+  headers = customHeaders("");
+  constructor(_token, _headers) {
+    const token = localStorage.getItem("accessToken");
+    const headers = {
+      Accept: "application/json",
+      authorization: token,
+    };
+    this.token = _token ? _token : token;
+    this.headers = _headers ? _headers : headers;
+  }
 
   async login(phoneno, password) {
     const endPoint = `${baseDomain}/users/login`;
-    // const endPoint = `https://api.tuitionsearch.co.in/api/v1/users/login`;
-    const reponse = await axios
+    const response = await axios
       .post(endPoint, { phoneno: phoneno, password: password })
       .then((response) => {
         if (response.data && response.data.success) {
           return {
             success: true,
             data: response.data.data,
+            error: false,
           };
         } else {
           return {
             success: false,
             data: null,
+            error: false,
           };
         }
       })
       .catch((error) => {
-        console.log(JSON.stringify(error));
         return {
           success: false,
-          data: null,
+          data: error,
+          error: true,
         };
       });
-    return reponse;
+    return response;
   }
   async sendotp(phone) {
     const endPoint = `${baseDomain}/users/send-otp`;
@@ -71,32 +82,41 @@ class AuthRepository {
     return reponse;
   }
   async getUserDetails(id) {
-    const endPoint = `${baseDomain}/users/${id}`;
+    const endPoint = `${baseDomain}/users/profile?id=${id}`;
+    console.log(this.headers);
     const reponse = await axios
-      .get(endPoint)
+      .get(endPoint, { headers: { ...this.headers } })
       .then((response) => {
         if (response.data) {
-          return response.data;
+          return {
+            success: true,
+            data: response.data,
+            error: false,
+          };
         } else {
-          return null;
+          return {
+            success: false,
+            data: null,
+            error: true,
+          };
         }
       })
       .catch((error) => {
-        console.log(JSON.stringify(error));
-        return null;
+        return {
+          success: false,
+          data: error,
+          error: true,
+        };
       });
     return reponse;
   }
 
   async signUp(requestBody) {
     const endPoint = `${baseDomain}/users/sign-up`;
-    // const endPoint = `https://api.tuitionsearch.co.in/api/v1/users/sign-up`;
-
     try {
       const response = await axios.post(endPoint, requestBody);
       return response.data;
     } catch (error) {
-      console.error(error);
       return null;
     }
   }

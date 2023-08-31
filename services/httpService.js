@@ -1,7 +1,7 @@
 import axios from "axios";
 // export const baseDomain = `${process.env.BASE_URL}/api/v1`;
 export const baseDomain = "https://api.tuitionsearch.co.in/api/v1";
-console.log(baseDomain);
+export const baseUrl = `${baseDomain}`;
 // export const baseUrlProduct = process.env.BASE_URL || "process.env.BASE_URL";
 export const baseUrlProduct = "https://api.tuitionsearch.co.in/api/v1";
 export const customHeaders = (token) =>
@@ -21,7 +21,6 @@ export const serializeQuery = (query) => {
     )
     .join("&");
 };
-export const baseUrl = `${baseDomain}`;
 const customAxios = (token) =>
   axios.create({
     baseUrl,

@@ -1,32 +1,25 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Button } from "antd";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../public/Images/logo.png";
 import Avatar from "../Elements/Avatar";
-import { Button } from "antd";
-import { useRouter } from "next/router";
 import coinImage from "../../public/Images/rupee.png";
 import InstagramIcon from "@/public/Icons/instagram";
 import WhatsappIcon from "@/public/Icons/whatsapp";
 import PhoneIcon from "@/public/Icons/Phone";
+import { useSelector } from "react-redux";
+import CustomPopover from "../Elements/CustomPopover";
 
-const Header = ({ isAuthenticated, os, location }) => {
+const Header = ({ isAuthenticated, os, location, userState }) => {
   const { push, route } = useRouter();
   const mobileMenu = useRef(null);
   const [openMenu, setOpenMenu] = useState(false);
+  const [openProfileMenu, setOpenProfileMenu] = useState(false);
   const [userName, setUserName] = useState("");
   const [loggedInUser, setLoggedInUser] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-  useEffect(() => {
-    if (localStorage) {
-      if (localStorage.getItem("accessToken")) {
-        setLoggedInUser(true);
-      }
-      if (localStorage.getItem("fullName")) {
-        setUserName(localStorage.getItem("fullName"));
-      }
-    }
-  }, []);
   useEffect(() => {
     // Burger menus
     document.addEventListener("DOMContentLoaded", function () {
@@ -83,7 +76,7 @@ const Header = ({ isAuthenticated, os, location }) => {
           <Image src={logo} width={200} alt="logo" />
         </Link>
         <div className="lg:hidden flex flex-row" onClick={handleShowMobileMenu}>
-          {isAuthenticated && (
+          {userState?.isAuth && (
             <Avatar
               size={300}
               imageSrc={
@@ -112,47 +105,83 @@ const Header = ({ isAuthenticated, os, location }) => {
               }
             />
           )}
-
-          {loggedInUser ? (
+          <>
+            <Link className="flex items-center mr-3" href="tel:9553444001">
+              <PhoneIcon />
+              <span className="ms-1 text-sm text-sky font-bold">
+                +919553444001
+              </span>
+            </Link>
+            <Link
+              className="flex items-center mr-3"
+              href="https://wa.me/+919553444001"
+              target="_blank"
+            >
+              <WhatsappIcon />
+              <span className="ms-1 text-sm text-sky font-bold">
+                +919553444001
+              </span>
+            </Link>
+            <Link
+              className="flex items-center mr-3"
+              href="https://www.instagram.com/tuitionsearch/"
+            >
+              <InstagramIcon />
+              <span className="ms-1 text-sm text-sky font-bold">
+                tuitionsearch
+              </span>
+            </Link>
+            {route === "/" && (
+              <>
+                <Link
+                  className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+                  href="#hero"
+                >
+                  Home
+                </Link>
+                <Link
+                  className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+                  href="#about-us"
+                >
+                  About Us
+                </Link>
+                <Link
+                  className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+                  href="#contact-us"
+                >
+                  Contact Us
+                </Link>
+              </>
+            )}
+            {/* <Link
+                className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+                href="/login"
+              >
+                Sign In
+              </Link> */}
+          </>
+          {userState?.isAuth && (
             <>
-              <div class="relative">
-                <button
-                  id="dropdownDefaultButton"
-                  data-dropdown-toggle="dropdown"
-                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  type="button"
-                  onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-                >
-                  {userName}(
-                  <Image src={coinImage} alt={"rupee"} width={20} />
-                  {1000} coins)
-                  <svg
-                    class="w-4 h-4 ml-2"
-                    aria-hidden="true"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 9l-7 7-7-7"
-                    ></path>
-                  </svg>
-                </button>
-
-                <div
-                  id="dropdown"
-                  class={`z-10 ${
-                    showProfileDropdown
-                      ? "opacity-100 pointer-events-auto"
-                      : "opacity-0 pointer-events-none"
-                  } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute right-0 transition-opacity duration-200`}
-                >
+              <Avatar
+                size={300}
+                imageSrc={
+                  "https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_6.png"
+                }
+              />
+              <CustomPopover
+                open={openProfileMenu}
+                handleClose={() => setOpenProfileMenu(false)}
+                handleOpen={(newOpen) => setOpenProfileMenu(newOpen)}
+                title={""}
+                text={
+                  <span className="flex">
+                    <Image src={coinImage} alt={"rupee"} width={20} />
+                    {userState?.data?.coins}
+                  </span>
+                }
+                contentHtml={
                   <ul
-                    class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                    className="py-2 text-sm text-gray-700 dark:text-gray-200"
                     aria-labelledby="dropdownDefaultButton"
                   >
                     <li>
@@ -160,7 +189,7 @@ const Header = ({ isAuthenticated, os, location }) => {
                         onClick={() => {
                           push("/profile");
                         }}
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         Profile
                       </a>
@@ -172,70 +201,14 @@ const Header = ({ isAuthenticated, os, location }) => {
                           localStorage.removeItem("accessToken");
                           push("/");
                         }}
-                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         Sign out
                       </a>
                     </li>
                   </ul>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <Link className="flex items-center mr-3" href="tel:9553444001">
-                <PhoneIcon />
-                <span className="ms-1 text-sm text-sky font-bold">
-                  +919553444001
-                </span>
-              </Link>
-              <Link
-                className="flex items-center mr-3"
-                href="https://wa.me/+919553444001"
-                target="_blank"
-              >
-                <WhatsappIcon />
-                <span className="ms-1 text-sm text-sky font-bold">
-                  +919553444001
-                </span>
-              </Link>
-              <Link
-                className="flex items-center mr-3"
-                href="https://www.instagram.com/tuitionsearch/"
-              >
-                <InstagramIcon />
-                <span className="ms-1 text-sm text-sky font-bold">
-                  tuitionsearch
-                </span>
-              </Link>
-              {route === "/" && (
-                <>
-                  <Link
-                    className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-                    href="#hero"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-                    href="#about-us"
-                  >
-                    About Us
-                  </Link>
-                  <Link
-                    className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-                    href="#contact-us"
-                  >
-                    Contact Us
-                  </Link>
-                </>
-              )}
-              {/* <Link
-                className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-                href="/login"
-              >
-                Sign In
-              </Link> */}
+                }
+              />
             </>
           )}
         </div>

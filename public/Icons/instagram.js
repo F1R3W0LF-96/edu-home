@@ -7,7 +7,7 @@ function InstagramIcon() {
       width="32"
       height="32"
       fill="currentColor"
-      class="bi bi-instagram"
+      className="bi bi-instagram"
       viewBox="0 0 16 16"
       id="IconChangeColor"
     >

@@ -1,16 +1,13 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import BarLoader from "react-spinners/BarLoader";
 import LandingPage from "@/components/LandingPage/LandingPage";
 import Hero from "@/components/Hero/Hero";
 import Wrapper from "@/components/Layouts/Wrapper";
 import Teams from "@/components/Teams/Teams";
 import Contact from "@/components/Contact/Contact";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 import locationImg from "../public/Images/location.png";
-import BarLoader from "react-spinners/BarLoader";
 import About from "@/components/AboutUs/About";
 import HeroSection from "@/components/Hero/HeroSection";
 

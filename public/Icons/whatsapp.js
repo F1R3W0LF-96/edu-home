@@ -7,7 +7,7 @@ function WhatsappIcon() {
       width="32"
       height="32"
       fill="currentColor"
-      class="bi bi-whatsapp"
+      className="bi bi-whatsapp"
       viewBox="0 0 16 16"
       id="IconChangeColor"
     >

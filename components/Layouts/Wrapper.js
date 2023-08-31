@@ -1,13 +1,15 @@
 // import { animationCreate } from "@/utils/utils";
 import React, { useEffect, useState } from "react";
-import styles from "@/styles/LandingPage.module.css";
+import { useSelector } from "react-redux";
 // import BackToTop from "../lib/BackToTop";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import useAuthentication from "@/hooks/useAuthentication";
 import Whatsapp from "../Widgets/Whatsapp";
+
 const Wrapper = (props) => {
-  console.log(props);
+  const state = useSelector((state) => state);
+  console.log(state, ":::: persisted state ::::");
   const { isAuthenticated } = useAuthentication();
   const [os, setOS] = useState("window");
   useEffect(() => {
@@ -26,7 +28,11 @@ const Wrapper = (props) => {
 
   return (
     <>
-      <Header isAuthenticated={isAuthenticated} os={os} />
+      <Header
+        isAuthenticated={isAuthenticated}
+        os={os}
+        userState={state.user}
+      />
       {props.children}
       <Footer />
       <Whatsapp />

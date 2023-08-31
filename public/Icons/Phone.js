@@ -7,7 +7,7 @@ function PhoneIcon() {
       width="32"
       height="32"
       fill="currentColor"
-      class="bi bi-phone"
+      className="bi bi-phone"
       viewBox="0 0 16 16"
       id="IconChangeColor"
     >

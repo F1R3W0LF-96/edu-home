@@ -3,7 +3,8 @@ import useValidation from "./useValidation";
 import AuthRepositors from "../services/authService";
 export default function useAuthentication() {
   const AuthRepositor = new AuthRepositors();
-  const { isEmail, validateStrongPassword, validatePhoneNo } = useValidation();
+  const { isEmail, validateEmail, validateStrongPassword, validatePhoneNo } =
+    useValidation();
   const [loading, setLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginResponse, setLoginResponse] = useState(null);
@@ -27,12 +28,7 @@ export default function useAuthentication() {
         if (response) {
           setLoginResponse(response);
           setIsAuthenticated(true);
-          setTimeout(
-            function () {
-              setLoading(false);
-            }.bind(this),
-            250
-          );
+          setLoading(false);
         }
         return true;
       } else {
@@ -42,37 +38,36 @@ export default function useAuthentication() {
     getlogin: async (phoneno, password) => {
       setLoading(true);
       const response = await AuthRepositor.login(phoneno, password);
-      if (response) {
+      if (response.success) {
         setLoginResponse(response);
         setIsAuthenticated(true);
-        setTimeout(
-          function () {
-            setLoading(false);
-          }.bind(this),
-          250
-        );
+        setLoading(false);
+      } else {
+        setLoginResponse(null);
+        setIsAuthenticated(false);
+        setLoading(false);
       }
       return response;
     },
     getUserDetails: async (id) => {
       setLoading(true);
       const response = await AuthRepositor.getUserDetails(id);
+      console.log(response.data, ":::: getUserDetails ::::");
       if (response) {
-        setUserDetails(response);
+        setUserDetails(response.data.data);
+        setLoading(false);
       } else {
+        setLoading(false);
         return null;
       }
+      return response;
     },
     signUp: async (fullname, name, email, password, phoneno, user_role) => {
       setLoading(true);
       const isValidEmail = validateEmail(email);
-      // const isStrongPassword = validateStrongPassword(password);
-      // debugger;
-
-      if (
-        isValidEmail
-        // && isStrongPassword
-      ) {
+      const isStrongPassword = validateStrongPassword(password);
+      const isPhone = validatePhoneNo(phoneno);
+      if (isValidEmail && isStrongPassword && isPhone) {
         try {
           const requestBody = {
             fullname: fullname,
@@ -80,22 +75,36 @@ export default function useAuthentication() {
             email: email,
             password: password,
             phoneno: phoneno,
-            user_role: user_role,
+            user_role: user_role === "teacher" ? "TEACHER" : "STUDENT",
           };
 
           const response = await AuthRepositor.signUp(requestBody);
           setLoginResponse(response.data);
           setIsAuthenticated(true);
-          setTimeout(() => setLoading(false), 250);
-          return response.data; // Return the response data on successful sign-up
-        } catch (error) {
-          console.error(error);
           setLoading(false);
-          return { error: "An error occurred during sign-up." }; // Return an error object if the API call fails
+          return {
+            data: response,
+            success: true,
+            error: false,
+            message: response?.message,
+          };
+        } catch (error) {
+          setLoading(false);
+          return {
+            data: error,
+            success: false,
+            error: true,
+            message: "Something went wrong.",
+          };
         }
       } else {
         setLoading(false);
-        return { error: "Invalid email or password." }; // Return an error object for validation errors
+        return {
+          data: null,
+          success: false,
+          error: true,
+          message: "Invalid email or password.",
+        };
       }
     },
     getUserBtRole: async (role) => {

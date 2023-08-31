@@ -14,7 +14,6 @@ function Student() {
   const [results, setResults] = useState([]);
   const [align, setAlign] = useState(alignment.GRID);
   useEffect(() => {
-    console.log("userType", userType);
     if (userType) {
       getUserListing(userType);
     }
@@ -22,43 +21,44 @@ function Student() {
 
   const getUserListing = async (type) => {
     const response = await getUserBtRole(type.toUpperCase());
-    setResults(response.data);
     console.log(response);
+    setResults(response.data);
   };
 
   const layout = (type, ele) => {
-    debugger;
     switch (type) {
       case alignment.GRID:
         return (
-          <div class="p-4 w-full lg:w-1/3 md:w-1/2" key={ele._id.toString()}>
-            <div class="h-full border border-gray-300 border-opacity-60 rounded-lg overflow-hidden bg-white">
+          <div
+            className="p-4 w-full lg:w-1/3 md:w-1/2"
+            key={ele._id.toString()}
+          >
+            <div className="h-full border border-gray-300 border-opacity-60 rounded-lg overflow-hidden bg-white">
               <img
-                class="lg:h-72 md:h-48 w-full object-cover object-center"
+                className="lg:h-72 md:h-48 w-full object-cover object-center"
                 src="https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 alt="blog"
               />
-              <div class="p-6">
+              <div className="p-6">
                 <div className="flex flex-row items-center">
-                  <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
+                  <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
                     ICSE
                   </div>
-                  <div class="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
+                  <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
                     CBSE
                   </div>
                 </div>
-                <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
+                <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
                   {ele.firstName} {ele.LastName}
                 </h1>
-                <p class="leading-relaxed mb-3">
-                  Photo booth fam kinfolk cold-pressed sriracha leggings
-                  jianbing microdosing tousled waistcoat.
+                <p className="leading-relaxed mb-3">
+                  {ele.bio ? ele.bio : "Lorem ispsum..."}
                 </p>
-                <div class="flex items-center flex-wrap">
-                  <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                <div className="flex items-center flex-wrap">
+                  <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
                     Learn More
                     <svg
-                      class="w-4 h-4 ml-2"
+                      className="w-4 h-4 ml-2"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                       stroke-width="2"
@@ -70,9 +70,9 @@ function Student() {
                       <path d="M12 5l7 7-7 7"></path>
                     </svg>
                   </a>
-                  <span class="text-black-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+                  <span className="text-black-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
                     <svg
-                      class="w-4 h-4 mr-1"
+                      className="w-4 h-4 mr-1"
                       stroke="currentColor"
                       stroke-width="2"
                       fill="none"
@@ -85,9 +85,9 @@ function Student() {
                     </svg>
                     1.2K
                   </span>
-                  <span class="text-black-400 inline-flex items-center leading-none text-sm">
+                  <span className="text-black-400 inline-flex items-center leading-none text-sm">
                     <svg
-                      class="w-4 h-4 mr-1"
+                      className="w-4 h-4 mr-1"
                       stroke="currentColor"
                       stroke-width="2"
                       fill="none"
@@ -101,8 +101,8 @@ function Student() {
                   </span>
                 </div>
 
-                <div class="flex justify-between items-center flex-wrap mt-8">
-                  <span class="text-black-400 mr-3 inline-flex items-center text-sm pr-3 py-1">
+                <div className="flex justify-between items-center flex-wrap mt-8">
+                  <span className="text-black-400 mr-3 inline-flex items-center text-sm pr-3 py-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -113,7 +113,7 @@ function Student() {
                       stroke-width="2"
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      class="feather feather-file-text"
+                      className="feather feather-file-text"
                     >
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                       <polyline points="14 2 14 8 20 8"></polyline>
@@ -123,7 +123,7 @@ function Student() {
                     </svg>
                     10 lessons
                   </span>
-                  <span class="text-black-400 inline-flex items-center leading-none text-sm">
+                  <span className="text-black-400 inline-flex items-center leading-none text-sm">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -134,7 +134,7 @@ function Student() {
                       stroke-width="2"
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      class="feather feather-share-2"
+                      className="feather feather-share-2"
                     >
                       <circle cx="18" cy="5" r="3"></circle>
                       <circle cx="6" cy="12" r="3"></circle>
@@ -152,21 +152,21 @@ function Student() {
 
       case alignment.ROW:
         return (
-          <div class="p-4 w-full ">
-            <div class="h-full border border-gray-300 border-opacity-60 rounded-lg overflow-hidden bg-white">
-              <div class="p-6">
-                <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
+          <div className="p-4 w-full ">
+            <div className="h-full border border-gray-300 border-opacity-60 rounded-lg overflow-hidden bg-white">
+              <div className="p-6">
+                <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
                   12th Physics
                 </h1>
-                <p class="leading-relaxed mb-3">
+                <p className="leading-relaxed mb-3">
                   Photo booth fam kinfolk cold-pressed sriracha leggings
                   jianbing microdosing tousled waistcoat.
                 </p>
-                <div class="flex items-center flex-wrap">
-                  <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                <div className="flex items-center flex-wrap">
+                  <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
                     Learn More
                     <svg
-                      class="w-4 h-4 ml-2"
+                      className="w-4 h-4 ml-2"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                       stroke-width="2"
@@ -178,9 +178,9 @@ function Student() {
                       <path d="M12 5l7 7-7 7"></path>
                     </svg>
                   </a>
-                  <span class="text-black-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+                  <span className="text-black-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
                     <svg
-                      class="w-4 h-4 mr-1"
+                      className="w-4 h-4 mr-1"
                       stroke="currentColor"
                       stroke-width="2"
                       fill="none"
@@ -193,9 +193,9 @@ function Student() {
                     </svg>
                     1.2K
                   </span>
-                  <span class="text-black-400 inline-flex items-center leading-none text-sm">
+                  <span className="text-black-400 inline-flex items-center leading-none text-sm">
                     <svg
-                      class="w-4 h-4 mr-1"
+                      className="w-4 h-4 mr-1"
                       stroke="currentColor"
                       stroke-width="2"
                       fill="none"
@@ -208,8 +208,8 @@ function Student() {
                     6
                   </span>
                 </div>
-                <div class="flex justify-between items-center flex-wrap mt-8">
-                  <span class="text-black-400 mr-3 inline-flex items-center text-sm pr-3 py-1">
+                <div className="flex justify-between items-center flex-wrap mt-8">
+                  <span className="text-black-400 mr-3 inline-flex items-center text-sm pr-3 py-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -220,7 +220,7 @@ function Student() {
                       stroke-width="2"
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      class="feather feather-file-text"
+                      className="feather feather-file-text"
                     >
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                       <polyline points="14 2 14 8 20 8"></polyline>
@@ -230,7 +230,7 @@ function Student() {
                     </svg>
                     10 lessons
                   </span>
-                  <span class="text-black-400 inline-flex items-center leading-none text-sm">
+                  <span className="text-black-400 inline-flex items-center leading-none text-sm">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -241,7 +241,7 @@ function Student() {
                       stroke-width="2"
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      class="feather feather-share-2"
+                      className="feather feather-share-2"
                     >
                       <circle cx="18" cy="5" r="3"></circle>
                       <circle cx="6" cy="12" r="3"></circle>
@@ -260,7 +260,7 @@ function Student() {
   };
   return (
     <Wrapper>
-      <section class="container text-gray-600 body-font mx-auto">
+      <section className="container text-gray-600 body-font mx-auto">
         <div className="w-full p-4 flex flex-row justify-between mt-12">
           <h1 className="mb-4 text-5xl font-bold text-gray-500">
             The Teacher Listing
@@ -288,9 +288,9 @@ function Student() {
             <CategoriesFilter />
           </div>
           <div className="col-span-12 lg:col-span-9">
-            <div class="mx-auto">
+            <div className="mx-auto">
               <div
-                class={`flex flex-wrap m-4 ${
+                className={`flex flex-wrap m-4 ${
                   align !== alignment.GRID ? "flex-col " : "flex-row "
                 } `}
               >
