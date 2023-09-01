@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "antd";
-const ProfileUpdateForm = ({ isModalOpen, handleOk, handleCancel, data }) => {
+const ProfileUpdateForm = ({
+  isModalOpen,
+  handleOk,
+  handleCancel,
+  data,
+  handleUpdate,
+}) => {
   console.log(data);
   useEffect(() => {
     setProfileDetails((ps) => ({
