@@ -10,18 +10,24 @@ import axios from "axios";
 //   return reponse;
 // }
 
-// export async function getProductsByIds(payload, token) {
-//   const endPoint = `${baseDomain}/lists/${payload}`;
-//   const response = await Repository(token)
-//     .get(endPoint)
-//     .then((response) => {
-//       return {
-//         items: response.data,
-//       };
-//     })
-//     .catch((error) => ({ error: JSON.stringify(error) }));
-//   return response;
-// }
+export async function updateUserDetails(body, token) {
+  const endPoint = `${baseDomain}/users/update-user`;
+  const response = await Repository(token)
+    .post(endPoint, body)
+    .then((response) => {
+      return {
+        success: true,
+        data: response.data,
+        error: false,
+      };
+    })
+    .catch((error) => ({
+      success: false,
+      data: error,
+      error: true,
+    }));
+  return response;
+}
 
 class AuthRepository {
   token = "";

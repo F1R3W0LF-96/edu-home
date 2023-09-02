@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useValidation from "./useValidation";
-import AuthRepositors from "../services/authService";
+import AuthRepositors, { updateUserDetails } from "../services/authService";
 export default function useAuthentication() {
   const AuthRepositor = new AuthRepositors();
   const { isEmail, validateEmail, validateStrongPassword, validatePhoneNo } =
@@ -17,6 +17,7 @@ export default function useAuthentication() {
     userDetails,
     isEmail,
     setUserDetails,
+    updateUserDetails,
     setLoading: (payload) => {
       setLoading(payload);
     },

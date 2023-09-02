@@ -13,22 +13,22 @@ const ProfileUpdateForm = ({
       ...ps,
       firstname: {
         ...ps.firstname,
-        value: data.firstName,
+        value: data?.firstName,
       },
       lastname: {
         ...ps.lastname,
-        value: data.LastName,
+        value: data?.LastName,
       },
       email: {
         ...ps.email,
-        value: data.email,
+        value: data?.email,
       },
       phoneno: {
         ...ps.phoneno,
-        value: data.phoneno,
+        value: data?.phoneno,
       },
     }));
-    setGender(data.gender);
+    setGender(data?.gender);
   }, [data]);
   const [updating, setUpdating] = useState(false);
   const [profileDetails, setProfileDetails] = useState({
