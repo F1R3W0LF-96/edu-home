@@ -17,7 +17,7 @@ const useValidation = () => {
     },
     validatePhoneNo: (phone) => {
       setIsPhone(validator.isMobilePhone(phone));
-      return validator.isMobilePhone(phone);
+      return `${phone}`.length === 10;
     },
     validateStrongPassword: (password) => {
       const _sp = validator.isStrongPassword(password, {

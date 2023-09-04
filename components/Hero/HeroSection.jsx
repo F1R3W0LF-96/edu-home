@@ -149,18 +149,19 @@ const HeroSection = () => {
                       {loading ? "Logging..." : "Login"}
                     </button>
                   </div>
-                  <div className="mt-4 mb-2 sm:mb-4">
-                    <button
-                      // type="submit"
-                      className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
-                    >
-                      Forgot password
-                    </button>
-                  </div>
-                  <p className="text-xs text-gray-600 sm:text-sm">
-                    We respect your privacy. Unsubscribe at any time.
-                  </p>
                 </form>
+                <div className="mt-4 mb-2 sm:mb-4">
+                  <button
+                    onClick={() => {}}
+                    // type="submit"
+                    className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
+                  >
+                    Forgot password
+                  </button>
+                </div>
+                <p className="text-xs text-gray-600 sm:text-sm">
+                  We respect your privacy. Unsubscribe at any time.
+                </p>
               </div>
             </div>
           </div>

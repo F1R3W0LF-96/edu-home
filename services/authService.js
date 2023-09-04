@@ -64,7 +64,7 @@ class AuthRepository {
       .catch((error) => {
         return {
           success: false,
-          data: error,
+          data: error?.response?.data || error,
           error: true,
         };
       });
@@ -102,7 +102,7 @@ class AuthRepository {
         } else {
           return {
             success: false,
-            data: null,
+            data: error?.response?.data || error,
             error: true,
           };
         }
@@ -110,7 +110,7 @@ class AuthRepository {
       .catch((error) => {
         return {
           success: false,
-          data: error,
+          data: error?.response?.data || error,
           error: true,
         };
       });
@@ -123,7 +123,8 @@ class AuthRepository {
       const response = await axios.post(endPoint, requestBody);
       return response.data;
     } catch (error) {
-      return null;
+      console.log(error?.response?.data?.message);
+      return error?.response?.data || error;
     }
   }
   async getUsersByRole(role) {
@@ -133,7 +134,7 @@ class AuthRepository {
       return response.data; // Return the data from the response
     } catch (error) {
       console.error("Error:", error);
-      return null; // Return null in case of an error
+      return error?.response?.data || error; // Return null in case of an error
     }
   }
 }

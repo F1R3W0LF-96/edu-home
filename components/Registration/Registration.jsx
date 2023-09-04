@@ -5,6 +5,7 @@ import { proverbs } from "@/helper";
 import useAuthentication from "@/hooks/useAuthentication";
 import { RegistrationTypes } from "@/helper/Constant";
 import { addDetails, isAuthenticated } from "@/redux/userReducer";
+import { toast } from "react-toastify";
 function Registration({ registrationType, ...props }) {
   const { signUp } = useAuthentication();
   const dispatch = useDispatch();
@@ -48,10 +49,18 @@ function Registration({ registrationType, ...props }) {
       apiData.phoneno,
       apiData.user_role
     );
+    console.log(data, success, error, message);
     if (success) {
-      dispatch(addDetails({ data, success, error }));
+      dispatch(addDetails({ data, success, error, message }));
       dispatch(isAuthenticated(true));
+      const success_msg =
+        message ||
+        data?.data?.message ||
+        data?.message ||
+        "Successfully Registered";
+      toast.success(success_msg);
     } else {
+      toast.error(message);
       dispatch(isAuthenticated(false));
     }
   };

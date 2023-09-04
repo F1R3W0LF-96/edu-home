@@ -85,7 +85,7 @@ export default function useAuthentication() {
           setLoading(false);
           return {
             data: response,
-            success: true,
+            success: response?.success,
             error: false,
             message: response?.message,
           };
@@ -95,16 +95,28 @@ export default function useAuthentication() {
             data: error,
             success: false,
             error: true,
-            message: "Something went wrong.",
+            message: error?.message || "Something went wrong.",
           };
         }
       } else {
+        let errostr = "";
+        if (!isStrongPassword) {
+          errostr =
+            errostr +
+            "min length 8, atleast 1 uppercase (A-Z), atleast 1 lowercase (a-z), atleast one number (0-9), 1 special character.";
+        }
+        if (!isValidEmail) {
+          errostr = errostr + "\n Not valid email";
+        }
+        if (isPhone) {
+          errostr = errostr + "\n Not valid phone no";
+        }
         setLoading(false);
         return {
           data: null,
           success: false,
           error: true,
-          message: "Invalid email or password.",
+          message: errostr === "" ? "Invalid email or password." : errostr,
         };
       }
     },
