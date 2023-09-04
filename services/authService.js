@@ -13,7 +13,7 @@ import axios from "axios";
 export async function updateUserDetails(body, token) {
   const endPoint = `${baseDomain}/users/update-user`;
   const response = await Repository(token)
-    .post(endPoint, body)
+    .patch(endPoint, body)
     .then((response) => {
       return {
         success: true,
@@ -23,7 +23,7 @@ export async function updateUserDetails(body, token) {
     })
     .catch((error) => ({
       success: false,
-      data: error,
+      data: error?.response?.data,
       error: true,
     }));
   return response;

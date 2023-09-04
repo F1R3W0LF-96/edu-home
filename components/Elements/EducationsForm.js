@@ -14,15 +14,9 @@ const months = [
   "Nov",
   "Dec",
 ];
-const QualificationsForm = ({
-  isModalOpen,
-  handleOk,
-  handleCancel,
-  qualifications = [],
-}) => {
-  console.log(qualifications);
-  const [organisation, setOrganisation] = useState("");
-  const [designation, setDesignation] = useState("");
+const EducationsForm = ({ isModalOpen, handleOk, handleCancel }) => {
+  const [name, setName] = useState("");
+  const [designation, setBoard] = useState("");
   const [from, setFrom] = useState({
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
@@ -45,20 +39,16 @@ const QualificationsForm = ({
   const handleToDate = (date, dateString) => {
     setTo((ps) => ({ ...ps, month: months[date.$M], year: date.$y }));
   };
-  const handleCalculateTenure = (from, to) => {
-    return new Date(to.fulldate).getTime() - new Date(from.fulldate).getTime();
-  };
   return (
     <Modal
-      title="Update Qualifications"
+      title="Update Educations"
       open={isModalOpen}
       onOk={(params) =>
         handleOk(params, {
-          org: organisation,
-          designation: designation,
-          fromMonthYear: `${from.month},${from.year}`,
-          toMonthYear: `${to.month},${to.year}`,
-          tenure: handleCalculateTenure(from, to),
+          name: name,
+          borad: designation,
+          fromYear: `${from.month},${from.year}`,
+          toYear: `${to.month},${to.year}`,
         })
       }
       onCancel={handleCancel}
@@ -71,7 +61,7 @@ const QualificationsForm = ({
     >
       <div className="mb-5">
         <label htmlFor="" className="text-xs font-semibold px-1">
-          Organisation
+          Univeristy/School/College
         </label>
         <div className="flex">
           <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -80,27 +70,34 @@ const QualificationsForm = ({
           <input
             type="text"
             className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-            placeholder="Enter the Organisation/Firm/School/University Name"
-            name="organisation"
-            onChange={(e) => setOrganisation(e.target.value)}
+            placeholder="Enter the School/University Name"
+            name="name"
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
       </div>
       <div className="mb-5">
         <label htmlFor="" className="text-xs font-semibold px-1">
-          Designation
+          Board
         </label>
         <div className="flex">
           <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
             <i className="mdi mdi-account-outline text-gray-400 text-lg" />
           </div>
-          <input
+          <select
             type="text"
             className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-            placeholder="Enter the Designation"
-            name="designation"
-            onChange={(e) => setDesignation(e.target.value)}
-          />
+            placeholder="Enter the board"
+            name="board"
+            onChange={(e) => setBoard(e.target.value)}
+          >
+            <option value={""} disabled>
+              Select a Board
+            </option>
+            <option value={"ICSE"}>ICSE</option>
+            <option value={"CBSE"}>CBSE</option>
+            <option value={"State Board"}>State Board</option>
+          </select>
         </div>
       </div>
       <div className="flex flex-row align-center">
@@ -112,4 +109,4 @@ const QualificationsForm = ({
     </Modal>
   );
 };
-export default QualificationsForm;
+export default EducationsForm;

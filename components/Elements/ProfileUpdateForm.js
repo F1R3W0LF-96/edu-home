@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "antd";
-const ProfileUpdateForm = ({
-  isModalOpen,
-  handleOk,
-  handleCancel,
-  data,
-  handleUpdate,
-}) => {
-  console.log(data);
+const ProfileUpdateForm = ({ isModalOpen, handleOk, handleCancel, data }) => {
   useEffect(() => {
     setProfileDetails((ps) => ({
       ...ps,
@@ -60,13 +53,13 @@ const ProfileUpdateForm = ({
       label: "Phone no",
       placeholder: "Enter the phone no",
     },
-    birthday: {
-      type: "date",
-      value: "",
-      valid: false,
-      label: "Birthday",
-      placeholder: "Enter the text",
-    },
+    // birthday: {
+    //   type: "date",
+    //   value: "",
+    //   valid: false,
+    //   label: "Birthday",
+    //   placeholder: "Enter the text",
+    // },
   });
 
   const [gender, setGender] = useState("");
@@ -82,7 +75,19 @@ const ProfileUpdateForm = ({
     <Modal
       title="Update Profile"
       open={isModalOpen}
-      onOk={handleOk}
+      onOk={(params) =>
+        handleOk(params, {
+          fullName:
+            profileDetails.firstname.value +
+            " " +
+            profileDetails.lastname.value,
+          firstName: profileDetails.firstname.value,
+          LastName: profileDetails.lastname.value,
+          phoneno: profileDetails.phoneno.value,
+          gender: gender,
+          email: profileDetails.email.value,
+        })
+      }
       onCancel={handleCancel}
       okButtonProps={{
         type: "default",
@@ -104,6 +109,7 @@ const ProfileUpdateForm = ({
                 className="w-full px-2 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                 placeholder={profileDetails[key].placeholder}
                 name={key}
+                // disabled={key == "birthday"}
                 onChange={handleInputChange}
               />
             </div>

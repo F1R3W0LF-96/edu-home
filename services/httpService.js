@@ -11,7 +11,7 @@ export const customHeaders = (token) =>
       }
     : {
         Accept: "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       };
 
 export const serializeQuery = (query) => {

@@ -6,27 +6,94 @@ import useAuthentication from "@/hooks/useAuthentication";
 import ImageUploader from "@/components/Elements/ImageUploader";
 import QualificationsForm from "@/components/Elements/QualificationsForm";
 import ProfileUpdateForm from "@/components/Elements/ProfileUpdateForm";
+import { toast } from "react-toastify";
+import { userUpdateKeys } from "@/helper/Constant";
+import EducationsForm from "@/components/Elements/EducationsForm";
 function Profile({ ...props }) {
   const userState = useSelector((state) => state).user;
   const [openImageUploader, setOpenImageUploader] = useState(false);
   const [openProfileForm, setOpenProfileForm] = useState(false);
+  const [openEducationForm, setOpenEducationForm] = useState(false);
   const [openQForm, setOpenQForm] = useState(false);
-  const { getUserDetails, loading, userDetails } = useAuthentication();
+  const { getUserDetails, loading, userDetails, updateUserDetails } =
+    useAuthentication();
   const handleUpdateProfile = (data) => {};
-  const handleDeleteQualifications = (_data, idx) => {
+  const handleDeleteQualifications = async (_data, idx) => {
     _data.splice(idx, 1);
-    handleUpdateProfile({
-      qualifications: _data,
-    });
+    console.log(_data);
+    const token = localStorage.getItem("accessToken");
+    const { success, data, error } = await updateUserDetails(
+      { ...userDetails, [userUpdateKeys.qualifications]: _data },
+      token
+    );
+    if (success) {
+      toast.success("User Details updated");
+    } else {
+      toast.error("User Details unable to update, Due to network issue");
+    }
+  };
+  const handleDeleteEducations = async (_data, idx) => {
+    _data.splice(idx, 1);
+    console.log(_data);
+    const token = localStorage.getItem("accessToken");
+    const { success, data, error } = await updateUserDetails(
+      { ...userDetails, [userUpdateKeys.education]: _data },
+      token
+    );
+    if (success) {
+      toast.success("User Details updated");
+    } else {
+      toast.error("User Details unable to update, Due to network issue");
+    }
   };
   useEffect(() => {
     getUserDetails(userDetails?._id);
   }, [userDetails?._id]);
+
+  const handleUpdateData = async (key, updateData) => {
+    let bodyData = { ...userDetails };
+    const _q = bodyData?.qualifications || [];
+    const _edu = bodyData?.education || [];
+    if (key === userUpdateKeys.qualifications) {
+      _q.push(updateData);
+      bodyData = {
+        ...bodyData,
+        qualifications: [..._q],
+      };
+    }
+    if (key === userUpdateKeys.profile) {
+      bodyData = {
+        ...bodyData,
+        ...updateData,
+      };
+    }
+    if (key === userUpdateKeys.education) {
+      _edu.push(updateData);
+      bodyData = {
+        ...bodyData,
+        education: [..._edu],
+      };
+    }
+    const token = localStorage.getItem("accessToken");
+    const { success, data, error } = await updateUserDetails(
+      { ...bodyData },
+      token
+    );
+    if (success) {
+      toast.success("User Details updated");
+      setOpenProfileForm(false);
+      setOpenImageUploader(false);
+      setOpenQForm(false);
+      setOpenEducationForm(false);
+      getUserDetails(userDetails?._id);
+    } else {
+      toast.error("User Details unable to update, Due to network issue");
+    }
+  };
   return (
     <Wrapper>
       {loading ? (
         <div className=" h-full flex m-16 flex-col">
-          <Skeleton active avatar={true} size={100} />
           <Skeleton active avatar={true} size={100} />
           <Skeleton active avatar={true} size={100} />
           <Skeleton active avatar={true} size={100} />
@@ -273,7 +340,7 @@ function Profile({ ...props }) {
                 </button>
 
                 <button
-                  onClick={(e) => handleUpdateProfile(e)}
+                  onClick={(e) => setOpenEducationForm(true)}
                   className="inline-flex items-center justify-center w-full h-12 px-6 ms-3 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
                 >
                   Update Educations
@@ -359,6 +426,17 @@ function Profile({ ...props }) {
                           <div className="text-gray-500 text-xs">
                             {_edu.fromYear} - {_edu.toYear}
                           </div>
+                          <button
+                            className="bg-red-300 text-xs p-1 rounded not my-1"
+                            onClick={() =>
+                              handleDeleteEducations(
+                                userDetails?.education,
+                                idx
+                              )
+                            }
+                          >
+                            Remove
+                          </button>
                         </li>
                       ))}
                     </ul>
@@ -372,19 +450,31 @@ function Profile({ ...props }) {
       <ImageUploader
         isModalOpen={openImageUploader}
         handleCancel={() => setOpenImageUploader(false)}
-        handleOk={() => setOpenImageUploader(false)}
+        handleOk={(params) => setOpenImageUploader(false)}
       />
       <QualificationsForm
         qualifications={userDetails?.qualifications}
         isModalOpen={openQForm}
         handleCancel={() => setOpenQForm(false)}
-        handleOk={() => setOpenQForm(false)}
+        handleOk={(params, updateData) =>
+          handleUpdateData(userUpdateKeys.qualifications, updateData)
+        }
       />
       <ProfileUpdateForm
         data={userDetails}
         isModalOpen={openProfileForm}
         handleCancel={() => setOpenProfileForm(false)}
-        handleOk={() => setOpenProfileForm(false)}
+        handleOk={(params, updateData) =>
+          handleUpdateData(userUpdateKeys.profile, updateData)
+        }
+      />
+      <EducationsForm
+        data={userDetails}
+        isModalOpen={openEducationForm}
+        handleCancel={() => setOpenEducationForm(false)}
+        handleOk={(params, updateData) =>
+          handleUpdateData(userUpdateKeys.education, updateData)
+        }
       />
     </Wrapper>
   );

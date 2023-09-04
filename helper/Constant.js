@@ -2,7 +2,27 @@ const RegistrationTypes = {
   TEACHER_TYPE: "teacher",
   STUDENT_TYPE: "student",
 };
-
+export const userUpdateKeys = {
+  fullName: "fullName",
+  firstName: "firstName",
+  LastName: "LastName",
+  phoneno: "phoneno",
+  gender: "gender",
+  pin_code: "pin_code",
+  city: "city",
+  user_role: "user_role",
+  address: "address",
+  education: "education",
+  experiences: "experiences",
+  qualifications: "qualifications",
+  subjects: "subjects",
+  hourly_rate: "hourly_rate",
+  other_information: "other_information",
+  isProfileComplete: "isProfileComplete",
+  description: "description",
+  board: "board",
+  profile: "profile",
+};
 const BoardsTypes = {
   CBSE: "CBSE",
   ICSE: "ICSE",

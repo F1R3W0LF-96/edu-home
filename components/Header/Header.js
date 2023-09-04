@@ -250,7 +250,7 @@ const Header = ({ isAuthenticated, os, location, userState }) => {
                 <li className="mb-1">
                   <a
                     className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#"
+                    href="https://tuitionsearch.co.in"
                   >
                     Home
                   </a>
@@ -258,7 +258,7 @@ const Header = ({ isAuthenticated, os, location, userState }) => {
                 <li className="mb-1">
                   <a
                     className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#"
+                    href="#about-us"
                   >
                     About Us
                   </a>
@@ -266,15 +266,7 @@ const Header = ({ isAuthenticated, os, location, userState }) => {
                 <li className="mb-1">
                   <a
                     className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#"
-                  >
-                    Services
-                  </a>
-                </li>
-                <li className="mb-1">
-                  <a
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#"
+                    href="#contact-us"
                   >
                     Contact
                   </a>
@@ -295,15 +287,15 @@ const Header = ({ isAuthenticated, os, location, userState }) => {
                 <>
                   <Link
                     className="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
-                    href="/login"
+                    href="/register/teacher"
                   >
-                    Sign in
+                    Sign-Up as Teacher
                   </Link>
                   <Link
                     className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-blue font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-                    href="/"
+                    href="/register/student"
                   >
-                    Sign Up
+                    Sign-Up as Student
                   </Link>
                 </>
               )}
