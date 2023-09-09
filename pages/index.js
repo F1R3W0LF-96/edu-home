@@ -42,14 +42,6 @@ export default function Home() {
     }
   }, [location]);
 
-  useEffect(() => {
-    if (localStorage) {
-      if (localStorage.getItem("accessToken")) {
-        push("/student");
-      }
-    }
-  }, []);
-
   return (
     <>
       {/* <div className="flex justify-end">

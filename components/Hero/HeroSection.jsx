@@ -32,8 +32,9 @@ const HeroSection = () => {
       delete data["otp"];
       dispatch(addDetails({ data, success, error }));
       dispatch(isAuthenticated(true));
+
       localStorage.setItem("accessToken", data.accessToken);
-      if (!data.isProfileComplete) {
+      if (data.isProfileComplete) {
         router.push("/lists/teacher");
       } else {
         router.push("/profile");

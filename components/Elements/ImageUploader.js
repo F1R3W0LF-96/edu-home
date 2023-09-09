@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal, Upload } from "antd";
+import { toast } from "react-toastify";
 const { Dragger } = Upload;
 const ImageUploader = ({ isModalOpen, handleOk, handleCancel }) => {
   const [fileList, setFileList] = useState([]);
@@ -17,10 +18,10 @@ const ImageUploader = ({ isModalOpen, handleOk, handleCancel }) => {
       .then((res) => res.json())
       .then(() => {
         setFileList([]);
-        message.success("upload successfully.");
+        toast.success("upload successfully.");
       })
       .catch(() => {
-        message.error("upload failed.");
+        toast.error("upload failed.");
       })
       .finally(() => {
         setUploading(false);
