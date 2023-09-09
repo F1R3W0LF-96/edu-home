@@ -49,3 +49,11 @@ body {
   position: absolute;
   z-index: -1;
 }
+
+.phone-number {
+  font-family: Arial, sans-serif;
+}
+
+.hidden-digits {
+  font-size: 0;
+}

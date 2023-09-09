@@ -69,6 +69,8 @@ const Header = ({ isAuthenticated, os, location, userState }) => {
     //   mobileMenu.current.classList.forEach((ele) => console.log(ele));
     // }
   };
+  const token = localStorage.getItem("accessToken");
+
   return (
     <header>
       <nav className=" relative px-4 py-4 flex justify-between items-center bg-white">
@@ -160,7 +162,7 @@ const Header = ({ isAuthenticated, os, location, userState }) => {
                 Sign In
               </Link> */}
           </>
-          {userState?.isAuth && (
+          {token && (
             <>
               <Avatar
                 size={300}
@@ -189,7 +191,7 @@ const Header = ({ isAuthenticated, os, location, userState }) => {
                         onClick={() => {
                           push("/profile");
                         }}
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         Profile
                       </a>
@@ -201,7 +203,7 @@ const Header = ({ isAuthenticated, os, location, userState }) => {
                           localStorage.removeItem("accessToken");
                           push("/");
                         }}
-                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        className="block px-4 py-2 text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         Sign out
                       </a>

@@ -3,7 +3,7 @@ import Wrapper from "@/components/Layouts/Wrapper";
 import CategoriesFilter from "@/components/Elements/CategoriesFilter";
 import GridIcon from "@/public/Icons/GridIcon";
 import SortIcon from "@/public/Icons/SortIcon";
-import { alignment } from "@/helper/Constant";
+import { RegistrationTypes, alignment } from "@/helper/Constant";
 import useAuthentication from "@/hooks/useAuthentication";
 import { useRouter } from "next/router";
 
@@ -20,7 +20,11 @@ function Student() {
   }, [userType]);
 
   const getUserListing = async (type) => {
-    const response = await getUserBtRole(type.toUpperCase());
+    const response = await getUserBtRole(
+      type.toLowerCase() === RegistrationTypes.TEACHER_TYPE
+        ? RegistrationTypes.STUDENT_TYPE.toUpperCase()
+        : RegistrationTypes.TEACHER_TYPE.toUpperCase()
+    );
     console.log(response);
     setResults(response.data);
   };
@@ -52,7 +56,19 @@ function Student() {
                   {ele.firstName} {ele.LastName}
                 </h1>
                 <p className="leading-relaxed mb-3">
-                  {ele.bio ? ele.bio : "Lorem ispsum..."}
+                  {ele.bio ? ele.bio : "Details..."} <br />
+                  <span className="phone-number">
+                    Contact Number:
+                    <span className="visible-digits">
+                      {ele.phoneno.substring(0, 2)}
+                    </span>
+                    <span className="hidden-digits">
+                      {ele.phoneno.substring(2, ele.phoneno.length - 2)}
+                    </span>
+                    <span className="visible-digits">
+                      {ele.phoneno.substring(ele.phoneno.length - 2)}
+                    </span>
+                  </span>
                 </p>
                 <div className="flex items-center flex-wrap">
                   <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
