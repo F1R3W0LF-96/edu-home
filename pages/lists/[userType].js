@@ -52,6 +52,14 @@ function Student() {
                     CBSE
                   </div>
                 </div>
+                <div className="flex flex-row items-center">
+                  <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
+                    ICSE
+                  </div>
+                  <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
+                    CBSE
+                  </div>
+                </div>
                 <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
                   {ele.firstName} {ele.LastName}
                 </h1>

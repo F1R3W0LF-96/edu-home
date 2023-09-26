@@ -31,8 +31,14 @@ function Registration({ registrationType, ...props }) {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    if (formData.phoneNumber !== formData.cnfPhNumber) {
+      toast.error("Phone no didn't matched");
+      return;
+    }
     const apiData = {
       fullname: `${formData.firstName} ${formData.lastName}`,
+      firstName: formData.firstName,
+      LastName: formData.lastName,
       name: formData.firstName.toLowerCase(),
       email: `${formData.email}`,
       password: formData.password,
@@ -50,7 +56,7 @@ function Registration({ registrationType, ...props }) {
       apiData.phoneno,
       apiData.user_role
     );
-    console.log(data, success, error, message);
+    // console.log(data, success, error, message);
     if (success) {
       dispatch(addDetails({ data, success, error, message }));
       dispatch(isAuthenticated(true));
