@@ -29,7 +29,7 @@ const Wrapper = (props) => {
   return (
     <>
       <Header
-        isAuthenticated={isAuthenticated}
+        isauthenticated={isAuthenticated}
         os={os}
         userState={state.user}
       />

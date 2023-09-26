@@ -14,6 +14,7 @@ function Registration({ registrationType, ...props }) {
     firstName: "",
     lastName: "",
     phoneNumber: "",
+    cnfPhNumber: "",
     password: "",
     email: "",
   });
@@ -142,6 +143,25 @@ function Registration({ registrationType, ...props }) {
                   </div>
                   <div className="w-1/2 px-3 mb-5">
                     <label htmlFor="" className="text-xs font-semibold px-1">
+                      Confirm Phone No
+                    </label>
+                    <div className="flex">
+                      <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
+                        <i className="mdi mdi-phone-outline text-gray-400 text-lg" />
+                      </div>
+                      <input
+                        type="number"
+                        name="cnfPhNumber"
+                        className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        placeholder="9900881234"
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex -mx-3">
+                  <div className="w-full px-3 mb-5">
+                    <label htmlFor="" className="text-xs font-semibold px-1">
                       Email
                     </label>
                     <div className="flex">
@@ -158,6 +178,7 @@ function Registration({ registrationType, ...props }) {
                     </div>
                   </div>
                 </div>
+
                 {/* <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
                     <label htmlFor="" className="text-xs font-semibold px-1">

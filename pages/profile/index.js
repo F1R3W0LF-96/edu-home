@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Skeleton } from "antd";
+import { toast } from "react-toastify";
 import Wrapper from "@/components/Layouts/Wrapper";
 import useAuthentication from "@/hooks/useAuthentication";
 import ImageUploader from "@/components/Elements/ImageUploader";
 import QualificationsForm from "@/components/Elements/QualificationsForm";
 import ProfileUpdateForm from "@/components/Elements/ProfileUpdateForm";
-import { toast } from "react-toastify";
 import { userUpdateKeys } from "@/helper/Constant";
 import EducationsForm from "@/components/Elements/EducationsForm";
+import AddressForm from "@/components/Elements/AddressForm";
 function Profile({ ...props }) {
   const userState = useSelector((state) => state).user;
+  const [openAddressForm, setOpenAddressForm] = useState(false);
   const [openImageUploader, setOpenImageUploader] = useState(false);
   const [openProfileForm, setOpenProfileForm] = useState(false);
   const [openEducationForm, setOpenEducationForm] = useState(false);
@@ -232,10 +234,10 @@ function Profile({ ...props }) {
                   Update Profile
                 </button>
                 <button
-                  onClick={(e) => handleUpdateProfile(e, userDetails?.address)}
+                  onClick={(e) => setOpenAddressForm(true)}
                   className="inline-flex items-center justify-center w-full h-12 px-6 ms-3 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
                 >
-                  Update Addresses
+                  Add Addresses
                 </button>
               </div>
               <div className="my-4"></div>
@@ -296,10 +298,6 @@ function Profile({ ...props }) {
                           {userDetails?.email}
                         </a>
                       </div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Birthday</div>
-                      <div className="px-4 py-2">Feb 06, 1998</div>
                     </div>
                     <div className="grid grid-cols-2">
                       <div className="px-4 py-2 font-semibold">
@@ -474,6 +472,14 @@ function Profile({ ...props }) {
         handleCancel={() => setOpenEducationForm(false)}
         handleOk={(params, updateData) =>
           handleUpdateData(userUpdateKeys.education, updateData)
+        }
+      />
+      <AddressForm
+        _addresses={userDetails?.address}
+        isModalOpen={openAddressForm}
+        handleCancel={() => setOpenAddressForm(false)}
+        handleOk={(params, updateData) =>
+          handleUpdateData(userUpdateKeys.address, updateData)
         }
       />
     </Wrapper>

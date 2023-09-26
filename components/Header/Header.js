@@ -9,11 +9,13 @@ import coinImage from "../../public/Images/rupee.png";
 import InstagramIcon from "@/public/Icons/instagram";
 import WhatsappIcon from "@/public/Icons/whatsapp";
 import PhoneIcon from "@/public/Icons/Phone";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CustomPopover from "../Elements/CustomPopover";
+import { isAuthenticated } from "@/redux/userReducer";
 
-const Header = ({ isAuthenticated, os, location, userState }) => {
+const Header = ({ isauthenticated, os, location, userState }) => {
   const { push, route } = useRouter();
+  const dispatch = useDispatch();
   const mobileMenu = useRef(null);
   const [openMenu, setOpenMenu] = useState(false);
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
@@ -99,7 +101,7 @@ const Header = ({ isAuthenticated, os, location, userState }) => {
           </button>
         </div>
         <div className={"flex flex-row items-center hidden lg:flex"}>
-          {isAuthenticated && (
+          {isauthenticated && (
             <Avatar
               size={300}
               imageSrc={
@@ -201,6 +203,7 @@ const Header = ({ isAuthenticated, os, location, userState }) => {
                       <a
                         onClick={() => {
                           localStorage.removeItem("accessToken");
+                          dispatch(isAuthenticated(null));
                           push("/");
                         }}
                         className="block px-4 py-2 text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"

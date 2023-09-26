@@ -125,6 +125,9 @@ const ProfileUpdateForm = ({ isModalOpen, handleOk, handleCancel, data }) => {
               onChange={(e) => setGender(e.target.value)}
               className="w-full px-2 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
             >
+              <option value={""} disabled>
+                Select an option
+              </option>
               <option value={"MALE"}>MALE</option>
               <option value={"FEMALE"}>FEMALE</option>
               <option value={"TRANSGENDER"}>TRANSGENDER</option>

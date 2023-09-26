@@ -120,10 +120,52 @@ export default function useAuthentication() {
         };
       }
     },
-    getUserBtRole: async (role) => {
+    getUserByRole: async (role) => {
       setLoading(true);
       const response = await AuthRepositor.getUsersByRole(role);
       return response;
+    },
+    sendMailForgotPassword: async (email) => {
+      setLoading(true);
+      const isValidEmail = validateEmail(email);
+      if (isValidEmail) {
+        const response = await AuthRepositor.forgotPassword({ email: email });
+        setLoading(false);
+        return { response: response, message: response?.message };
+      } else {
+        setLoading(false);
+        return { response: null, message: "Not A Valid Email" };
+      }
+    },
+    verifyOTP: async (OTP) => {
+      setLoading(true);
+      var reg = new RegExp("^[0-9]$");
+      const isValidOTP = reg.test(OTP) && OTP.length === 6;
+      console.log(isValidOTP);
+      if (isValidOTP) {
+        const response = await AuthRepositor.verifyOTP(eOTPmail);
+        return { response: response, message: response?.message };
+      } else {
+        return {
+          response: null,
+          message: "OTP should contain 6 digit and only numeric",
+        };
+      }
+    },
+    resetPassword: async (OTP) => {
+      setLoading(true);
+      var reg = new RegExp("^[0-9]$");
+      const isValidOTP = reg.test(OTP) && OTP.length === 6;
+      console.log(isValidOTP);
+      if (isValidOTP) {
+        const response = await AuthRepositor.verifyOTP(eOTPmail);
+        return { response: response, message: response?.message };
+      } else {
+        return {
+          response: null,
+          message: "OTP should contain 6 digit and only numeric",
+        };
+      }
     },
   };
 }

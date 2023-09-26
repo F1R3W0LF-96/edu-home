@@ -13,7 +13,6 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const apiUrl = process.env.API_URL;
-    console.log("process.env.HOST>>>>>>>>>>>>>>>>>>>>>>>", apiUrl);
     if (email && password) {
       axios
         .post(`${apiUrl}/api/v1/users/login`, {

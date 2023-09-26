@@ -8,7 +8,7 @@ import useAuthentication from "@/hooks/useAuthentication";
 import { useRouter } from "next/router";
 
 function Student() {
-  const { getUserBtRole } = useAuthentication();
+  const { getUserByRole } = useAuthentication();
   const router = useRouter();
   const { userType } = router.query;
   const [results, setResults] = useState([]);
@@ -20,7 +20,7 @@ function Student() {
   }, [userType]);
 
   const getUserListing = async (type) => {
-    const response = await getUserBtRole(
+    const response = await getUserByRole(
       type.toLowerCase() === RegistrationTypes.TEACHER_TYPE
         ? RegistrationTypes.STUDENT_TYPE.toUpperCase()
         : RegistrationTypes.TEACHER_TYPE.toUpperCase()

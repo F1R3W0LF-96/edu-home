@@ -137,6 +137,57 @@ class AuthRepository {
       return error?.response?.data || error; // Return null in case of an error
     }
   }
+
+  async forgotPassword(requestBody) {
+    const endPoint = `${baseDomain}/users/forgot-password`;
+    try {
+      const response = await axios.post(endPoint, requestBody);
+      return {
+        success: true,
+        response: response.data,
+      };
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+      return {
+        success: false,
+        response: error?.response?.data || error,
+      };
+    }
+  }
+
+  async verifyOTP(requestBody) {
+    const endPoint = `${baseDomain}/users/verify-otp`;
+    try {
+      const response = await axios.post(endPoint, requestBody);
+      return {
+        success: true,
+        response: response.data,
+      };
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+      return {
+        success: false,
+        response: error?.response?.data || error,
+      };
+    }
+  }
+
+  async resetPassword(requestBody) {
+    const endPoint = `${baseDomain}/users/reset-password`;
+    try {
+      const response = await axios.post(endPoint, requestBody);
+      return {
+        success: true,
+        response: response.data,
+      };
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+      return {
+        success: false,
+        response: error?.response?.data || error,
+      };
+    }
+  }
 }
 
 export default AuthRepository;
