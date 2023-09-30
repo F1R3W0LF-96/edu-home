@@ -347,6 +347,24 @@ function Profile({ ...props }) {
               <div className="my-4"></div>
               <div className="bg-white p-3 shadow-sm rounded-sm">
                 <div className="grid grid-cols-2">
+                  <div className="flex flex-row items-center">
+                    {userDetails?.subjects?.map((ele) => (
+                      <div
+                        key={Math.random().toString()}
+                        className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2"
+                      >
+                        {ele} ICSE
+                      </div>
+                    ))}
+
+                    <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
+                      CBSE
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white p-3 shadow-sm rounded-sm">
+                <div className="grid grid-cols-2">
                   <div>
                     <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
                       <span clas="text-green-500">
