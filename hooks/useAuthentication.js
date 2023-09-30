@@ -139,11 +139,11 @@ export default function useAuthentication() {
     },
     verifyOTP: async (OTP) => {
       setLoading(true);
-      var reg = new RegExp("^[0-9]$");
+      const reg = /^\d{6}$/;
       const isValidOTP = reg.test(OTP) && OTP.length === 6;
       console.log(isValidOTP);
       if (isValidOTP) {
-        const response = await AuthRepositor.verifyOTP(eOTPmail);
+        const response = await AuthRepositor.verifyOTP(OTP);
         return { response: response, message: response?.message };
       } else {
         return {
@@ -152,20 +152,10 @@ export default function useAuthentication() {
         };
       }
     },
-    resetPassword: async (OTP) => {
+    resetPassword: async (request) => {
       setLoading(true);
-      var reg = new RegExp("^[0-9]$");
-      const isValidOTP = reg.test(OTP) && OTP.length === 6;
-      console.log(isValidOTP);
-      if (isValidOTP) {
-        const response = await AuthRepositor.verifyOTP(eOTPmail);
-        return { response: response, message: response?.message };
-      } else {
-        return {
-          response: null,
-          message: "OTP should contain 6 digit and only numeric",
-        };
-      }
+      const response = await AuthRepositor.resetPassword(request);
+      return { response: response, message: response?.message };
     },
   };
 }
