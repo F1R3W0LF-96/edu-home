@@ -1,16 +1,33 @@
 import React, { useEffect, useState, useRef } from "react";
 import Wrapper from "@/components/Layouts/Wrapper";
+import useAuthentication from "@/hooks/useAuthentication";
+import { useRouter } from "next/router";
 
 function ResetPassword() {
   const passwordRef = useRef(null);
   const cnfpasswordRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
-  const handleResetPassword = (e) => {
+  const { resetPassword, loading } = useAuthentication();
+  const router = useRouter();
+  const { query } = router;
+
+  const handleResetPassword = async (e) => {
     e.preventDefault();
     const value_pwd = passwordRef.current.value;
     const value_cnfpwd = cnfpasswordRef.current.value;
+    const email = query.email; // Replace "paramName" with the name of your query parameter
     if (value_pwd === value_cnfpwd) {
-    } else {
+      const request = {
+        email: email,
+        password: value_pwd,
+      };
+      const { response, message } = await resetPassword(request);
+      debugger;
+      if (response.success) {
+        console.log(response);
+        // Redirect to /reset-password on success
+        router.push(`/`);
+      }
     }
   };
   return (

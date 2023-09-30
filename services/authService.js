@@ -157,6 +157,7 @@ class AuthRepository {
 
   async verifyOTP(requestBody) {
     const endPoint = `${baseDomain}/users/verify-otp`;
+
     try {
       const response = await axios.post(endPoint, requestBody);
       return {
