@@ -9,7 +9,6 @@ import Whatsapp from "../Widgets/Whatsapp";
 
 const Wrapper = (props) => {
   const state = useSelector((state) => state);
-  console.log(state, ":::: persisted state ::::");
   const { isAuthenticated } = useAuthentication();
   const [os, setOS] = useState("window");
   useEffect(() => {

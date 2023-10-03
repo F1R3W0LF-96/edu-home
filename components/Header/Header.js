@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Button } from "antd";
+import { PayCircleOutlined, UserOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
@@ -79,26 +80,31 @@ const Header = ({ isauthenticated, os, location, userState }) => {
         <Link className="text-3xl font-bold leading-none" href="/">
           <Image src={logo} width={200} alt="logo" />
         </Link>
-        <div className="lg:hidden flex flex-row" onClick={handleShowMobileMenu}>
-          {userState?.isAuth && (
-            <Avatar
-              size={300}
-              imageSrc={
-                "https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_6.png"
-              }
-            />
-          )}
+        <div className="lg:hidden flex justify-center content-center items-center">
+          <div className="flex justify-center content-center items-center">
+            <div className="ps-1 pe-1">
+              <UserOutlined size={100} />
+            </div>
+            <div className="ps-1">
+              <PayCircleOutlined color="yellow" />
+            </div>
+            <div className="ps-1 pe-1 pt-1">
+              <p>{userState?.data?.coins}</p>
+            </div>
+          </div>
 
-          <button className="navbar-burger flex items-center text-blue-600 p-3">
-            <svg
-              className="block h-4 w-4 fill-current"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Mobile menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-            </svg>
-          </button>
+          <div className="flex flex-row" onClick={handleShowMobileMenu}>
+            <button className="navbar-burger flex items-center text-blue-600 p-3">
+              <svg
+                className="block h-4 w-4 fill-current"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Mobile menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+              </svg>
+            </button>
+          </div>
         </div>
         <div className={"flex flex-row items-center hidden lg:flex"}>
           {isauthenticated && (
@@ -168,16 +174,16 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                 {userState?.data?.user_role === "TEACHER" ? (
                   <Link
                     className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-                    href="/lists/student"
+                    href="/lists/teacher"
                   >
-                    Lists
+                    Student Lists
                   </Link>
                 ) : (
                   <Link
                     className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-                    href="/lists/teacher"
+                    href="/lists/student"
                   >
-                    Lists
+                    Teacher Lists
                   </Link>
                 )}
               </>
@@ -191,16 +197,31 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                 handleOpen={(newOpen) => setOpenProfileMenu(newOpen)}
                 title={""}
                 text={
-                  <span className="flex">
-                    <Avatar
-                      size={300}
+                  <div className="flex justify-center content-center items-center">
+                    <div className="ps-2 pe-2">
+                      <UserOutlined size={100} />
+                    </div>
+
+                    {/* <Avatar
+                      size={20}
                       imageSrc={
-                        "https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_6.png"
+                        "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
                       }
-                    />
-                    <Image src={coinImage} alt={"rupee"} width={20} />
-                    {userState?.data?.coins}
-                  </span>
+                    /> */}
+                    <div className="ps-2">
+                      <PayCircleOutlined color="yellow" />
+                    </div>
+
+                    {/* <Image
+                      src={coinImage}
+                      alt={"rupee"}
+                      width={20}
+                      height={20}
+                    /> */}
+                    <div className="ps-1 pe-2 pt-1">
+                      <p>{userState?.data?.coins}</p>
+                    </div>
+                  </div>
                 }
                 contentHtml={
                   <ul
@@ -271,42 +292,85 @@ const Header = ({ isauthenticated, os, location, userState }) => {
             </div>
             <div>
               <ul>
-                <li className="mb-1">
-                  <a
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="https://tuitionsearch.co.in"
-                  >
-                    Home
-                  </a>
-                </li>
-                <li className="mb-1">
-                  <a
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#about-us"
-                  >
-                    About Us
-                  </a>
-                </li>
-                <li className="mb-1">
-                  <a
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                    href="#contact-us"
-                  >
-                    Contact
-                  </a>
-                </li>
+                {!token && (
+                  <>
+                    <li className="mb-1">
+                      <a
+                        className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                        href="https://tuitionsearch.co.in"
+                      >
+                        Home
+                      </a>
+                    </li>
+                    <li className="mb-1">
+                      <a
+                        className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                        href="#about-us"
+                      >
+                        About Us
+                      </a>
+                    </li>
+                    <li className="mb-1">
+                      <a
+                        className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                        href="#contact-us"
+                      >
+                        Contact
+                      </a>
+                    </li>
+                  </>
+                )}
+                {token && (
+                  <>
+                    <li className="mb-1">
+                      <a
+                        className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          push("/profile");
+                        }}
+                      >
+                        Profile
+                      </a>
+                    </li>
+                    {userState?.data?.user_role === "TEACHER" ? (
+                      <li className="mb-1">
+                        <Link
+                          className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                          href="/lists/teacher"
+                        >
+                          Student Lists
+                        </Link>
+                      </li>
+                    ) : (
+                      <li className="mb-1">
+                        <Link
+                          className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                          href="/lists/student"
+                        >
+                          Teacher Lists
+                        </Link>
+                      </li>
+                    )}
+                  </>
+                )}
               </ul>
             </div>
             <div className="mt-auto">
-              {loggedInUser ? (
-                <Button
-                  onClick={() => {
-                    localStorage.removeItem("accessToken");
-                    push("/");
-                  }}
-                >
-                  Logout
-                </Button>
+              {token ? (
+                <div className="flex content-center justify-center items-center w-full px-2 py-2">
+                  <a
+                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded w-full text-center"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      localStorage.removeItem("accessToken");
+                      dispatch(isAuthenticated(null));
+                      push("/");
+                    }}
+                  >
+                    Logout
+                  </a>
+                </div>
               ) : (
                 <>
                   <Link
