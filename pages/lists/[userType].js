@@ -45,20 +45,36 @@ function Student() {
               />
               <div className="p-6">
                 <div className="flex flex-row items-center">
-                  <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
-                    ICSE
-                  </div>
-                  <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
-                    CBSE
-                  </div>
+                  {ele?.subjects?.length > 0 ? (
+                    ele?.subjects?.map((sub, idx) => (
+                      <div
+                        key={idx}
+                        className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2"
+                      >
+                        {sub}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
+                      No subjects found
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-row items-center">
-                  <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
-                    ICSE
-                  </div>
-                  <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
-                    CBSE
-                  </div>
+                  {ele?.board?.length > 0 ? (
+                    ele?.board?.split(",").map((_b, idx) => (
+                      <div
+                        key={idx}
+                        className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2"
+                      >
+                        {_b}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
+                      No boards found
+                    </div>
+                  )}
                 </div>
                 <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
                   {ele.firstName} {ele.LastName}
@@ -79,6 +95,23 @@ function Student() {
                   </span>
                 </p>
                 <div className="flex items-center flex-wrap">
+                  <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                    Direct Message
+                    <svg
+                      className="w-4 h-4 ml-2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M5 12h14"></path>
+                      <path d="M12 5l7 7-7 7"></path>
+                    </svg>
+                  </a>
+                </div>
+                {/* <div className="flex items-center flex-wrap">
                   <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
                     Learn More
                     <svg
@@ -123,9 +156,9 @@ function Student() {
                     </svg>
                     6
                   </span>
-                </div>
+                </div> */}
 
-                <div className="flex justify-between items-center flex-wrap mt-8">
+                {/* <div className="flex justify-between items-center flex-wrap mt-8">
                   <span className="text-black-400 mr-3 inline-flex items-center text-sm pr-3 py-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +201,7 @@ function Student() {
                     </svg>
                     6
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

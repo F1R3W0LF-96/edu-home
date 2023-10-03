@@ -163,15 +163,28 @@ const Header = ({ isauthenticated, os, location, userState }) => {
               >
                 Sign In
               </Link> */}
+            {token && (
+              <>
+                {userState?.data?.user_role === "TEACHER" ? (
+                  <Link
+                    className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+                    href="/lists/student"
+                  >
+                    Lists
+                  </Link>
+                ) : (
+                  <Link
+                    className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+                    href="/lists/teacher"
+                  >
+                    Lists
+                  </Link>
+                )}
+              </>
+            )}
           </>
           {token && (
             <>
-              <Avatar
-                size={300}
-                imageSrc={
-                  "https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_6.png"
-                }
-              />
               <CustomPopover
                 open={openProfileMenu}
                 handleClose={() => setOpenProfileMenu(false)}
@@ -179,6 +192,12 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                 title={""}
                 text={
                   <span className="flex">
+                    <Avatar
+                      size={300}
+                      imageSrc={
+                        "https://tuk-cdn.s3.amazonaws.com/assets/components/avatars/a_3_6.png"
+                      }
+                    />
                     <Image src={coinImage} alt={"rupee"} width={20} />
                     {userState?.data?.coins}
                   </span>
