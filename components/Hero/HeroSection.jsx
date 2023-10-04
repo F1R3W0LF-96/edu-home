@@ -22,6 +22,7 @@ const HeroSection = () => {
       [name]: value,
     }));
   };
+  const accessToken = localStorage.getItem("accessToken");
   const handleLogin = async (e) => {
     e.preventDefault();
     const { phoneNumber, password } = formData;
@@ -104,7 +105,7 @@ const HeroSection = () => {
                 </>
               )}
             </div>
-            {!userState?.isAuth && (
+            {!accessToken && (
               <div className="w-full max-w-xl xl:px-8 xl:w-5/12">
                 <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                   <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
