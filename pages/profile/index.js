@@ -10,6 +10,7 @@ import ProfileUpdateForm from "@/components/Elements/ProfileUpdateForm";
 import { userUpdateKeys } from "@/helper/Constant";
 import EducationsForm from "@/components/Elements/EducationsForm";
 import AddressForm from "@/components/Elements/AddressForm";
+import SubjectsBoardsForm from "@/components/Elements/SubjectsBoardsForm";
 function Profile({ ...props }) {
   const userState = useSelector((state) => state).user;
   const [openAddressForm, setOpenAddressForm] = useState(false);
@@ -17,6 +18,7 @@ function Profile({ ...props }) {
   const [openProfileForm, setOpenProfileForm] = useState(false);
   const [openEducationForm, setOpenEducationForm] = useState(false);
   const [openQForm, setOpenQForm] = useState(false);
+  const [openSBForm, setOpenSBForm] = useState(false);
   const { getUserDetails, loading, userDetails, updateUserDetails } =
     useAuthentication();
   const handleUpdateProfile = (data) => {};
@@ -69,8 +71,8 @@ function Profile({ ...props }) {
         ...updateData,
       };
     }
-    if (key === userUpdateKeys.education) {
-      _edu.push(updateData);
+
+    if (key === userUpdateKeys.subjects) {
       bodyData = {
         ...bodyData,
         education: [..._edu],
@@ -87,6 +89,7 @@ function Profile({ ...props }) {
       setOpenImageUploader(false);
       setOpenQForm(false);
       setOpenEducationForm(false);
+      setOpenSBForm(false);
       getUserDetails(userDetails?._id);
     } else {
       toast.error("User Details unable to update, Due to network issue");
@@ -126,9 +129,42 @@ function Profile({ ...props }) {
                 <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">
                   {userDetails?.fullName}
                 </h1>
-                <h3 className="text-gray-600 font-lg font-bold leading-6">
-                  Physics Teacher
-                </h3>
+                <button
+                  className="bg-blue-100 text-blue-500 rounded p-2 text-sm w-auto"
+                  onClick={() => setOpenSBForm(true)}
+                >
+                  Add Subjects & Boards
+                </button>
+                <div className="bg-white pt-1 shadow-sm rounded-sm">
+                  <div className="flex flex-row flex-wrap items-center w-full">
+                    {userDetails?.subjects?.map((ele) => (
+                      <div
+                        key={Math.random().toString()}
+                        className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/3"
+                      >
+                        {ele}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="bg-white pt-1 shadow-sm rounded-sm">
+                  <div className="flex flex-row flex-wrap items-center">
+                    {userDetails?.board?.length > 0 ? (
+                      userDetails?.board?.split(",").map((_b, idx) => (
+                        <div
+                          key={idx}
+                          className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-orange-200 w-1/3"
+                        >
+                          {_b}
+                        </div>
+                      ))
+                    ) : (
+                      <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-orange-200 w-1/2">
+                        No boards found
+                      </div>
+                    )}
+                  </div>
+                </div>
                 <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
                   {userDetails?.description}
                 </p>
@@ -347,24 +383,6 @@ function Profile({ ...props }) {
               <div className="my-4"></div>
               <div className="bg-white p-3 shadow-sm rounded-sm">
                 <div className="grid grid-cols-2">
-                  <div className="flex flex-row items-center">
-                    {userDetails?.subjects?.map((ele) => (
-                      <div
-                        key={Math.random().toString()}
-                        className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2"
-                      >
-                        {ele} ICSE
-                      </div>
-                    ))}
-
-                    <div className="tracking-widest text-xs title-font font-medium text-black-400 mb-1 mr-1 p-2 text-center rounded-full bg-lime-200 w-1/2">
-                      CBSE
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white p-3 shadow-sm rounded-sm">
-                <div className="grid grid-cols-2">
                   <div>
                     <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
                       <span clas="text-green-500">
@@ -463,43 +481,64 @@ function Profile({ ...props }) {
           </div>
         </div>
       )}
-      <ImageUploader
-        isModalOpen={openImageUploader}
-        handleCancel={() => setOpenImageUploader(false)}
-        handleOk={(params) => setOpenImageUploader(false)}
-      />
-      <QualificationsForm
-        qualifications={userDetails?.qualifications}
-        isModalOpen={openQForm}
-        handleCancel={() => setOpenQForm(false)}
-        handleOk={(params, updateData) =>
-          handleUpdateData(userUpdateKeys.qualifications, updateData)
-        }
-      />
-      <ProfileUpdateForm
-        data={userDetails}
-        isModalOpen={openProfileForm}
-        handleCancel={() => setOpenProfileForm(false)}
-        handleOk={(params, updateData) =>
-          handleUpdateData(userUpdateKeys.profile, updateData)
-        }
-      />
-      <EducationsForm
-        data={userDetails}
-        isModalOpen={openEducationForm}
-        handleCancel={() => setOpenEducationForm(false)}
-        handleOk={(params, updateData) =>
-          handleUpdateData(userUpdateKeys.education, updateData)
-        }
-      />
-      <AddressForm
-        _addresses={userDetails?.address}
-        isModalOpen={openAddressForm}
-        handleCancel={() => setOpenAddressForm(false)}
-        handleOk={(params, updateData) =>
-          handleUpdateData(userUpdateKeys.address, updateData)
-        }
-      />
+      {openImageUploader && (
+        <ImageUploader
+          isModalOpen={openImageUploader}
+          handleCancel={() => setOpenImageUploader(false)}
+          handleOk={(params) => setOpenImageUploader(false)}
+        />
+      )}
+      {openQForm && (
+        <QualificationsForm
+          qualifications={userDetails?.qualifications}
+          isModalOpen={openQForm}
+          handleCancel={() => setOpenQForm(false)}
+          handleOk={(params, updateData) =>
+            handleUpdateData(userUpdateKeys.qualifications, updateData)
+          }
+        />
+      )}
+      {openProfileForm && (
+        <ProfileUpdateForm
+          data={userDetails}
+          isModalOpen={openProfileForm}
+          handleCancel={() => setOpenProfileForm(false)}
+          handleOk={(params, updateData) =>
+            handleUpdateData(userUpdateKeys.profile, updateData)
+          }
+        />
+      )}
+      {openEducationForm && (
+        <EducationsForm
+          data={userDetails}
+          isModalOpen={openEducationForm}
+          handleCancel={() => setOpenEducationForm(false)}
+          handleOk={(params, updateData) =>
+            handleUpdateData(userUpdateKeys.education, updateData)
+          }
+        />
+      )}
+      {openAddressForm && (
+        <AddressForm
+          _addresses={userDetails?.address}
+          isModalOpen={openAddressForm}
+          handleCancel={() => setOpenAddressForm(false)}
+          handleOk={(params, updateData) =>
+            handleUpdateData(userUpdateKeys.address, updateData)
+          }
+        />
+      )}
+      {openSBForm && (
+        <SubjectsBoardsForm
+          isModalOpen={openSBForm}
+          handleCancel={() => setOpenSBForm(false)}
+          subject={userDetails?.subjects}
+          board={userDetails?.board}
+          handleOk={(params, updateData) =>
+            handleUpdateData(userUpdateKeys.profile, updateData)
+          }
+        />
+      )}
     </Wrapper>
   );
 }

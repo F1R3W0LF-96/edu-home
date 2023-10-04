@@ -17,6 +17,31 @@ const filters = [
       { showname: "Mathematics", val: "mathematics" },
     ],
   },
+  {
+    name: "Boards",
+    values: [
+      { showname: "ICSE", val: "ICSE" },
+      { showname: "CBSE", val: "CSBE" },
+      { showname: "IGCSE", val: "IGCSE" },
+    ],
+  },
+  {
+    name: "Min Hourly Rate",
+    values: [
+      { showname: "500/hr - 1000/hr", val: "500" },
+      { showname: "1000/hr - 2000/hr", val: "1000" },
+      { showname: "2000/hr and above", val: "2000" },
+    ],
+  },
+  {
+    name: "Area Radius",
+    values: [
+      { showname: "within 5km", val: "5" },
+      { showname: "within 10km", val: "10" },
+      { showname: "within 15km", val: "15" },
+      { showname: "within 30km", val: "30" },
+    ],
+  },
 ];
 const FlexAlignation = ({ data }) => {
   return (
@@ -61,7 +86,7 @@ const GridAlignation = ({ data }) => {
 const CategoriesFilter = ({ type = "flex" }) => {
   return (
     <div className="w-full shadow p-5 rounded-lg bg-white m-4">
-      <div className="relative">
+      {/* <div className="relative">
         <div className="absolute flex items-center ml-2 h-full">
           <svg
             className="w-4 h-4 fill-current text-primary-gray-dark"
@@ -78,7 +103,7 @@ const CategoriesFilter = ({ type = "flex" }) => {
           placeholder="Search by listing, location, bedroom number..."
           className="px-8 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
         />
-      </div>
+      </div> */}
 
       <div className="flex items-center justify-between mt-4">
         <p className="font-medium">Filters</p>
