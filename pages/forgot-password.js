@@ -2,9 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import Wrapper from "@/components/Layouts/Wrapper";
 import useAuthentication from "@/hooks/useAuthentication";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 function ForgotPaswword() {
-  const { sendMailForgotPassword, verifyOTP, loading } = useAuthentication();
+  const { sendMailForgotPassword, verifyOTP, verifyingOTP, loading } =
+    useAuthentication();
   const router = useRouter();
 
   const emailRef = useRef(null);
@@ -24,13 +26,16 @@ function ForgotPaswword() {
   const handleVerifyOTP = async (e) => {
     e.preventDefault();
     const value = otpref.current.value;
-    const { response, message } = await verifyOTP(value);
+    const { response, message } = await verifyOTP({
+      email: emailRef.current.value,
+      otp: otpref.current.value,
+    });
     if (response.success) {
-      console.log(response);
       // Redirect to /reset-password on success
       router.push(`/reset-password?${emailRef.current.value}`);
     } else {
       // Handle the case when OTP verification fails
+      toast.error("OTP is not verified");
       setEmailSent(false);
     }
 
@@ -85,6 +90,7 @@ function ForgotPaswword() {
                 )}
                 <div className="mt-4 mb-2 sm:mb-4">
                   <button
+                    disabled={loading}
                     type="submit"
                     onClick={(e) =>
                       emailSent ? handleVerifyOTP(e) : handleSendEmail(e)
