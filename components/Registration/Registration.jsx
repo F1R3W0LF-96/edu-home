@@ -7,7 +7,7 @@ import { RegistrationTypes } from "@/helper/Constant";
 import { addDetails, isAuthenticated } from "@/redux/userReducer";
 import { toast } from "react-toastify";
 function Registration({ registrationType, ...props }) {
-  const { signUp } = useAuthentication();
+  const { signUp, loading } = useAuthentication();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
