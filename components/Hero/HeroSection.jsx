@@ -77,11 +77,13 @@ const HeroSection = () => {
               </p>
               {!accessToken && (
                 <>
-                  <h3 className="text-white">Register as !</h3>
+                  <h3 className="text-white text-5xl p-7 ps-7 pe-3 bg-blue-500 rounded-full">
+                    Register as !
+                  </h3>
                   <Link
                     href="/register/teacher"
                     aria-label=""
-                    className="mr-3 inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-100 hover:text-white"
+                    className="text-4xl mr-3 inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-100 hover:text-white"
                   >
                     Teacher
                     <svg
@@ -95,7 +97,7 @@ const HeroSection = () => {
                   <Link
                     href="/register/student"
                     aria-label=""
-                    className="mr-3 inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-100 hover:text-white"
+                    className="text-4xl mr-3 inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-100 hover:text-white"
                   >
                     Student
                     <svg
