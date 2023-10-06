@@ -5,12 +5,15 @@ import { useRouter } from "next/router";
 import { addDetails, isAuthenticated } from "@/redux/userReducer";
 import useAuthentication from "@/hooks/useAuthentication";
 import { RegistrationTypes } from "@/helper/Constant";
+import { toast } from "react-toastify";
+import { message } from "antd";
 
 const HeroSection = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const userState = useSelector((state) => state).user;
   const { getlogin, loading } = useAuthentication();
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     phoneNumber: "",
     password: "",
@@ -27,13 +30,13 @@ const HeroSection = () => {
     e.preventDefault();
     const { phoneNumber, password } = formData;
     const { data, success, error } = await getlogin(phoneNumber, password);
-    console.log(data, success, error, ":::: handleLogin ::::");
+    console.log(data, success, error, message, ":::: handleLogin ::::");
     if (success) {
       delete data["password"];
       delete data["otp"];
       dispatch(addDetails({ data, success, error }));
       dispatch(isAuthenticated(true));
-
+      toast.success(message);
       localStorage.setItem("accessToken", data.accessToken);
       if (data.isProfileComplete) {
         router.push("/lists/teacher");
@@ -41,6 +44,7 @@ const HeroSection = () => {
         router.push("/profile");
       }
     } else {
+      toast.error(message);
       dispatch(isAuthenticated(null));
     }
   };
@@ -139,12 +143,23 @@ const HeroSection = () => {
                       <input
                         name="password"
                         id="password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
                         required
                         className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-teal-400 focus:outline-none focus:shadow-outline"
                         onChange={handleInputChange}
                       />
+                    </div>
+                    <div className="mx-3 mb-4">
+                      <input
+                        type="checkbox"
+                        name="showpassword"
+                        placeholder="************"
+                        onChange={() => {
+                          setShowPassword((ps) => !ps);
+                        }}
+                      />
+                      &nbsp;Show Password
                     </div>
                     <div className="mt-4 mb-2 sm:mb-4">
                       <button

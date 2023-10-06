@@ -97,7 +97,7 @@ function Student() {
                     href={`/profile/${ele._id}`}
                     className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0"
                   >
-                    Learn More
+                    Know More
                     <svg
                       className="w-4 h-4 ml-2"
                       viewBox="0 0 24 24"
@@ -304,7 +304,7 @@ function Student() {
       <section className="container text-gray-600 body-font mx-auto">
         <div className="w-full p-4 flex flex-row justify-between mt-12">
           <h1 className="mb-4 text-5xl font-bold text-gray-500">
-            The Teacher Listing
+            The {userType === "teacher" ? "Teacher" : "Student"} Listing
           </h1>
           <div className="flex align-items-center">
             <h3 className="mr-3 font-semibold">Sort</h3>

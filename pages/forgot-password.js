@@ -35,7 +35,7 @@ function ForgotPaswword() {
       router.push(`/reset-password?${emailRef.current.value}`);
     } else {
       // Handle the case when OTP verification fails
-      toast.error("OTP is not verified");
+      toast.error(response.message || "Somtehing went wrong");
       setEmailSent(false);
     }
 
