@@ -12,7 +12,7 @@ import WhatsappIcon from "@/public/Icons/whatsapp";
 import PhoneIcon from "@/public/Icons/Phone";
 import { useSelector, useDispatch } from "react-redux";
 import CustomPopover from "../Elements/CustomPopover";
-import { isAuthenticated } from "@/redux/userReducer";
+import { isAuthenticated, removeUserDetails } from "@/redux/userReducer";
 
 const Header = ({ isauthenticated, os, location, userState }) => {
   const { push, route } = useRouter();
@@ -243,7 +243,8 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                       <a
                         onClick={() => {
                           localStorage.removeItem("accessToken");
-                          dispatch(isAuthenticated(null));
+                          dispatch(removeUserDetails());
+                          dispatch(isAuthenticated(false));
                           push("/");
                         }}
                         className="block px-4 py-2 text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
