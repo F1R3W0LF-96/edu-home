@@ -69,21 +69,23 @@ const HeroSection = () => {
         <div className="relative px-4 py-16 mx-auto overflow-hidden sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
           <div className="flex flex-col items-center justify-between xl:flex-row">
             <div className="w-full max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-7/12">
-              <h1 className="mb-2 font-sans text-4xl font-bold tracking-tight text-white lg:text-6xl sm:leading-none">
+              <h1 className="ps-7 mb-2 font-sans text-4xl font-bold tracking-tight text-white lg:text-6xl sm:leading-none">
                 Tuition Search
               </h1>
-              <p className="max-w-xl mb-4 text-base text-gray-200 md:text-lg">
+              <p className="ps-7 max-w-xl mb-4 text-base text-gray-200 md:text-lg">
                 Learning at Doorsteps
               </p>
               {!accessToken && (
                 <>
-                  <h3 className="text-white text-5xl p-7 ps-7 pe-3 bg-blue-500 rounded-full">
-                    Register as !
+                  <h3 className="text-white text-5xl mb-4">
+                    <span className="bg-blue-500 rounded-full p-1 ps-7 pe-3">
+                      Register as !
+                    </span>
                   </h3>
                   <Link
                     href="/register/teacher"
                     aria-label=""
-                    className="text-4xl mr-3 inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-100 hover:text-white"
+                    className="ps-7 pe-3 text-4xl mr-3 inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-100 hover:text-white"
                   >
                     Teacher
                     <svg
@@ -97,7 +99,7 @@ const HeroSection = () => {
                   <Link
                     href="/register/student"
                     aria-label=""
-                    className="text-4xl mr-3 inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-100 hover:text-white"
+                    className="ps-7 text-4xl mr-3 inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-100 hover:text-white"
                   >
                     Student
                     <svg
