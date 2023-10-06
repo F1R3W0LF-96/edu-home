@@ -32,7 +32,7 @@ function Registration({ registrationType, ...props }) {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     if (formData.phoneNumber !== formData.cnfPhNumber) {
-      toast.error("Phone no didn't matched");
+      toast.error("Phone number didn't match");
       return;
     }
     const apiData = {
@@ -66,6 +66,7 @@ function Registration({ registrationType, ...props }) {
         data?.message ||
         "Successfully Registered";
       toast.success(success_msg);
+      window.location.href = "https://tuitionsearch.co.in";
     } else {
       toast.error(message);
       dispatch(isAuthenticated(false));
@@ -236,6 +237,7 @@ function Registration({ registrationType, ...props }) {
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
                     <button
+                      disabled={loading}
                       className="block w-full max-w-xs mx-auto bg-teal-500 hover:bg-teal-700 focus:bg-teal-700 text-white rounded-lg px-3 py-3 font-semibold"
                       onClick={(e) => handleFormSubmit(e)}
                     >

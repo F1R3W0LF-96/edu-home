@@ -299,40 +299,46 @@ function Profile({ ...props }) {
                 </div>
                 <div className="text-gray-700">
                   <div className="grid md:grid-cols-2 text-sm">
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">First Name</div>
-                      <div className="px-4 py-2">
-                        {userDetails?.firstName || "Update for firstname"}
+                    <div className="d-flex flex-column">
+                      <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">
+                          First Name
+                        </div>
+                        <div className="px-4 py-2">
+                          {userDetails?.firstName || "Update for firstname"}
+                        </div>
                       </div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Last Name</div>
-                      <div className="px-4 py-2">
-                        {userDetails?.LastName || "Update for lastname"}
+                      <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">Last Name</div>
+                        <div className="px-4 py-2">
+                          {userDetails?.LastName || "Update for lastname"}
+                        </div>
                       </div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Gender</div>
-                      <div className="px-4 py-2">
-                        {userDetails?.gender || "Please update gender"}
+                      <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">Gender</div>
+                        <div className="px-4 py-2">
+                          {userDetails?.gender || "Please update gender"}
+                        </div>
                       </div>
-                    </div>
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Contact No.</div>
-                      <div className="px-4 py-2">
-                        +91 {userDetails?.phoneno}
+                      <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">
+                          Contact No.
+                        </div>
+                        <div className="px-4 py-2">
+                          +91 {userDetails?.phoneno}
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="grid grid-cols-2">
-                      <div className="px-4 py-2 font-semibold">Email.</div>
-                      <div className="px-4 py-2">
-                        <a
-                          className="text-blue-800"
-                          href="mailto:jane@example.com"
-                        >
-                          {userDetails?.email}
-                        </a>
+                      <div className="grid grid-cols-2">
+                        <div className="px-4 py-2 font-semibold">Email.</div>
+                        <div className="px-4 py-2">
+                          <a
+                            className="text-blue-800"
+                            href="mailto:jane@example.com"
+                          >
+                            {userDetails?.email}
+                          </a>
+                        </div>
                       </div>
                     </div>
                     <div className="grid grid-cols-2">
