@@ -71,7 +71,7 @@ const HeroSection = () => {
               <p className="max-w-xl mb-4 text-base text-gray-200 md:text-lg">
                 Learning at Doorsteps
               </p>
-              {!userState?.isAuth && (
+              {!accessToken && (
                 <>
                   <h3 className="text-white">Register as !</h3>
                   <Link

@@ -6,6 +6,7 @@ import SortIcon from "@/public/Icons/SortIcon";
 import { RegistrationTypes, alignment } from "@/helper/Constant";
 import useAuthentication from "@/hooks/useAuthentication";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 function Student() {
   const { getUserByRole } = useAuthentication();
@@ -13,6 +14,7 @@ function Student() {
   const { userType } = router.query;
   const [results, setResults] = useState([]);
   const [align, setAlign] = useState(alignment.GRID);
+  const [showPhoneIdx, setShowPhoneIdx] = useState(-1);
   useEffect(() => {
     if (userType) {
       getUserListing(userType);
@@ -29,7 +31,7 @@ function Student() {
     setResults(response.data);
   };
 
-  const layout = (type, ele) => {
+  const layout = (type, ele, parentidx) => {
     switch (type) {
       case alignment.GRID:
         return (
@@ -40,7 +42,7 @@ function Student() {
             <div className="h-full border border-gray-300 border-opacity-60 rounded-lg overflow-hidden bg-white">
               <img
                 className="lg:h-72 md:h-48 w-full object-cover object-center"
-                src="https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                 alt="blog"
               />
               <div className="p-6">
@@ -80,39 +82,21 @@ function Student() {
                   {ele.firstName} {ele.LastName}
                 </h1>
                 <p className="leading-relaxed mb-3">
-                  {ele.bio ? ele.bio : "Details..."} <br />
-                  <span className="phone-number">
-                    Contact Number:
+                  {ele.description !== "" ? ele.description : "Details..."}{" "}
+                  <br />
+                  <span className="phone-number" onClick={() => {}}>
+                    Ph.No: &nbsp;
                     <span className="visible-digits">
-                      {ele.phoneno.substring(0, 2)}
-                    </span>
-                    <span className="hidden-digits">
-                      {ele.phoneno.substring(2, ele.phoneno.length - 2)}
-                    </span>
-                    <span className="visible-digits">
-                      {ele.phoneno.substring(ele.phoneno.length - 2)}
+                      {ele.phoneno.substring(0, 4)}
                     </span>
                   </span>
                 </p>
+
                 <div className="flex items-center flex-wrap">
-                  <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
-                    Direct Message
-                    <svg
-                      className="w-4 h-4 ml-2"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M5 12h14"></path>
-                      <path d="M12 5l7 7-7 7"></path>
-                    </svg>
-                  </a>
-                </div>
-                {/* <div className="flex items-center flex-wrap">
-                  <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                  <Link
+                    href={`/profile/${ele._id}`}
+                    className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0"
+                  >
                     Learn More
                     <svg
                       className="w-4 h-4 ml-2"
@@ -126,8 +110,8 @@ function Student() {
                       <path d="M5 12h14"></path>
                       <path d="M12 5l7 7-7 7"></path>
                     </svg>
-                  </a>
-                  <span className="text-black-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+                  </Link>
+                  {/* <span className="text-black-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
                     <svg
                       className="w-4 h-4 mr-1"
                       stroke="currentColor"
@@ -155,8 +139,8 @@ function Student() {
                       <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
                     </svg>
                     6
-                  </span>
-                </div> */}
+                  </span> */}
+                </div>
 
                 {/* <div className="flex justify-between items-center flex-wrap mt-8">
                   <span className="text-black-400 mr-3 inline-flex items-center text-sm pr-3 py-1">
@@ -351,7 +335,8 @@ function Student() {
                   align !== alignment.GRID ? "flex-col " : "flex-row "
                 } `}
               >
-                {results.length > 0 && results.map((ele) => layout(align, ele))}
+                {results.length > 0 &&
+                  results.map((ele, idx) => layout(align, ele, idx))}
               </div>
             </div>
           </div>

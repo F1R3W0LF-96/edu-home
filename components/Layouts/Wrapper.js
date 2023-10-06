@@ -1,17 +1,20 @@
 // import { animationCreate } from "@/utils/utils";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import BackToTop from "../lib/BackToTop";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import useAuthentication from "@/hooks/useAuthentication";
 import Whatsapp from "../Widgets/Whatsapp";
+import { setProfileViewedData } from "@/redux/userReducer";
 
 const Wrapper = (props) => {
+  const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const { isAuthenticated } = useAuthentication();
   const [os, setOS] = useState("window");
   useEffect(() => {
+    dispatch(setProfileViewedData());
     // setTimeout(() => {
     //   animationCreate();
     // }, 500);
