@@ -6,12 +6,14 @@ export default function useAuthentication() {
   const { isEmail, validateEmail, validateStrongPassword, validatePhoneNo } =
     useValidation();
   const [loading, setLoading] = useState(false);
+  const [verifyingOTP, setVerifyingOTP] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginResponse, setLoginResponse] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
 
   return {
     loading,
+    verifyingOTP,
     isAuthenticated,
     loginResponse,
     userDetails,
@@ -137,15 +139,19 @@ export default function useAuthentication() {
         return { response: null, message: "Not A Valid Email" };
       }
     },
-    verifyOTP: async (OTP) => {
+    verifyOTP: async (body) => {
       setLoading(true);
+      setVerifyingOTP(true);
       const reg = /^\d{6}$/;
-      const isValidOTP = reg.test(OTP) && OTP.length === 6;
-      console.log(isValidOTP);
+      const isValidOTP = reg.test(body.otp) && body.otp.length === 6;
       if (isValidOTP) {
-        const response = await AuthRepositor.verifyOTP(OTP);
+        const response = await AuthRepositor.verifyOTP(body);
+        setVerifyingOTP(false);
+        setLoading(false);
         return { response: response, message: response?.message };
       } else {
+        setVerifyingOTP(false);
+        setLoading(false);
         return {
           response: null,
           message: "OTP should contain 6 digit and only numeric",

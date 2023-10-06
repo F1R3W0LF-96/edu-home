@@ -81,17 +81,19 @@ const Header = ({ isauthenticated, os, location, userState }) => {
           <Image src={logo} width={200} alt="logo" />
         </Link>
         <div className="lg:hidden flex justify-center content-center items-center">
-          <div className="flex justify-center content-center items-center">
-            <div className="ps-1 pe-1">
-              <UserOutlined size={100} />
+          {token && (
+            <div className="flex justify-center content-center items-center">
+              <div className="ps-1 pe-1">
+                <UserOutlined size={100} />
+              </div>
+              <div className="ps-1">
+                <PayCircleOutlined color="yellow" />
+              </div>
+              <div className="ps-1 pe-1 pt-1">
+                <p>{userState?.data?.coins}</p>
+              </div>
             </div>
-            <div className="ps-1">
-              <PayCircleOutlined color="yellow" />
-            </div>
-            <div className="ps-1 pe-1 pt-1">
-              <p>{userState?.data?.coins}</p>
-            </div>
-          </div>
+          )}
 
           <div className="flex flex-row" onClick={handleShowMobileMenu}>
             <button className="navbar-burger flex items-center text-blue-600 p-3">
