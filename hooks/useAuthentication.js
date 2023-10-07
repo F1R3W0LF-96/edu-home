@@ -5,6 +5,7 @@ export default function useAuthentication() {
   const AuthRepositor = new AuthRepositors();
   const { isEmail, validateEmail, validateStrongPassword, validatePhoneNo } =
     useValidation();
+  const [loggingIn, setLoggingIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [verifyingOTP, setVerifyingOTP] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -12,6 +13,7 @@ export default function useAuthentication() {
   const [userDetails, setUserDetails] = useState(null);
 
   return {
+    loggingIn,
     loading,
     verifyingOTP,
     isAuthenticated,
@@ -20,6 +22,9 @@ export default function useAuthentication() {
     isEmail,
     setUserDetails,
     updateUserDetails,
+    validateEmail,
+    validateStrongPassword,
+    validatePhoneNo,
     setLoading: (payload) => {
       setLoading(payload);
     },
@@ -40,15 +45,18 @@ export default function useAuthentication() {
     },
     getlogin: async (phoneno, password) => {
       setLoading(true);
+      setLoggingIn(true);
       const response = await AuthRepositor.login(phoneno, password);
       if (response.success) {
         setLoginResponse(response);
         setIsAuthenticated(true);
         setLoading(false);
+        setLoggingIn(false);
       } else {
         setLoginResponse(null);
         setIsAuthenticated(false);
         setLoading(false);
+        setLoggingIn(false);
       }
       return response;
     },

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { addDetails, isAuthenticated } from "@/redux/userReducer";
@@ -7,13 +7,21 @@ import useAuthentication from "@/hooks/useAuthentication";
 import { RegistrationTypes } from "@/helper/Constant";
 import { toast } from "react-toastify";
 import { message } from "antd";
+import ListsLayout from "@/pages/lists/ListsLayout";
 
 const HeroSection = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const userState = useSelector((state) => state).user;
-  const { getlogin, loading } = useAuthentication();
+  const {
+    getlogin,
+    loading,
+    loggingIn,
+    getUserByRole,
+    validateStrongPassword,
+  } = useAuthentication();
   const [showPassword, setShowPassword] = useState(false);
+  const [results, setResults] = useState([]);
   const [formData, setFormData] = useState({
     phoneNumber: "",
     password: "",
@@ -29,14 +37,31 @@ const HeroSection = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const { phoneNumber, password } = formData;
-    const { data, success, error } = await getlogin(phoneNumber, password);
-    console.log(data, success, error, message, ":::: handleLogin ::::");
+    if (phoneNumber === "") {
+      toast.error("Phone no cannot be empty");
+      return;
+    }
+    if (phoneNumber.length !== 10) {
+      toast.error("Incorrect phone number it should be 10 digits");
+      return;
+    }
+    if (password === "") {
+      toast.error("Please enter passwword");
+      return;
+    }
+
+    const { data, success, error, ...rest } = await getlogin(
+      phoneNumber,
+      password
+    );
+    debugger;
     if (success) {
+      debugger;
       delete data["password"];
       delete data["otp"];
-      dispatch(addDetails({ data, success, error }));
+      dispatch(addDetails({ data: data, success, error }));
       dispatch(isAuthenticated(true));
-      toast.success(message);
+      toast.success(data.message);
       localStorage.setItem("accessToken", data.accessToken);
       if (data.isProfileComplete) {
         router.push("/lists/teacher");
@@ -44,10 +69,24 @@ const HeroSection = () => {
         router.push("/profile");
       }
     } else {
-      toast.error(message);
+      toast.error(data.message);
       dispatch(isAuthenticated(null));
     }
   };
+  const getUserListing = async (type) => {
+    const response = await getUserByRole(
+      type.toLowerCase() === RegistrationTypes.TEACHER_TYPE
+        ? RegistrationTypes.STUDENT_TYPE.toUpperCase()
+        : RegistrationTypes.TEACHER_TYPE.toUpperCase()
+    );
+    console.log(response);
+    setResults(response.data);
+  };
+  // useEffect(() => {
+  //   if (userState.data && accessToken) {
+  //     getUserListing(userState.data.user_role);
+  //   }
+  // }, [userState.data, accessToken]);
 
   return (
     <div className="relative">
@@ -168,11 +207,11 @@ const HeroSection = () => {
                     <div className="mt-4 mb-2 sm:mb-4">
                       <button
                         // type="submit"
-                        disabled={loading}
+                        disabled={loggingIn}
                         onClick={(e) => handleLogin(e)}
                         className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-400 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
                       >
-                        {loading ? "Logging..." : "Login"}
+                        {loggingIn ? "Logging..." : "Login"}
                       </button>
                     </div>
                   </form>
@@ -193,6 +232,25 @@ const HeroSection = () => {
             )}
           </div>
         </div>
+        {accessToken && (
+          <div className="relative px-4 py-16 mx-auto overflow-hidden sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+            <div className="mx-auto">
+              <div className={`flex flex-wrap m-4 flex-row`}>
+                {results.length > 0 &&
+                  results
+                    .splice(0, 4)
+                    .map((ele, idx) => (
+                      <ListsLayout
+                        key={idx}
+                        ele={ele}
+                        type={"GRID"}
+                        parentidx={idx}
+                      />
+                    ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
