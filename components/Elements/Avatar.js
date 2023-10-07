@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-function Avatar({ size, imageSrc }) {
+function Avatar({ size, imageSrc, className = null }) {
   let _avatar = (
-    <div className="h-6 w-6 mb-4 lg:mb-0 mr-4">
+    <div className={className ? className : "h-6 w-6 mb-4 lg:mb-0 mr-4"}>
       <img
         src={imageSrc}
         alt

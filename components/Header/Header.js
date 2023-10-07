@@ -82,15 +82,28 @@ const Header = ({ isauthenticated, os, location, userState }) => {
         </Link>
         <div className="lg:hidden flex justify-center content-center items-center">
           {token && (
-            <div className="flex justify-center content-center items-center">
-              <div className="ps-1 pe-1">
-                <UserOutlined size={100} />
+            <div
+              className="flex justify-center content-center items-center cursor-pointer"
+              onClick={handleShowMobileMenu}
+            >
+              <div className="ps-6 flex items-center sm:flex-row flex-wrap">
+                <div className="h-10 w-10">
+                  <img
+                    src={
+                      "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
+                    }
+                    alt=""
+                    className="h-full w-full rounded-full overflow-hidden shadow border-2 border-gray-100"
+                  />
+                </div>
               </div>
-              <div className="ps-1">
-                <PayCircleOutlined color="yellow" />
-              </div>
-              <div className="ps-1 pe-1 pt-1">
-                <p>{userState?.data?.coins}</p>
+              <div className="ps-1 flex flex-row justify-center items-center">
+                <div className="ts_coin_circle">
+                  <div className="ts_coin_letter">TS</div>
+                </div>
+                <p className="ps-1 text-yellow-500 font-bold">
+                  {userState?.data?.coins}
+                </p>
               </div>
             </div>
           )}
@@ -199,29 +212,25 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                 handleOpen={(newOpen) => setOpenProfileMenu(newOpen)}
                 title={""}
                 text={
-                  <div className="flex justify-center content-center items-center">
-                    <div className="ps-2 pe-2">
-                      <UserOutlined size={100} />
+                  <div className="flex justify-center content-center items-center cursor-pointer">
+                    <div className="ps-6 flex items-center sm:flex-row flex-wrap">
+                      <div className="h-10 w-10">
+                        <img
+                          src={
+                            "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
+                          }
+                          alt=""
+                          className="h-full w-full rounded-full overflow-hidden shadow border-2 border-gray-100"
+                        />
+                      </div>
                     </div>
-
-                    {/* <Avatar
-                      size={20}
-                      imageSrc={
-                        "https://img.freepik.com/premium-vector/account-icon-user-icon-vector-graphics_292645-552.jpg"
-                      }
-                    /> */}
-                    <div className="ps-2">
-                      <PayCircleOutlined color="yellow" />
-                    </div>
-
-                    {/* <Image
-                      src={coinImage}
-                      alt={"rupee"}
-                      width={20}
-                      height={20}
-                    /> */}
-                    <div className="ps-1 pe-2 pt-1">
-                      <p>{userState?.data?.coins}</p>
+                    <div className="ps-1 flex flex-row justify-center items-center">
+                      <div className="ts_coin_circle">
+                        <div className="ts_coin_letter">TS</div>
+                      </div>
+                      <p className="ps-1 text-yellow-500 font-bold">
+                        {userState?.data?.coins}
+                      </p>
                     </div>
                   </div>
                 }
@@ -299,7 +308,7 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                   <>
                     <li className="mb-1">
                       <a
-                        className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                        className="cursor-pointer block p-4 text-sm font-semibold text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href="https://tuitionsearch.co.in"
                       >
                         Home
@@ -307,7 +316,7 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                     </li>
                     <li className="mb-1">
                       <a
-                        className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                        className="cursor-pointer block p-4 text-sm font-semibold text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href="#about-us"
                       >
                         About Us
@@ -315,7 +324,7 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                     </li>
                     <li className="mb-1">
                       <a
-                        className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                        className="cursor-pointer block p-4 text-sm font-semibold text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href="#contact-us"
                       >
                         Contact
@@ -327,7 +336,7 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                   <>
                     <li className="mb-1">
                       <a
-                        className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                        className="block p-4 text-sm font-semibold text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded"
                         onClick={(e) => {
                           e.preventDefault();
                           push("/profile");
@@ -339,7 +348,7 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                     {userState?.data?.user_role === "TEACHER" ? (
                       <li className="mb-1">
                         <Link
-                          className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                          className="block p-4 text-sm font-semibold text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded"
                           href="/lists/teacher"
                         >
                           Student Lists
@@ -348,7 +357,7 @@ const Header = ({ isauthenticated, os, location, userState }) => {
                     ) : (
                       <li className="mb-1">
                         <Link
-                          className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                          className="block p-4 text-sm font-semibold text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded"
                           href="/lists/student"
                         >
                           Teacher Lists
@@ -363,7 +372,7 @@ const Header = ({ isauthenticated, os, location, userState }) => {
               {token ? (
                 <div className="flex content-center justify-center items-center w-full px-2 py-2">
                   <a
-                    className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded w-full text-center"
+                    className="block p-4 text-sm font-semibold text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded w-full text-center"
                     onClick={(e) => {
                       e.preventDefault();
                       localStorage.removeItem("accessToken");
