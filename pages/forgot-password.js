@@ -32,7 +32,7 @@ function ForgotPaswword() {
     });
     if (response.success) {
       // Redirect to /reset-password on success
-      router.push(`/reset-password?${emailRef.current.value}`);
+      router.push(`/reset-password?email=${emailRef.current.value}`);
     } else {
       // Handle the case when OTP verification fails
       toast.error(response.message || "Somtehing went wrong");
