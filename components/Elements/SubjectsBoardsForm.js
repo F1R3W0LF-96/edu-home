@@ -52,7 +52,7 @@ const SubjectsBoardsForm = ({
               width: "100%",
             }}
             placeholder="Please Boards select"
-            defaultValue={board.split(",")}
+            defaultValue={board?.split(",")}
             onChange={handleBoardsChange}
             options={["ICSE", "CBSE", "IGCSE", "STATE BOARD"].map(
               (ele, idx) => ({
