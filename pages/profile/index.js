@@ -72,7 +72,7 @@ function Profile({ ...props }) {
       };
     }
 
-    if (key === userUpdateKeys.subjects) {
+    if (key === userUpdateKeys.education) {
       bodyData = {
         ...bodyData,
         education: [..._edu],
