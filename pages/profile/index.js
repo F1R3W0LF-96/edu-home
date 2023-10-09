@@ -75,7 +75,7 @@ function Profile({ ...props }) {
     if (key === userUpdateKeys.education) {
       bodyData = {
         ...bodyData,
-        education: [..._edu],
+        education: [..._edu, updateData],
       };
     }
     const token = localStorage.getItem("accessToken");
