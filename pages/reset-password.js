@@ -10,7 +10,7 @@ function ResetPassword() {
   const { resetPassword, loading } = useAuthentication();
   const router = useRouter();
   const { query } = router;
-
+  console.log(query.email);
   const handleResetPassword = async (e) => {
     e.preventDefault();
     const value_pwd = passwordRef.current.value;
@@ -22,7 +22,6 @@ function ResetPassword() {
         password: value_pwd,
       };
       const { response, message } = await resetPassword(request);
-      debugger;
       if (response.success) {
         console.log(response);
         // Redirect to /reset-password on success
