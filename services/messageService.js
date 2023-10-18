@@ -93,8 +93,8 @@ class MessageRepository {
     return reponse;
   }
 
-  async getAllMessageOfUser(senderid) {
-    const endPoint = `${baseDomain}/message/${senderid}`;
+  async getAllMessageOfUser(senderid, recieverid) {
+    const endPoint = `${baseDomain}/message/${senderid}/${recieverid}`;
     console.log(this.headers);
     const reponse = await Repository(this.token)
       .get(endPoint, { headers: { ...this.headers } })
