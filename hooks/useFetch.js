@@ -19,7 +19,6 @@ export default function useFetch() {
       setLoading(true);
     },
     sendMessage: async (message, senderid, recieverid) => {
-      debugger;
       setLoading(true);
       const response = await MessageRepositor.sendMessage(
         message,
