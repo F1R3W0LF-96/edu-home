@@ -14,6 +14,7 @@ import SubjectsBoardsForm from "@/components/Elements/SubjectsBoardsForm";
 function Profile({ ...props }) {
   const userState = useSelector((state) => state).user;
   const [openAddressForm, setOpenAddressForm] = useState(false);
+  const [openChat, setOpenChat] = useState(false);
   const [openImageUploader, setOpenImageUploader] = useState(false);
   const [openProfileForm, setOpenProfileForm] = useState(false);
   const [openEducationForm, setOpenEducationForm] = useState(false);
@@ -51,7 +52,7 @@ function Profile({ ...props }) {
     }
   };
   useEffect(() => {
-    getUserDetails(userDetails?._id);
+    getUserDetails(userDetails?._id, false);
   }, [userDetails?._id]);
 
   const handleUpdateData = async (key, updateData) => {
@@ -183,14 +184,6 @@ function Profile({ ...props }) {
                       <span className="bg-yellow-500 py-1 px-2 rounded text-gray-900 text-sm font-semibold">
                         {userDetails?.coins}
                       </span>
-                    </span>
-                  </li>
-                  <li className="flex items-center py-3">
-                    <span>Member since</span>
-                    <span className="ml-auto">
-                      {new Date(
-                        userState?.data?.createdAt
-                      ).toLocaleDateString()}
                     </span>
                   </li>
                 </ul>

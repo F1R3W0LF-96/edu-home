@@ -60,9 +60,9 @@ export default function useAuthentication() {
       }
       return response;
     },
-    getUserDetails: async (id) => {
+    getUserDetails: async (id, getById) => {
       setLoading(true);
-      const response = await AuthRepositor.getUserDetails(id);
+      const response = await AuthRepositor.getUserDetails(id, getById);
       console.log(response.data, ":::: getUserDetails ::::");
       if (response) {
         setUserDetails(response.data.data);

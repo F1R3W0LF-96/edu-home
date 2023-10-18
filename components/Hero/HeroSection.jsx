@@ -54,9 +54,7 @@ const HeroSection = () => {
       phoneNumber,
       password
     );
-    debugger;
     if (success) {
-      debugger;
       delete data["password"];
       delete data["otp"];
       dispatch(addDetails({ data: data, success, error }));
