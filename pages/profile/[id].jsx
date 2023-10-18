@@ -366,7 +366,7 @@ function Profile({ ...props }) {
           senderid={userState?.data?._id}
           handleClose={() => setOpenChat(false)}
           heading={userDetails?.data?.fullName}
-          recieverid={userDetails?.data?._id}
+          recieverid={id}
         />
       ) : null}
     </Wrapper>
