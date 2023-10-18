@@ -28,9 +28,12 @@ export default function useFetch() {
       );
       return response;
     },
-    getMessageByUser: async (senderid) => {
+    getMessageByUser: async (senderid, recieverid) => {
       setLoading(true);
-      const response = await MessageRepositor.getAllMessageOfUser(senderid);
+      const response = await MessageRepositor.getAllMessageOfUser(
+        senderid,
+        recieverid
+      );
       return response;
     },
   };

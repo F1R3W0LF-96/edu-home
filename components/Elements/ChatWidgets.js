@@ -19,7 +19,7 @@ function ChatWidgets({
     //     handleClose();
     //   }
     // });
-    getMessageByUser(senderid)
+    getMessageByUser(senderid, recieverid)
       .then((res) => {
         console.log(res.data.data);
         setMessages(res.data.data);
