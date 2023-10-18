@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { Skeleton } from "antd";
-import { toast } from "react-toastify";
 import Wrapper from "@/components/Layouts/Wrapper";
 import useAuthentication from "@/hooks/useAuthentication";
 import { deductCoins } from "@/redux/userReducer";
+import ChatWidgets from "@/components/Elements/ChatWidgets";
 function Profile({ ...props }) {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state).user;
@@ -14,17 +14,18 @@ function Profile({ ...props }) {
   const { getUserDetails, loading, userDetails, updateUserDetails } =
     useAuthentication();
   const _tkn = localStorage.getItem("accessToken");
+  const [openChat, setOpenChat] = useState(false);
   useEffect(() => {
-    getUserDetails(id);
-    dispatch(
-      deductCoins({
-        coin: 20,
-        id: id,
-        cb: (userData) => {
-          updateUserDetails(userData, _tkn);
-        },
-      })
-    );
+    getUserDetails(id, true);
+    // dispatch(
+    //   deductCoins({
+    //     coin: 20,
+    //     id: id,
+    //     cb: (userData) => {
+    //       updateUserDetails(userData, _tkn);
+    //     },
+    //   })
+    // );
   }, [id]);
 
   return (
@@ -113,6 +114,15 @@ function Profile({ ...props }) {
                         userState?.data?.createdAt
                       ).toLocaleDateString()}
                     </span>
+                  </li>
+                  <li className="flex items-center pt-3">
+                    <span>Message</span>
+                    <button
+                      className="ml-auto bg-gray-200 p-2 "
+                      onClick={() => setOpenChat(true)}
+                    >
+                      Click here
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -351,6 +361,14 @@ function Profile({ ...props }) {
           </div>
         </div>
       )}
+      {openChat ? (
+        <ChatWidgets
+          senderid={userState?.data?._id}
+          handleClose={() => setOpenChat(false)}
+          heading={userDetails?.data?.fullName}
+          recieverid={userDetails?.data?._id}
+        />
+      ) : null}
     </Wrapper>
   );
 }

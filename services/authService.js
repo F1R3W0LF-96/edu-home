@@ -89,8 +89,8 @@ class AuthRepository {
       });
     return reponse;
   }
-  async getUserDetails(id) {
-    const endPoint = `${baseDomain}/users/profile?id=${id}`;
+  async getUserDetails(id, getById) {
+    const endPoint = `${baseDomain}/users/profile?id=${id}&getById=${getById}`;
     console.log(this.headers);
     const reponse = await axios
       .get(endPoint, { headers: { ...this.headers } })
