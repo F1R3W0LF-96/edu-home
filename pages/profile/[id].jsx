@@ -17,15 +17,15 @@ function Profile({ ...props }) {
   const [openChat, setOpenChat] = useState(false);
   useEffect(() => {
     getUserDetails(id, true);
-    // dispatch(
-    //   deductCoins({
-    //     coin: 20,
-    //     id: id,
-    //     cb: (userData) => {
-    //       updateUserDetails(userData, _tkn);
-    //     },
-    //   })
-    // );
+    dispatch(
+      deductCoins({
+        coin: 20,
+        id: id,
+        cb: (userData) => {
+          updateUserDetails(userData, _tkn);
+        },
+      })
+    );
   }, [id]);
 
   return (
