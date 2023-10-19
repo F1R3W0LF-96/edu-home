@@ -12,7 +12,7 @@ function ChatWidgets({
   const { loading, getMessageByUser, sendMessage } = useFetch();
   const wrapperRef = useRef(null);
   const inputRef = useRef(null);
-  const [typedMessage, setTypedMessage] = useState("")
+  const [typedMessage, setTypedMessage] = useState("");
   const [messages, setMessages] = useState([]);
   useEffect(() => {
     if (messagesData) {
@@ -26,35 +26,32 @@ function ChatWidgets({
       .then((res) => {
         console.log(res.data.data);
         setMessages(res.data.data.reverse());
-        scrollToBottom()
-
+        scrollToBottom();
       })
       .catch((err) => {
         console.log(err);
       });
-  }
-
+  };
 
   const sendSingleMessage = (message, senderid, recieverid) => {
     sendMessage(message, senderid, recieverid).then((response) => {
       if (response.data.success) {
-        setTypedMessage("")
+        setTypedMessage("");
         fetchConversation();
-
       }
-    })
-  }
+    });
+  };
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
-  }
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+  };
   const scrollToBottom = () => {
- const main = document.querySelector('.message-chat');
- if (main) {
-    main.scrollTop = main.scrollHeight;
- }
-}
+    const main = document.querySelector(".message-chat");
+    if (main) {
+      main.scrollTop = main.scrollHeight;
+    }
+  };
   return (
     <div className="chat-container">
       <section className="message" ref={wrapperRef}>
@@ -74,7 +71,7 @@ function ChatWidgets({
           {messages?.map((ele, idx) => {
             return (
               <>
-                {ele.senderid._id === recieverid &&
+                {ele.senderid._id === recieverid && (
                   <div className="msg left-msg">
                     <div
                       className="msg-img"
@@ -98,7 +95,7 @@ function ChatWidgets({
                       </div>
                     </div>
                   </div>
-                }
+                )}
                 {ele.senderid._id === senderid && (
                   <div className="msg right-msg">
                     <div
@@ -121,7 +118,8 @@ function ChatWidgets({
                     </div>
                   </div>
                 )}
-              </>)
+              </>
+            );
           })}
         </main>
         <form
@@ -136,7 +134,9 @@ function ChatWidgets({
             className="message-input"
             placeholder="Enter your message..."
             value={typedMessage}
-            onChange={(event) => { setTypedMessage(event.target.value) }}
+            onChange={(event) => {
+              setTypedMessage(event.target.value);
+            }}
           />
           <button
             type="submit"
@@ -144,6 +144,7 @@ function ChatWidgets({
             onSubmit={(e) => {
               e.preventDefault();
               sendSingleMessage(typedMessage, senderid, recieverid);
+              fetchConversation();
             }}
           >
             Send

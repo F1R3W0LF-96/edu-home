@@ -18,6 +18,12 @@ const userReducer = createSlice({
       state.isAuth = action.payload;
     },
     deductCoins(state, action) {
+      const profileViewed = localStorage.getItem("profileViewed");
+      if (profileViewed) {
+        state.profileViewed = JSON.parse(profileViewed);
+      } else {
+        localStorage.setItem("profileViewed", JSON.stringify([]));
+      }
       if (state.data) {
         const isProfileViewed = state.profileViewed?.includes(
           action.payload.id
