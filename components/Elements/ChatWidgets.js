@@ -14,6 +14,7 @@ function ChatWidgets({
   const inputRef = useRef(null);
   const [typedMessage, setTypedMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [sending, setSending] = useState(false);
   useEffect(() => {
     if (messagesData) {
       setMessages(messagesData);
@@ -22,14 +23,17 @@ function ChatWidgets({
     }
   }, [messagesData]);
   const fetchConversation = () => {
+    setSending(true);
     getMessageByUser(senderid, recieverid)
       .then((res) => {
         console.log(res.data.data);
         setMessages(res.data.data.reverse());
         scrollToBottom();
+        setSending(false);
       })
       .catch((err) => {
         console.log(err);
+        setSending(false);
       });
   };
 
@@ -130,6 +134,7 @@ function ChatWidgets({
           className="message-inputarea"
         >
           <input
+            disabled={sending}
             type="text"
             className="message-input"
             placeholder="Enter your message..."
@@ -139,15 +144,18 @@ function ChatWidgets({
             }}
           />
           <button
+            disabled={sending}
             type="submit"
-            className="ms-2 rounded bg-teal-500 text-white"
+            className={`ms-2 rounded ${
+              sending ? "bg-teal-100 text-gray-900" : " text-white bg-teal-500"
+            }`}
             onSubmit={(e) => {
               e.preventDefault();
               sendSingleMessage(typedMessage, senderid, recieverid);
               fetchConversation();
             }}
           >
-            Send
+            {sending ? "Sending.." : "Send"}
           </button>
         </form>
       </section>
