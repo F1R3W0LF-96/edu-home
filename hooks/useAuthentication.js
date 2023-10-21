@@ -73,7 +73,15 @@ export default function useAuthentication() {
       }
       return response;
     },
-    signUp: async (fullname, name, email, password, phoneno, user_role) => {
+    signUp: async (
+      fullname,
+      firstName,
+      LastName,
+      email,
+      password,
+      phoneno,
+      user_role
+    ) => {
       setLoading(true);
       const isValidEmail = validateEmail(email);
       const isStrongPassword = validateStrongPassword(password);
@@ -82,7 +90,8 @@ export default function useAuthentication() {
         try {
           const requestBody = {
             fullname: fullname,
-            name: name,
+            firstName: firstName,
+            LastName: LastName,
             email: email,
             password: password,
             phoneno: phoneno,
