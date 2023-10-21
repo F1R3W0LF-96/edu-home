@@ -99,7 +99,8 @@ function Registration({ registrationType, ...props }) {
     };
     const { data, success, error, message } = await signUp(
       apiData.fullname,
-      apiData.name,
+      apiData.firstName,
+      apiData.LastName,
       apiData.email,
       apiData.password,
       apiData.phoneno,
