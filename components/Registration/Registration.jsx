@@ -79,18 +79,19 @@ function Registration({ registrationType, ...props }) {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    if (formData.phoneNumber !== formData.cnfPhNumber) {
+    debugger;
+    if (formData.phoneNumber.value !== formData.cnfPhNumber.value) {
       toast.error("Phone number didn't match");
       return;
     }
     const apiData = {
-      fullname: `${formData.firstName} ${formData.lastName}`,
-      firstName: formData.firstName,
-      LastName: formData.lastName,
-      name: formData.firstName.toLowerCase(),
-      email: `${formData.email}`,
-      password: formData.password,
-      phoneno: formData.phoneNumber,
+      fullname: `${formData.firstName.value} ${formData.lastName.value}`,
+      firstName: formData.firstName.value,
+      LastName: formData.lastName.value,
+      name: formData.firstName.value.toLowerCase(),
+      email: `${formData.email.value}`,
+      password: formData.password.value,
+      phoneno: formData.phoneNumber.value,
       user_role:
         registrationType.toLowerCase() === RegistrationTypes.TEACHER_TYPE
           ? RegistrationTypes.TEACHER_TYPE
