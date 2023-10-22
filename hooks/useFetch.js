@@ -9,7 +9,7 @@ export default function useFetch() {
     authorization: accessToken,
   });
   const [loading, setLoading] = useState(false);
-
+  const [sendingNotification, setSendingNotification] = useState(false);
   return {
     loading,
     setLoading: (payload) => {
@@ -33,6 +33,27 @@ export default function useFetch() {
         senderid,
         recieverid
       );
+      return response;
+    },
+
+    sendNotification: async (body) => {
+      setSendingNotification(true);
+      const response = await MessageRepositor.getUserNotification(userid);
+      setSendingNotification(false);
+      return response;
+    },
+
+    getUserNotification: async (userid, isSeen) => {
+      setLoading(true);
+      const response = await MessageRepositor.getUserNotification(
+        userid,
+        isSeen
+      );
+      setLoading(false);
+      return response;
+    },
+    updateNotifications: async (body) => {
+      const response = await MessageRepositor.updateNotifications(body);
       return response;
     },
   };
