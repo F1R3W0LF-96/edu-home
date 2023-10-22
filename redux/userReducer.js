@@ -29,7 +29,8 @@ const userReducer = createSlice({
           action.payload.id
         );
         if (!isProfileViewed) {
-          state.data["coins"] = state.data?.coins - action.payload.coin;
+          state.data["coins"] =
+            state.data?.coins > 0 ? state.data?.coins - action.payload.coin : 0;
           state.profileViewed.push(action.payload.id);
           localStorage.setItem(
             "profileViewed",

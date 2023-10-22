@@ -10,7 +10,7 @@ function Profile({ ...props }) {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state).user;
   const router = useRouter();
-  const { id } = router.query;
+  const { id, showMessage } = router.query;
   const { getUserDetails, loading, userDetails, updateUserDetails } =
     useAuthentication();
   const _tkn = localStorage.getItem("accessToken");
@@ -27,6 +27,12 @@ function Profile({ ...props }) {
       })
     );
   }, [id]);
+
+  useEffect(() => {
+    if (showMessage === "true" || showMessage === true) {
+      setTimeout(() => setOpenChat(false), 1000);
+    }
+  }, [showMessage]);
 
   return (
     <Wrapper>
@@ -126,7 +132,7 @@ function Profile({ ...props }) {
                   </li>
                 </ul>
               </div>
-              {userDetails?.user_role === "STUDENT" && (
+              {userDetails?.user_role === "STUDENT" && false && (
                 <div className="bg-white p-3 hover:shadow mt-4">
                   <div className="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
                     <span className="text-green-500">

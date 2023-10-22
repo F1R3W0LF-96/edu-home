@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Button } from "antd";
-import { PayCircleOutlined, UserOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import { Popconfirm, Popover } from "antd";
+import { RiNotificationFill } from "react-icons/ri";
 import logo from "../../public/Images/logo.png";
 import Avatar from "../Elements/Avatar";
-import coinImage from "../../public/Images/rupee.png";
 import InstagramIcon from "@/public/Icons/instagram";
 import WhatsappIcon from "@/public/Icons/whatsapp";
 import PhoneIcon from "@/public/Icons/Phone";
 import { useSelector, useDispatch } from "react-redux";
 import CustomPopover from "../Elements/CustomPopover";
 import { isAuthenticated, removeUserDetails } from "@/redux/userReducer";
+import Notifications from "../Elements/Notifications";
 
 const Header = ({ isauthenticated, os, location, userState }) => {
   const { push, route } = useRouter();
@@ -206,6 +206,8 @@ const Header = ({ isauthenticated, os, location, userState }) => {
           </>
           {token && (
             <>
+              <Notifications />
+
               <CustomPopover
                 open={openProfileMenu}
                 handleClose={() => setOpenProfileMenu(false)}

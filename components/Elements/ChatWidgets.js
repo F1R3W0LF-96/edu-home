@@ -48,6 +48,8 @@ function ChatWidgets({
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
     const options = { year: "numeric", month: "long", day: "numeric" };
+    // const time =
+    //   date.getHours() + " " + date.getMinutes() + " " + date.getSeconds();
     return date.toLocaleDateString("en-US", options);
   };
   const scrollToBottom = () => {
@@ -90,7 +92,7 @@ function ChatWidgets({
                           {ele.senderid.firstName} {ele.senderid.lastName}
                         </div>
                         <div className="msg-info-time">
-                          {formatDate("1697653343548")}
+                          {formatDate(new Date(ele.timestamp).getTime())}
                         </div>
                       </div>
                       <div className="msg-text">
@@ -115,7 +117,7 @@ function ChatWidgets({
                           {ele.senderid.firstName} {ele.senderid.lastName}
                         </div>
                         <div className="msg-info-time">
-                          {formatDate(new Date(ele.timestamp).toISOString())}
+                          {formatDate(new Date(ele.timestamp).getTime())}
                         </div>
                       </div>
                       <div className="msg-text">{ele.message}</div>

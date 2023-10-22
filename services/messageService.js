@@ -95,7 +95,6 @@ class MessageRepository {
 
   async getAllMessageOfUser(senderid, recieverid) {
     const endPoint = `${baseDomain}/message/${senderid}/${recieverid}`;
-    console.log(this.headers);
     const reponse = await Repository(this.token)
       .get(endPoint, { headers: { ...this.headers } })
       .then((response) => {
@@ -109,6 +108,98 @@ class MessageRepository {
           return {
             success: false,
             data: error?.response?.data || error,
+            error: true,
+          };
+        }
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          data: error?.response?.data || error,
+          error: true,
+        };
+      });
+    return reponse;
+  }
+
+  async sendNotifications(body) {
+    const endPoint = `${baseDomain}/notification/send-notification`;
+
+    const reponse = await Repository(this.token)
+      .post(endPoint, body, { headers: { ...this.headers } })
+      .then((response) => {
+        if (response.data) {
+          return {
+            success: true,
+            data: response.data,
+            error: false,
+          };
+        } else {
+          return {
+            success: false,
+            data: null,
+            error: true,
+          };
+        }
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          data: error?.response?.data || error,
+          error: true,
+        };
+      });
+    return reponse;
+  }
+
+  async getUserNotification(userid, isSeen) {
+    const endPoint =
+      isSeen === true || isSeen === false
+        ? `${baseDomain}/notification/get/usernotification/${userid}?isSeen=${isSeen}`
+        : `${baseDomain}/notification/get/usernotification/${userid}`;
+    const reponse = await Repository(this.token)
+      .get(endPoint, { headers: { ...this.headers } })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data) {
+          return {
+            success: true,
+            data: response.data,
+            error: false,
+          };
+        } else {
+          return {
+            success: false,
+            data: error?.response?.data || error,
+            error: true,
+          };
+        }
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          data: error?.response?.data || error,
+          error: true,
+        };
+      });
+    return reponse;
+  }
+  async updateNotifications(body) {
+    const endPoint = `${baseDomain}/notification/usernotification`;
+
+    const reponse = await Repository(this.token)
+      .patch(endPoint, body, { headers: { ...this.headers } })
+      .then((response) => {
+        if (response.data) {
+          return {
+            success: true,
+            data: response.data,
+            error: false,
+          };
+        } else {
+          return {
+            success: false,
+            data: null,
             error: true,
           };
         }
